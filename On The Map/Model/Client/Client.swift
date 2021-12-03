@@ -81,11 +81,13 @@ class Client {
         return task
     }
     
-    class func taskForPOSTRequest<ResponseType: Decodable>(url: URL, responseType: ResponseType.Type, body: String, completion: @escaping(ResponseType?, Error?) -> Void) -> Void {
+    class func taskForPOSTRequest<ResponseType: Decodable>(url: URL, responseType: ResponseType.Type, body: String, login: Bool, completion: @escaping(ResponseType?, Error?) -> Void) -> Void {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.httpBody = body.data(using: .utf8)
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        if login {
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+        }
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
@@ -99,12 +101,20 @@ class Client {
             let decoder = JSONDecoder()
             do {
                 
-                let range = 5..<data.count
-                let newData = data.subdata(in: range)
-                let responseObj = try decoder.decode(ResponseType.self, from: newData)
-                DispatchQueue.main.async {
-                    completion(responseObj, nil)
+                if login {
+                    let range = 5..<data.count
+                    let newData = data.subdata(in: range)
+                    let responseObj = try decoder.decode(ResponseType.self, from: newData)
+                    DispatchQueue.main.async {
+                        completion(responseObj, nil)
+                    }
+                } else {
+                    let responseObj = try decoder.decode(ResponseType.self, from: data)
+                    DispatchQueue.main.async {
+                        completion(responseObj, nil)
+                    }
                 }
+
             } catch {
                 DispatchQueue.main.async {
                     completion(nil, error)
@@ -130,7 +140,7 @@ class Client {
 
     class func login(username: String, password: String, completion: @escaping (Bool, Error?) -> Void) {
         let body = "{\"udacity\": {\"username\": \"\(username)\", \"password\": \"\(password)\"}}"
-        taskForPOSTRequest(url: EndPoints.login.url, responseType: LoginResponse.self, body: body) { response, error in
+        taskForPOSTRequest(url: EndPoints.login.url, responseType: LoginResponse.self, body: body, login: true) { response, error in
             
             if let response = response {
                 Auth.sessionId = response.session.id
@@ -143,26 +153,18 @@ class Client {
     }
     
     class func post(student: Student?, completion: @escaping(Bool, Error?) -> Void) {
-        var request = URLRequest(url: EndPoints.post.url)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = "{\"uniqueKey\": \"\(student?.uniqueKey ?? "")\", \"firstName\": \"\(student?.firstName ?? "")\", \"lastName\": \"\(student?.lastName ?? "")\",\"mapString\": \"\(student?.mapString ?? "")\", \"mediaURL\": \"\(student?.mediaURL ?? "")\",\"latitude\": \(student?.latitude ?? 0.0), \"longitude\": \(student?.longitude ?? 0.0)}".data(using: .utf8)
-        let session = URLSession.shared
-        let task = session.dataTask(with: request) { data, response, error in
+        
+        let body = "{\"uniqueKey\": \"\(student?.uniqueKey ?? "")\", \"firstName\": \"\(student?.firstName ?? "")\", \"lastName\": \"\(student?.lastName ?? "")\",\"mapString\": \"\(student?.mapString ?? "")\", \"mediaURL\": \"\(student?.mediaURL ?? "")\",\"latitude\": \(student?.latitude ?? 0.0), \"longitude\": \(student?.longitude ?? 0.0)}"
+        
+        taskForPOSTRequest(url: EndPoints.post.url, responseType: PostResponse.self, body: body, login: false) { response, error in
             
-            guard let data = data else {
-                DispatchQueue.main.async {
-                    completion(false, error)
-                }
-                return
+            if response != nil {
+                completion(true, nil)
+            } else {
+                completion(false, error)
             }
             
-            
-            print(String(data: data, encoding: .utf8))
-            completion(true, nil)
         }
-        
-        task.resume()
     }
     
     class func logout(completion: @escaping(Bool, Error?) -> Void) {
