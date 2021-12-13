@@ -23,6 +23,8 @@ class AddLocationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         activityIndicator.hidesWhenStopped = true
+        locationTextField.delegate = self
+        linkTextField.delegate = self
     }
     
     func geocode() {

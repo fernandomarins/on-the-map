@@ -16,8 +16,9 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         activityIndicator.hidesWhenStopped = true
-        usernameTextField.text = "f.augustomarins@gmail.com"
-        passwordTextField.text = "123Pirralho"
+        usernameTextField.delegate = self
+        passwordTextField.delegate = self
+
     }
     
     @IBAction func login(_ sender: UIButton) {
@@ -47,4 +48,3 @@ class LoginViewController: UIViewController {
     }
 
 }
-
