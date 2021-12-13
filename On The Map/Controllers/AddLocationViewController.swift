@@ -9,7 +9,9 @@ import Foundation
 import UIKit
 import CoreLocation
 
-class AddLocationViewController: UIViewController {
+class AddLocationViewController: UIViewController, UITextFieldDelegate {
+    
+    // MARK: - Variables
     
     @IBOutlet weak var locationTextField: UITextField!
     @IBOutlet weak var linkTextField: UITextField!
@@ -19,6 +21,8 @@ class AddLocationViewController: UIViewController {
     
     var latitude: CLLocationDegrees?
     var longitude: CLLocationDegrees?
+    
+    // MARK: Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +58,7 @@ class AddLocationViewController: UIViewController {
         geocode()
     }
     
+    // Sending data to the next view
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         let newStudent = Student(createdAt: "", firstName: Client.Auth.firstName, lastName: Client.Auth.lastName, latitude: latitude, longitude: longitude, mapString: locationTextField.text, mediaURL: linkTextField.text, objectId: "", uniqueKey: Client.Auth.uniqueKey, updatedAt: "")
@@ -63,6 +68,11 @@ class AddLocationViewController: UIViewController {
             vc.infoToSend = newStudent
         }
         
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
         
 }

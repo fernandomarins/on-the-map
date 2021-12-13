@@ -11,9 +11,13 @@ import MapKit
 
 class PostLocationViewController: UIViewController, MKMapViewDelegate {
     
+    // MARK: - Variables
+    
     var infoToSend: Student?
     
     @IBOutlet weak var mapView: MKMapView!
+    
+    // MARK: Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +36,7 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
         mapView.addAnnotation(pin)
     }
     
+    // Sending a location to the server    
     @IBAction func submit(_ sender: UIButton) {
         if let infoToSend = infoToSend {
             Client.post(student: infoToSend) { success, error in

@@ -11,9 +11,13 @@ import MapKit
 
 class MapViewController: UIViewController, MKMapViewDelegate {
     
+    // MARK: - Variables
+    
     @IBOutlet weak var mapView: MKMapView!
     
     var students = [Student]()
+    
+    // MARK: Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +44,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
+    // Getting all the pins
+    
     func getPins() {
         Client.getAllLocations { students, error in
             if students.count == 0 {
@@ -52,6 +58,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     func addPinsToMap() {
+        // Removing the old pins before adding new ones
         mapView.removeAnnotations(mapView.annotations)
         for student in students {
             let pin = MKPointAnnotation()
@@ -61,6 +68,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             mapView.addAnnotation(pin)
         }
     }
+    
+    // MARK: - MapView delegate methods
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation is MKPointAnnotation else { return nil }

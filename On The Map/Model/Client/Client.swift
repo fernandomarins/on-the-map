@@ -147,6 +147,7 @@ class Client {
                 Auth.accountId = response.account.key
                 completion(true, nil)
             } else {
+                debugPrint(error)
                 completion(false, error)
             }
         }

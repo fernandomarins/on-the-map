@@ -10,18 +10,24 @@ import UIKit
 
 class TableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    // MARK: - Variables
+    
     @IBOutlet weak var tableView: UITableView!
     
     var students = [Student]()
     
+    // MARK: Lifecycle methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        getPins()
+        getPins()
     }
     
     @IBAction func refresh(_ sender: UIButton) {
-//        getPins()
+        getPins()
     }
+    
+    
     
     @IBAction func logout(_ sender: UIButton) {
         Client.logout { success, error in
@@ -47,6 +53,8 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
         }
     }
+    
+    // MARK: - TableView delegate methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return students.count
