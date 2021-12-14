@@ -14,6 +14,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var createAccountLabel: UILabel!
     
     // MARK: Lifecycle methods
     
@@ -22,6 +23,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         activityIndicator.hidesWhenStopped = true
         usernameTextField.delegate = self
         passwordTextField.delegate = self
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(openURL))
+        createAccountLabel.addGestureRecognizer(tap)
+        createAccountLabel.isUserInteractionEnabled = true
     }
     
     // MARK: - Login
@@ -52,6 +57,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 showAlert(title: "Error login", message: error.localizedDescription)
             }
         }
+    }
+    
+    @objc private func openURL() {
+        let url = URL(string: "https://auth.udacity.com/sign-up")
+        UIApplication.shared.open(url!, options: [:])
     }
     
     // MARK: - Text field delegate
