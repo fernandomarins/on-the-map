@@ -27,8 +27,6 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         getPins()
     }
     
-    
-    
     @IBAction func logout(_ sender: UIButton) {
         Client.logout { success, error in
             if success {

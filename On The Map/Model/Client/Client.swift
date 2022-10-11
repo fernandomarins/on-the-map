@@ -48,6 +48,7 @@ class Client {
         }
     }
     
+    @discardableResult
     class func taskForGETRequest<ResponseType: Decodable>(url: URL, responseType: ResponseType.Type, isUserInfo: Bool, completion: @escaping (ResponseType?, Error?) -> Void) -> URLSessionDataTask {
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data else {
@@ -81,10 +82,10 @@ class Client {
         return task
     }
     
-    class func taskForPOSTRequest<ResponseType: Decodable>(url: URL, responseType: ResponseType.Type, body: String, login: Bool, completion: @escaping(ResponseType?, Error?) -> Void) -> Void {
+    class func taskForPOSTRequest<ResponseType: Decodable, PostType: Encodable>(url: URL, responseType: ResponseType.Type, body: PostType, login: Bool, completion: @escaping(ResponseType?, Error?) -> Void) -> Void {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.httpBody = body.data(using: .utf8)
+        request.httpBody = try? JSONEncoder().encode(body)
         if login {
             request.addValue("application/json", forHTTPHeaderField: "Accept")
         }
@@ -100,7 +101,6 @@ class Client {
             
             let decoder = JSONDecoder()
             do {
-                
                 if login {
                     let range = 5..<data.count
                     let newData = data.subdata(in: range)
@@ -139,7 +139,7 @@ class Client {
     }
 
     class func login(username: String, password: String, completion: @escaping (Bool, Error?) -> Void) {
-        let body = "{\"udacity\": {\"username\": \"\(username)\", \"password\": \"\(password)\"}}"
+        let body = UdacityLogin(udacity: UserLogin(username: username, password: password))
         taskForPOSTRequest(url: EndPoints.login.url, responseType: LoginResponse.self, body: body, login: true) { response, error in
             
             if let response = response {
@@ -147,7 +147,6 @@ class Client {
                 Auth.accountId = response.account.key
                 completion(true, nil)
             } else {
-                debugPrint(error)
                 completion(false, error)
             }
         }
@@ -155,7 +154,7 @@ class Client {
     
     class func post(student: Student?, completion: @escaping(Bool, Error?) -> Void) {
         
-        let body = "{\"uniqueKey\": \"\(student?.uniqueKey ?? "")\", \"firstName\": \"\(student?.firstName ?? "")\", \"lastName\": \"\(student?.lastName ?? "")\",\"mapString\": \"\(student?.mapString ?? "")\", \"mediaURL\": \"\(student?.mediaURL ?? "")\",\"latitude\": \(student?.latitude ?? 0.0), \"longitude\": \(student?.longitude ?? 0.0)}"
+        let body = PostLocation(uniqueKey: student?.uniqueKey ?? "", firstName: student?.firstName ?? "", lastName: student?.lastName ?? "", mapString: student?.mapString ?? "", mediaURL: student?.mediaURL ?? "", latitude: student?.latitude ?? 0.0, longitude: student?.longitude ?? 0.0)
         
         taskForPOSTRequest(url: EndPoints.post.url, responseType: PostResponse.self, body: body, login: false) { response, error in
             
