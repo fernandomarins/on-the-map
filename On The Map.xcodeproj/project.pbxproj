@@ -10,6 +10,7 @@
 		55B9253428F62B8F003765B7 /* PostLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B9253328F62B8F003765B7 /* PostLocation.swift */; };
 		55B9253628F62EFB003765B7 /* UserLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B9253528F62EFB003765B7 /* UserLogin.swift */; };
 		55B9253928F633AA003765B7 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 55B9253828F633AA003765B7 /* SnapKit */; };
+		55B9253D28F64F59003765B7 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B9253C28F64F59003765B7 /* TableViewCell.swift */; };
 		55FFD867275914D9003654AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FFD866275914D9003654AA /* AppDelegate.swift */; };
 		55FFD869275914DA003654AA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FFD868275914DA003654AA /* SceneDelegate.swift */; };
 		55FFD86B275914DA003654AA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FFD86A275914DA003654AA /* LoginViewController.swift */; };
@@ -33,6 +34,7 @@
 /* Begin PBXFileReference section */
 		55B9253328F62B8F003765B7 /* PostLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLocation.swift; sourceTree = "<group>"; };
 		55B9253528F62EFB003765B7 /* UserLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLogin.swift; sourceTree = "<group>"; };
+		55B9253C28F64F59003765B7 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		55FFD863275914D9003654AA /* On The Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On The Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55FFD866275914D9003654AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		55FFD868275914DA003654AA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 				55FFD86A275914DA003654AA /* LoginViewController.swift */,
 				55FFD88E27593F9D003654AA /* MapViewController.swift */,
 				55FFD89027593FAA003654AA /* TableViewController.swift */,
+				55B9253C28F64F59003765B7 /* TableViewCell.swift */,
 				55FFD89C275958EF003654AA /* AddLocationViewController.swift */,
 				55FFD89E275977F4003654AA /* PostLocationViewController.swift */,
 				55FFD89727594DF3003654AA /* UIViewController+Extensions.swift */,
@@ -247,6 +250,7 @@
 				55FFD87D27591650003654AA /* User.swift in Sources */,
 				55FFD86B275914DA003654AA /* LoginViewController.swift in Sources */,
 				55FFD8812759169F003654AA /* Client.swift in Sources */,
+				55B9253D28F64F59003765B7 /* TableViewCell.swift in Sources */,
 				55FFD89127593FAA003654AA /* TableViewController.swift in Sources */,
 				55FFD89F275977F4003654AA /* PostLocationViewController.swift in Sources */,
 				55FFD89B27595012003654AA /* UserInfo.swift in Sources */,

@@ -5,7 +5,6 @@
 //  Created by Fernando Marins on 02/12/21.
 //
 
-import Foundation
 import UIKit
 import MapKit
 import SnapKit
@@ -14,13 +13,13 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: - Variables
     
-    lazy var contentView: UIView = {
+    private lazy var contentView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         return view
     }()
     
-    lazy var mapView: MKMapView = {
+    private lazy var mapView: MKMapView = {
         let mapView = MKMapView()
         mapView.delegate = self
         return mapView

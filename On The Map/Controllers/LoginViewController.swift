@@ -12,27 +12,27 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Variables
     
-    lazy var contentView: UIView! = {
+    private lazy var contentView: UIView! = {
         let view = UIView()
         view.backgroundColor = .white
         return view
     }()
     
-    lazy var udacityLabel: UILabel = {
+    private lazy var udacityLabel: UILabel = {
         let label = UILabel()
         label.text = "UDACITY"
         label.font = UIFont.systemFont(ofSize: 29)
         return label
     }()
     
-    lazy var titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "On The Map"
         label.font = UIFont.systemFont(ofSize: 25)
         return label
     }()
     
-    lazy var usernameTextField: UITextField = {
+    private lazy var usernameTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "E-mail"
         textField.borderStyle = .roundedRect
@@ -41,7 +41,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return textField
     }()
     
-    lazy var passwordTextField: UITextField = {
+    private lazy var passwordTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Password"
         textField.borderStyle = .roundedRect
@@ -50,7 +50,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return textField
     }()
     
-    lazy var loginButton: UIButton = {
+    private lazy var loginButton: UIButton = {
         let button = UIButton(type: .system)
         button.layer.cornerRadius = 15
         button.backgroundColor = .blue
@@ -60,13 +60,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return button
     }()
     
-    lazy var activityIndicator: UIActivityIndicatorView = {
+    private lazy var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.hidesWhenStopped = true
         return activityIndicator
     }()
     
-    lazy var createAccountLabel: UILabel = {
+    private lazy var createAccountLabel: UILabel = {
         let label = UILabel()
         label.text = "Don't have an account? Create one here"
         label.textAlignment = .center
