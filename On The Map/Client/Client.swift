@@ -61,8 +61,7 @@ class Client {
             do {
                 
                 if isUserInfo {
-                    let range = 5..<data.count
-                    let newData = data.subdata(in: range)
+                    let newData = removeFirstFiveCharacters(data)
                     let responseObject = try decoder.decode(ResponseType.self, from: newData)
                     DispatchQueue.main.async {
                         completion(responseObject, nil)
@@ -102,8 +101,7 @@ class Client {
             let decoder = JSONDecoder()
             do {
                 if login {
-                    let range = 5..<data.count
-                    let newData = data.subdata(in: range)
+                    let newData = removeFirstFiveCharacters(data)
                     let responseObj = try decoder.decode(ResponseType.self, from: newData)
                     DispatchQueue.main.async {
                         completion(responseObj, nil)
@@ -184,8 +182,7 @@ class Client {
                 return
             }
 
-            let range = (5..<data.count)
-            let newData = data.subdata(in: range)
+            let newData = removeFirstFiveCharacters(data)
             print(String(data: newData, encoding: .utf8)!)
             Auth.sessionId = ""
             completion(true, nil)
@@ -208,4 +205,8 @@ class Client {
         }
     }
     
+    class func removeFirstFiveCharacters(_ data: Data) -> Data {
+        let range = 5..<data.count
+        return data.subdata(in: range)
+    }
 }

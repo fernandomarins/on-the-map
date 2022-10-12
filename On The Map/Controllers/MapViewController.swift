@@ -56,6 +56,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
+    // MARK: - Private methods
+    
     private func setupBarButtons() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .done, target: self, action: #selector(logout))
         let refreshButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refresh))

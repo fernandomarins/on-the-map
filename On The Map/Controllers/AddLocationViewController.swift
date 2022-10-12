@@ -134,6 +134,8 @@ class AddLocationViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    // MARK: - Private methods
+    
     private func setupBarButtons() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(dismissView))
     }
@@ -172,16 +174,7 @@ class AddLocationViewController: UIViewController, UITextFieldDelegate {
         navigationController?.pushViewController(postLocationViewController, animated: true)
     }
     
-    // Sending data to the next view
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        let newStudent = Student(createdAt: "", firstName: Client.Auth.firstName, lastName: Client.Auth.lastName, latitude: latitude, longitude: longitude, mapString: locationTextField.text, mediaURL: linkTextField.text, objectId: "", uniqueKey: Client.Auth.uniqueKey, updatedAt: "")
-//
-//        if segue.identifier == "toPost" {
-//            let vc = segue.destination as! PostLocationViewController
-//            vc.infoToSend = newStudent
-//        }
-//
-//    }
+    // MARK: - Textfield delegate method
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()

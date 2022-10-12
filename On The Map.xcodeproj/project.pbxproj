@@ -87,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				55FFD87A275915F8003654AA /* Model */,
+				55FFD882275916A9003654AA /* Client */,
 				55FFD866275914D9003654AA /* AppDelegate.swift */,
 				55FFD868275914DA003654AA /* SceneDelegate.swift */,
 				55FFD88D27593F8B003654AA /* Controllers */,
@@ -103,7 +104,6 @@
 				55FFD8A027598532003654AA /* Post */,
 				55FFD89927595004003654AA /* User Info */,
 				55FFD89227594265003654AA /* Students */,
-				55FFD882275916A9003654AA /* Client */,
 				55FFD87B2759163F003654AA /* Login */,
 			);
 			path = Model;

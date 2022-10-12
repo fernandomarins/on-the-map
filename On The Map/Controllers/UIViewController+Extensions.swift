@@ -22,5 +22,4 @@ extension UIViewController {
             show ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
         }
     }
-    
 }

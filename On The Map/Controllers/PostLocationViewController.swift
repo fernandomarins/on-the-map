@@ -90,6 +90,8 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
+    // MARK: - Private methods
+    
     private func setupBarButtons() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel",
                                                             style: .done, target: self,
@@ -114,7 +116,7 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
         mapView.addAnnotation(pin)
     }
     
-    // Sending a location to the server    
+    // MARK: - Submitting the location
     @objc private func submit() {
         showHideActivityIndicator(show: true, activityIndicator: activityIndicator)
         let postLocation = PostLocation(uniqueKey: Client.Auth.uniqueKey,
@@ -141,6 +143,8 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
             }
         }
     }
+    
+    // MARK: - MapView delegate method
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation is MKPointAnnotation else { return nil }
