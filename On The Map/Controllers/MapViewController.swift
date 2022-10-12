@@ -5,40 +5,79 @@
 //  Created by Fernando Marins on 02/12/21.
 //
 
-import Foundation
 import UIKit
 import MapKit
+import SnapKit
 
 class MapViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: - Variables
     
-    @IBOutlet weak var mapView: MKMapView!
+    private lazy var contentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
     
-    var students = [Student]()
+    private lazy var mapView: MKMapView = {
+        let mapView = MKMapView()
+        mapView.delegate = self
+        return mapView
+    }()
     
     // MARK: Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        mapView.delegate = self
+        view.backgroundColor = .white
+        addViews()
+        addConstraints()
+        setupBarButtons()
+        getPins()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: Notification.Name("update"), object: nil)
+    }
+    
+    private func addViews() {
+        view.addSubview(contentView)
+        contentView.addSubview(mapView)
+    }
+    
+    private func addConstraints() {
+        contentView.snp.makeConstraints {
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+
+        mapView.snp.makeConstraints {
+            $0.top.equalTo(contentView.snp.top)
+            $0.leading.equalTo(contentView.snp.leading)
+            $0.bottom.equalTo(contentView.snp.bottom).offset(-16)
+            $0.trailing.equalTo(contentView.snp.trailing)
+        }
+    }
+    
+    // MARK: - Private methods
+    
+    private func setupBarButtons() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .done, target: self, action: #selector(logout))
+        let refreshButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refresh))
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(presentAddLocationView))
+        navigationItem.rightBarButtonItems = [addButton, refreshButton]
+    }
+    
+    @objc private func refresh() {
         getPins()
     }
     
-    @IBAction func refresh(_ sender: UIButton) {
-        getPins()
-    }
-    
-    @IBAction func logout(_ sender: UIButton) {
-        Client.logout { success, error in
+    @objc private func logout() {
+        Client.logout { [weak self] success, error in
             if success {
                 DispatchQueue.main.async {
-                    self.dismiss(animated: true)
+                    self?.dismiss(animated: true)
                 }
             } else {
-                if let error = error {
-                    self.showAlert(title: "Error logout", message: error.localizedDescription)
+                if let error {
+                    self?.showAlert(title: "Error logout", message: error.localizedDescription)
                 }
             }
         }
@@ -46,27 +85,35 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     // Getting all the pins
     
-    func getPins() {
-        Client.getAllLocations { students, error in
-            if students.count == 0 {
-                self.showAlert(title: "Error", message: error!.localizedDescription)
+    private func getPins() {
+        Client.getAllLocations { [weak self] students, error in
+            if students.isEmpty {
+                if let error {
+                    self?.showAlert(title: "Error", message: error.localizedDescription)
+                }
             } else {
-                self.students = students
-                self.addPinsToMap()
+                self?.addPinsToMap()
             }
         }
     }
     
-    func addPinsToMap() {
+    private func addPinsToMap() {
         // Removing the old pins before adding new ones
         mapView.removeAnnotations(mapView.annotations)
-        for student in students {
+        for student in StudentList.allStudents {
             let pin = MKPointAnnotation()
-            pin.title = student.firstName ?? ""
-            pin.subtitle = student.mediaURL ?? ""
+            pin.title = student.firstName
+            pin.subtitle = student.mediaURL
             pin.coordinate = CLLocationCoordinate2D(latitude: student.latitude ?? 0.0, longitude: student.longitude ?? 0.0)
             mapView.addAnnotation(pin)
         }
+    }
+    
+    @objc private func presentAddLocationView() {
+        let addLocationViewController = AddLocationViewController()
+        let nav = UINavigationController(rootViewController: addLocationViewController)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true)
     }
     
     // MARK: - MapView delegate methods

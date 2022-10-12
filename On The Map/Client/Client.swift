@@ -61,8 +61,7 @@ class Client {
             do {
                 
                 if isUserInfo {
-                    let range = 5..<data.count
-                    let newData = data.subdata(in: range)
+                    let newData = removeFirstFiveCharacters(data)
                     let responseObject = try decoder.decode(ResponseType.self, from: newData)
                     DispatchQueue.main.async {
                         completion(responseObject, nil)
@@ -102,8 +101,7 @@ class Client {
             let decoder = JSONDecoder()
             do {
                 if login {
-                    let range = 5..<data.count
-                    let newData = data.subdata(in: range)
+                    let newData = removeFirstFiveCharacters(data)
                     let responseObj = try decoder.decode(ResponseType.self, from: newData)
                     DispatchQueue.main.async {
                         completion(responseObj, nil)
@@ -127,9 +125,10 @@ class Client {
     }
     
     class func getAllLocations(completion: @escaping ([Student], Error?) -> Void) -> Void {
-        taskForGETRequest(url: EndPoints.getStudentLocations.url, responseType: StudentsList.self, isUserInfo: false) { response, error in
+        taskForGETRequest(url: EndPoints.getStudentLocations.url, responseType: StudentResult.self, isUserInfo: false) { response, error in
             
             if let response = response {
+                StudentList.allStudents = response.results
                 completion(response.results, nil)
             } else {
                 completion([], error)
@@ -152,11 +151,8 @@ class Client {
         }
     }
     
-    class func post(student: Student?, completion: @escaping(Bool, Error?) -> Void) {
-        
-        let body = PostLocation(uniqueKey: student?.uniqueKey ?? "", firstName: student?.firstName ?? "", lastName: student?.lastName ?? "", mapString: student?.mapString ?? "", mediaURL: student?.mediaURL ?? "", latitude: student?.latitude ?? 0.0, longitude: student?.longitude ?? 0.0)
-        
-        taskForPOSTRequest(url: EndPoints.post.url, responseType: PostResponse.self, body: body, login: false) { response, error in
+    class func post(student: PostLocation, completion: @escaping(Bool, Error?) -> Void) {
+        taskForPOSTRequest(url: EndPoints.post.url, responseType: PostResponse.self, body: student, login: false) { response, error in
             
             if response != nil {
                 completion(true, nil)
@@ -186,8 +182,7 @@ class Client {
                 return
             }
 
-            let range = (5..<data.count)
-            let newData = data.subdata(in: range)
+            let newData = removeFirstFiveCharacters(data)
             print(String(data: newData, encoding: .utf8)!)
             Auth.sessionId = ""
             completion(true, nil)
@@ -210,4 +205,8 @@ class Client {
         }
     }
     
+    class func removeFirstFiveCharacters(_ data: Data) -> Data {
+        let range = 5..<data.count
+        return data.subdata(in: range)
+    }
 }

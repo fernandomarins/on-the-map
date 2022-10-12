@@ -7,6 +7,10 @@
 
 import Foundation
 
-struct StudentsList: Codable {
+struct StudentResult: Codable {
     let results: [Student]
+}
+
+struct StudentList {
+    static var allStudents = [Student]()
 }
