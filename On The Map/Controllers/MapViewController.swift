@@ -57,7 +57,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     private func setupBarButtons() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .done, target: self, action: #selector(logout))
         let refreshButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refresh))
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(refresh))
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(presentAddLocationView))
         navigationItem.rightBarButtonItems = [addButton, refreshButton]
     }
     
@@ -81,7 +81,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     // Getting all the pins
     
-    func getPins() {
+    private func getPins() {
         Client.getAllLocations { [weak self] students, error in
             if students.isEmpty {
                 if let error {
@@ -93,7 +93,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
-    func addPinsToMap() {
+    private func addPinsToMap() {
         // Removing the old pins before adding new ones
         mapView.removeAnnotations(mapView.annotations)
         for student in StudentList.allStudents {
@@ -103,6 +103,13 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             pin.coordinate = CLLocationCoordinate2D(latitude: student.latitude ?? 0.0, longitude: student.longitude ?? 0.0)
             mapView.addAnnotation(pin)
         }
+    }
+    
+    @objc private func presentAddLocationView() {
+        let addLocationViewController = AddLocationViewController()
+        let nav = UINavigationController(rootViewController: addLocationViewController)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true)
     }
     
     // MARK: - MapView delegate methods

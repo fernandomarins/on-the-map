@@ -12,7 +12,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Variables
     
-    private lazy var contentView: UIView! = {
+    private lazy var contentView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         return view
