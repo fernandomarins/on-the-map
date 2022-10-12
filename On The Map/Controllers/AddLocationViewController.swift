@@ -37,7 +37,6 @@ class AddLocationViewController: UIViewController, UITextFieldDelegate {
         let textField = UITextField()
         textField.placeholder = "Enter your location"
         textField.borderStyle = .roundedRect
-        textField.autocapitalizationType = .none
         textField.delegate = self
         return textField
     }()

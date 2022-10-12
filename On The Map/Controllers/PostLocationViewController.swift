@@ -130,7 +130,8 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
             if success {
                 DispatchQueue.main.async {
                     self.showHideActivityIndicator(show: false, activityIndicator: self.activityIndicator)
-                    self.navigationController?.dismiss(animated: true, completion: nil)
+                    NotificationCenter.default.post(name: Notification.Name("update"), object: nil)
+                    self.dismissView()
                 }
             } else {
                 if let error {
@@ -139,6 +140,23 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
                 }
             }
         }
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard annotation is MKPointAnnotation else { return nil }
+        
+        let identifier = "Annotation"
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+        
+        if annotationView == nil {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView!.canShowCallout = true
+            annotationView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+        } else {
+            annotationView!.annotation = annotation
+        }
+        
+        return annotationView
     }
     
 }

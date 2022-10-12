@@ -34,6 +34,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         addConstraints()
         setupBarButtons()
         getPins()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: Notification.Name("update"), object: nil)
     }
     
     private func addViews() {
@@ -98,8 +100,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         mapView.removeAnnotations(mapView.annotations)
         for student in StudentList.allStudents {
             let pin = MKPointAnnotation()
-            pin.title = student.firstName ?? ""
-            pin.subtitle = student.mediaURL ?? ""
+            pin.title = student.firstName
+            pin.subtitle = student.mediaURL
             pin.coordinate = CLLocationCoordinate2D(latitude: student.latitude ?? 0.0, longitude: student.longitude ?? 0.0)
             mapView.addAnnotation(pin)
         }
