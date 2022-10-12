@@ -8,7 +8,22 @@
 import UIKit
 import SnapKit
 
+protocol LoginViewDisplyaing: AnyObject, LoadingViewProtocol {
+    func displayError(_ error: Errors)
+}
+
 class LoginViewController: UIViewController, UITextFieldDelegate {
+    
+    private let interactor: LoginInteracting
+    
+    init(interactor: LoginInteracting) {
+        self.interactor = interactor
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Variables
     
@@ -60,7 +75,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return button
     }()
     
-    private lazy var activityIndicator: UIActivityIndicatorView = {
+    lazy var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.hidesWhenStopped = true
         return activityIndicator
@@ -156,61 +171,39 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Login
     
     @objc private func login() {
-        showHideActivityIndicator(show: true, activityIndicator: activityIndicator)
-        Client.login(username: usernameTextField.text ?? "", password: passwordTextField.text ?? "", completion: handleSessionResponse(success:error:))
+        interactor.login(username: usernameTextField.text ?? "", password: passwordTextField.text ?? "")
+//        showHideActivityIndicator(show: true, activityIndicator: activityIndicator)
+//        Client.login(username: usernameTextField.text ?? "", password: passwordTextField.text ?? "", completion: handleSessionResponse(success:error:))
     }
     
-    private func handleSessionResponse(success: Bool, error: Error?) {
-        if success {
-            Client.getUserInfo { [weak self] success, error in
-                guard let self = self else { return }
-                if success {
-                    self.showHideActivityIndicator(show: false,
-                                                   activityIndicator: self.activityIndicator)
-                    self.presentTabBarController()
-                } else {
-                    if let error  {
-                        self.showHideActivityIndicator(show: false,
-                                                       activityIndicator: self.activityIndicator)
-                        self.showAlert(title: "Error",
-                                       message: error.localizedDescription)
-                    }
-                }
-            }
-        } else {
-            if let error {
-                showHideActivityIndicator(show: false,
-                                                activityIndicator: activityIndicator)
-                showAlert(title: "Error login",
-                          message: error.localizedDescription)
-            }
-        }
-    }
+//    private func handleSessionResponse(success: Bool, error: Error?) {
+//        if success {
+//            Client.getUserInfo { [weak self] success, error in
+//                guard let self = self else { return }
+//                if success {
+////                    self.showHideActivityIndicator(show: false,
+////                                                   activityIndicator: self.activityIndicator)
+//
+//                } else {
+//                    if let error  {
+////                        self.showHideActivityIndicator(show: false,
+////                                                       activityIndicator: self.activityIndicator)
+//                        self.showAlert(title: "Error",
+//                                       message: error.localizedDescription)
+//                    }
+//                }
+//            }
+//        } else {
+//            if let error {
+//                showHideActivityIndicator(show: false,
+//                                                activityIndicator: activityIndicator)
+//                showAlert(title: "Error login",
+//                          message: error.localizedDescription)
+//            }
+//        }
+//    }
     
     // MARK: - Tabbar Controller
-    
-    private func presentTabBarController() {
-        let tabBarController = createTabBarController()
-        present(tabBarController, animated: true)
-    }
-    
-    private func createTabBarController() -> UITabBarController {
-        let tabBarController = UITabBarController()
-        let mapViewController = MapViewController()
-        mapViewController.tabBarItem = UITabBarItem(title: "Map", image: UIImage(named: "icon_listview-deselected"), tag: 0)
-        
-        let tableViewController = TableViewController()
-        tableViewController.tabBarItem = UITabBarItem(title: "Table", image: UIImage(named: "icon_mapview-deselected"), tag: 1)
-        
-        let viewControllersList = [mapViewController, tableViewController].map {
-            UINavigationController(rootViewController: $0)
-        }
-        
-        tabBarController.setViewControllers(viewControllersList, animated: true)
-        tabBarController.modalPresentationStyle = .fullScreen
-        
-        return tabBarController
-    }
     
     @objc private func openURL() {
         let url = URL(string: "https://auth.udacity.com/sign-up")
@@ -224,4 +217,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return true
     }
 
+}
+
+extension LoginViewController: LoginViewDisplyaing {
+    func displayError(_ error: Errors) {
+        
+    }
 }

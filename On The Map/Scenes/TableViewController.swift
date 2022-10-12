@@ -89,11 +89,9 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     private func getData() {
-        Client.getAllLocations { [weak self] students, error in
-            if StudentList.allStudents.isEmpty {
-                if let error {
-                    self?.showAlert(title: "Error", message: error.localizedDescription)
-                }
+        Client.getAllLocations { [weak self] error in
+            if let error  {
+                self?.showAlert(title: "Error", message: error.localizedDescription)
             } else {
                 self?.tableView.reloadData()
             }

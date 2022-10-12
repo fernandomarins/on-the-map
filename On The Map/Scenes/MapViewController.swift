@@ -86,11 +86,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     // Getting all the pins
     
     private func getPins() {
-        Client.getAllLocations { [weak self] students, error in
-            if students.isEmpty {
-                if let error {
-                    self?.showAlert(title: "Error", message: error.localizedDescription)
-                }
+        Client.getAllLocations { [weak self] error in
+            if let error  {
+                self?.showAlert(title: "Error", message: error.localizedDescription)
             } else {
                 self?.addPinsToMap()
             }
