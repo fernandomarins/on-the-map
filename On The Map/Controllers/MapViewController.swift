@@ -21,9 +21,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        mapView.delegate = self
+        view.backgroundColor = .white
+//        mapView.delegate = self
         
-        getPins()
+//        getPins()
     }
     
     @IBAction func refresh(_ sender: UIButton) {

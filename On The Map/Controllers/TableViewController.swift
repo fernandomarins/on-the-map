@@ -20,7 +20,8 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getPins()
+        view.backgroundColor = .white
+//        getPins()
     }
     
     @IBAction func refresh(_ sender: UIButton) {

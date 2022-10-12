@@ -81,8 +81,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         addViews()
         addConstraints()
+        
+        usernameTextField.text = "f.augustomarins@gmail.com"
+        passwordTextField.text = "123Pirralho"
     }
     
     private func addViews() {
@@ -161,7 +165,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 if success {
                     self.showHideActivityIndicator(show: false,
                                                    activityIndicator: self.activityIndicator)
-                    self.performSegue(withIdentifier: "login", sender: nil)
+                    self.presentTabBarController()
                 } else {
                     if let error = error {
                         self.showHideActivityIndicator(show: false,
@@ -184,6 +188,26 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @objc private func openURL() {
         let url = URL(string: "https://auth.udacity.com/sign-up")
         UIApplication.shared.open(url!, options: [:])
+    }
+    
+    private func presentTabBarController() {
+        let tabBarController = createTabBarController()
+        present(tabBarController, animated: true)
+    }
+    
+    private func createTabBarController() -> UITabBarController {
+        let tabBarController = UITabBarController()
+        let mapViewController = MapViewController()
+        mapViewController.tabBarItem = UITabBarItem(title: "Map", image: UIImage(named: "icon_listview-deselected"), tag: 0)
+        let tableViewController = TableViewController()
+        tableViewController.tabBarItem = UITabBarItem(title: "Table", image: UIImage(named: "icon_mapview-deselected"), tag: 0)
+        let viewControllersList = [mapViewController, tableViewController].map {
+            UINavigationController(rootViewController: $0)
+        }
+        tabBarController.setViewControllers(viewControllersList, animated: true)
+        tabBarController.modalPresentationStyle = .fullScreen
+        
+        return tabBarController
     }
     
     // MARK: - Text field delegate
