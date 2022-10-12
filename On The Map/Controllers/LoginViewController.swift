@@ -89,6 +89,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         passwordTextField.text = "123Pirralho"
     }
     
+    // MARK: - Add views
+    
     private func addViews() {
         view.addSubview(contentView)
         contentView.addSubview(udacityLabel)
@@ -185,10 +187,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    @objc private func openURL() {
-        let url = URL(string: "https://auth.udacity.com/sign-up")
-        UIApplication.shared.open(url!, options: [:])
-    }
+    // MARK: - Tabbar Controller
     
     private func presentTabBarController() {
         let tabBarController = createTabBarController()
@@ -199,15 +198,23 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let tabBarController = UITabBarController()
         let mapViewController = MapViewController()
         mapViewController.tabBarItem = UITabBarItem(title: "Map", image: UIImage(named: "icon_listview-deselected"), tag: 0)
+        
         let tableViewController = TableViewController()
-        tableViewController.tabBarItem = UITabBarItem(title: "Table", image: UIImage(named: "icon_mapview-deselected"), tag: 0)
+        tableViewController.tabBarItem = UITabBarItem(title: "Table", image: UIImage(named: "icon_mapview-deselected"), tag: 1)
+        
         let viewControllersList = [mapViewController, tableViewController].map {
             UINavigationController(rootViewController: $0)
         }
+        
         tabBarController.setViewControllers(viewControllersList, animated: true)
         tabBarController.modalPresentationStyle = .fullScreen
         
         return tabBarController
+    }
+    
+    @objc private func openURL() {
+        let url = URL(string: "https://auth.udacity.com/sign-up")
+        UIApplication.shared.open(url!, options: [:])
     }
     
     // MARK: - Text field delegate

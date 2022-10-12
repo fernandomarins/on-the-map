@@ -217,54 +217,6 @@
             </objects>
             <point key="canvasLocation" x="5495.652173913044" y="148.66071428571428"/>
         </scene>
-        <!--Map View Controller-->
-        <scene sceneID="csf-AS-uyO">
-            <objects>
-                <viewController id="rrK-FT-P5k" customClass="MapViewController" customModule="On_The_Map" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="g4p-zY-CFR">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="GWZ-ER-VLe">
-                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </mapView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IbW-Gj-xnh">
-                                <rect key="frame" x="-2" y="44" width="414" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <items>
-                                    <barButtonItem title="Logout" id="s8s-fu-C0D">
-                                        <connections>
-                                            <action selector="logout:" destination="rrK-FT-P5k" id="jjB-rU-nTn"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="zjk-58-5nW"/>
-                                    <barButtonItem systemItem="refresh" id="oPw-9F-463">
-                                        <connections>
-                                            <action selector="refresh:" destination="rrK-FT-P5k" id="beg-8O-6l5"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem width="30" style="plain" systemItem="fixedSpace" id="JCh-xx-QH4"/>
-                                    <barButtonItem systemItem="add" id="1I7-ES-A6r">
-                                        <connections>
-                                            <segue destination="jJQ-fM-umH" kind="presentation" modalPresentationStyle="fullScreen" id="cWK-SY-XaY"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="Yyp-eJ-G5D"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="" image="icon_mapview-deselected" selectedImage="icon_mapview-deselected" id="Tcf-5b-loo"/>
-                    <connections>
-                        <outlet property="mapView" destination="GWZ-ER-VLe" id="L71-7y-Nqy"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="RFi-je-fQE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2447.826086956522" y="669.64285714285711"/>
-        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="je8-1Y-5Z7">
             <objects>
@@ -276,7 +228,6 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="rrK-FT-P5k" kind="relationship" relationship="viewControllers" id="rAV-EJ-lcd"/>
                         <segue destination="eCV-Ia-nAG" kind="relationship" relationship="viewControllers" id="4s1-JG-p18"/>
                     </connections>
                 </tabBarController>
@@ -303,12 +254,8 @@
             <point key="canvasLocation" x="3702.898550724638" y="148.66071428571428"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="n4z-mR-80p"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <image name="icon_listview-deselected" width="75" height="50"/>
-        <image name="icon_mapview-deselected" width="75" height="50"/>
         <image name="icon_world" width="52" height="67"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

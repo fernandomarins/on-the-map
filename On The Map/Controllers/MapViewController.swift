@@ -8,12 +8,23 @@
 import Foundation
 import UIKit
 import MapKit
+import SnapKit
 
 class MapViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: - Variables
     
-    @IBOutlet weak var mapView: MKMapView!
+    lazy var contentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    lazy var mapView: MKMapView = {
+        let mapView = MKMapView()
+        mapView.delegate = self
+        return mapView
+    }()
     
     var students = [Student]()
     
@@ -22,24 +33,50 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-//        mapView.delegate = self
-        
-//        getPins()
-    }
-    
-    @IBAction func refresh(_ sender: UIButton) {
+        addViews()
+        addConstraints()
+        setupBarButtons()
         getPins()
     }
     
-    @IBAction func logout(_ sender: UIButton) {
-        Client.logout { success, error in
+    private func addViews() {
+        view.addSubview(contentView)
+        contentView.addSubview(mapView)
+    }
+    
+    private func addConstraints() {
+        contentView.snp.makeConstraints {
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+
+        mapView.snp.makeConstraints {
+            $0.top.equalTo(contentView.snp.top)
+            $0.leading.equalTo(contentView.snp.leading)
+            $0.bottom.equalTo(contentView.snp.bottom).offset(-16)
+            $0.trailing.equalTo(contentView.snp.trailing)
+        }
+    }
+    
+    private func setupBarButtons() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .done, target: self, action: #selector(logout))
+        let refreshButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refresh))
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(refresh))
+        navigationItem.rightBarButtonItems = [addButton, refreshButton]
+    }
+    
+    @objc private func refresh() {
+        getPins()
+    }
+    
+    @objc private func logout() {
+        Client.logout { [weak self] success, error in
             if success {
                 DispatchQueue.main.async {
-                    self.dismiss(animated: true)
+                    self?.dismiss(animated: true)
                 }
             } else {
-                if let error = error {
-                    self.showAlert(title: "Error logout", message: error.localizedDescription)
+                if let error {
+                    self?.showAlert(title: "Error logout", message: error.localizedDescription)
                 }
             }
         }
@@ -48,12 +85,14 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     // Getting all the pins
     
     func getPins() {
-        Client.getAllLocations { students, error in
-            if students.count == 0 {
-                self.showAlert(title: "Error", message: error!.localizedDescription)
+        Client.getAllLocations { [weak self] students, error in
+            if students.isEmpty {
+                if let error {
+                    self?.showAlert(title: "Error", message: error.localizedDescription)
+                }
             } else {
-                self.students = students
-                self.addPinsToMap()
+                self?.students = students
+                self?.addPinsToMap()
             }
         }
     }
