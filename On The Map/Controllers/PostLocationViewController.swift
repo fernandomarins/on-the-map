@@ -5,7 +5,7 @@
 //  Created by Fernando Marins on 02/12/21.
 //
 
-import Foundation
+import SnapKit
 import UIKit
 import MapKit
 
@@ -13,23 +13,101 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: - Variables
     
-    var infoToSend: Student?
+    private lazy var contentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
     
-    @IBOutlet weak var mapView: MKMapView!
+    private lazy var mapView: MKMapView = {
+        let mapView = MKMapView()
+        mapView.delegate = self
+        return mapView
+    }()
+    
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.hidesWhenStopped = true
+        return activityIndicator
+    }()
+    
+    private lazy var submitButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.layer.cornerRadius = 15
+        button.backgroundColor = .blue
+        button.setTitle("Submit", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.addTarget(self, action: #selector(submit), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var latitude = CLLocationDegrees()
+    lazy var longitude = CLLocationDegrees()
+    lazy var location = String()
+    lazy var link = String()
     
     // MARK: Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         
-        mapView.delegate = self
+        addViews()
+        addConstraints()
+        setupBarButtons()
+        
+        setupMap()
+    }
+    
+    // MARK: - Add views
+    
+    private func addViews() {
+        view.addSubview(contentView)
+        contentView.addSubview(mapView)
+        contentView.addSubview(activityIndicator)
+        contentView.addSubview(submitButton)
+    }
+    
+    private func addConstraints() {
+        contentView.snp.makeConstraints {
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        mapView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        activityIndicator.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.centerX.equalToSuperview()
+        }
+        
+        submitButton.snp.makeConstraints {
+            $0.height.equalTo(35)
+            $0.width.equalTo(220)
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview().offset(-24)
+        }
+    }
+    
+    private func setupBarButtons() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel",
+                                                            style: .done, target: self,
+                                                            action: #selector(dismissView))
+    }
+    
+    @objc private func dismissView() {
+        dismiss(animated: true)
+    }
+    
+    private func setupMap() {
         let pin = MKPointAnnotation()
-        pin.coordinate = CLLocationCoordinate2D(latitude: infoToSend!.latitude ?? 0.0, longitude: infoToSend!.longitude ?? 0.0)
+        pin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         
-        let latDelta:CLLocationDegrees = 0.05
-        let lonDelta:CLLocationDegrees = 0.05
+        let latDelta: CLLocationDegrees = 0.05
+        let lonDelta: CLLocationDegrees = 0.05
         let span = MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: lonDelta)
-        let location = CLLocationCoordinate2DMake(infoToSend!.latitude ?? 0.0, infoToSend!.longitude ?? 0.0)
+        let location = CLLocationCoordinate2DMake(latitude, longitude)
         let region = MKCoordinateRegion(center: location, span: span)
         
         mapView.setRegion(region, animated: false)
@@ -37,23 +115,30 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
     }
     
     // Sending a location to the server    
-    @IBAction func submit(_ sender: UIButton) {
-        if let infoToSend = infoToSend {
-            Client.post(student: infoToSend) { success, error in
-                if success {
-                    DispatchQueue.main.async {
-                        self.navigationController?.dismiss(animated: true, completion: nil)
-                    }
-                    
-                } else {
-                    if let error = error {
-                        self.showAlert(title: "Error posting", message: error.localizedDescription)
-                    }
-                    
+    @objc private func submit() {
+        showHideActivityIndicator(show: true, activityIndicator: activityIndicator)
+        let postLocation = PostLocation(uniqueKey: Client.Auth.uniqueKey,
+                                        firstName: Client.Auth.firstName,
+                                        lastName: Client.Auth.lastName,
+                                        mapString: location,
+                                        mediaURL: link,
+                                        latitude: latitude,
+                                        longitude: longitude)
+        
+        Client.post(student: postLocation) { [weak self] success, error in
+            guard let self else { return }
+            if success {
+                DispatchQueue.main.async {
+                    self.showHideActivityIndicator(show: false, activityIndicator: self.activityIndicator)
+                    self.navigationController?.dismiss(animated: true, completion: nil)
+                }
+            } else {
+                if let error {
+                    self.showHideActivityIndicator(show: false, activityIndicator: self.activityIndicator)
+                    self.showAlert(title: "Error posting", message: error.localizedDescription)
                 }
             }
         }
-        
     }
     
 }

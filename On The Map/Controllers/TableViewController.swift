@@ -57,7 +57,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     private func setupBarButtons() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .done, target: self, action: #selector(logout))
         let refreshButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refresh))
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(refresh))
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(presentAddLocationView))
         navigationItem.rightBarButtonItems = [addButton, refreshButton]
     }
     
@@ -77,6 +77,13 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 }
             }
         }
+    }
+    
+    @objc private func presentAddLocationView() {
+        let addLocationViewController = AddLocationViewController()
+        let nav = UINavigationController(rootViewController: addLocationViewController)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true)
     }
     
     private func getData() {

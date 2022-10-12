@@ -153,11 +153,8 @@ class Client {
         }
     }
     
-    class func post(student: Student?, completion: @escaping(Bool, Error?) -> Void) {
-        
-        let body = PostLocation(uniqueKey: student?.uniqueKey ?? "", firstName: student?.firstName ?? "", lastName: student?.lastName ?? "", mapString: student?.mapString ?? "", mediaURL: student?.mediaURL ?? "", latitude: student?.latitude ?? 0.0, longitude: student?.longitude ?? 0.0)
-        
-        taskForPOSTRequest(url: EndPoints.post.url, responseType: PostResponse.self, body: body, login: false) { response, error in
+    class func post(student: PostLocation, completion: @escaping(Bool, Error?) -> Void) {
+        taskForPOSTRequest(url: EndPoints.post.url, responseType: PostResponse.self, body: student, login: false) { response, error in
             
             if response != nil {
                 completion(true, nil)

@@ -68,9 +68,6 @@ class AddLocationViewController: UIViewController, UITextFieldDelegate {
     
     private lazy var geocoder = CLGeocoder()
     
-    private var latitude: CLLocationDegrees?
-    private var longitude: CLLocationDegrees?
-    
     // MARK: Lifecycle methods
     
     override func viewDidLoad() {
@@ -139,7 +136,6 @@ class AddLocationViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func setupBarButtons() {
-        navigationController?.isNavigationBarHidden = false
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(dismissView))
     }
     
@@ -149,34 +145,44 @@ class AddLocationViewController: UIViewController, UITextFieldDelegate {
     
     @objc private func geocode() {
         showHideActivityIndicator(show: true, activityIndicator: activityIndicator)
-        geocoder.geocodeAddressString(locationTextField.text!) { placemarks, error in
-            
-            if let error = error {
+        geocoder.geocodeAddressString(locationTextField.text ?? "") { [weak self] placemarks, error in
+            guard let self else { return }
+            if let error {
                 self.showHideActivityIndicator(show: false, activityIndicator: self.activityIndicator)
                 self.showAlert(title: "Error", message: error.localizedDescription)
                 return
             }
             
             if let placemarks = placemarks?.first?.location {
-                self.latitude = placemarks.coordinate.latitude
-                self.longitude = placemarks.coordinate.longitude
+                let latitude = placemarks.coordinate.latitude
+                let longitude = placemarks.coordinate.longitude
+                let location = self.locationTextField.text ?? ""
+                let link = self.linkTextField.text ?? ""
                 self.showHideActivityIndicator(show: false, activityIndicator: self.activityIndicator)
-                self.performSegue(withIdentifier: "toPost", sender: nil)
+                self.presentPostLocationViewController(latitude, longitude, location, link)
             }
         }
     }
     
-    // Sending data to the next view
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        let newStudent = Student(createdAt: "", firstName: Client.Auth.firstName, lastName: Client.Auth.lastName, latitude: latitude, longitude: longitude, mapString: locationTextField.text, mediaURL: linkTextField.text, objectId: "", uniqueKey: Client.Auth.uniqueKey, updatedAt: "")
-        
-        if segue.identifier == "toPost" {
-            let vc = segue.destination as! PostLocationViewController
-            vc.infoToSend = newStudent
-        }
-        
+    private func presentPostLocationViewController(_ latitude: CLLocationDegrees, _ longitude: CLLocationDegrees, _ location: String, _ link: String) {
+        let postLocationViewController = PostLocationViewController()
+        postLocationViewController.latitude = latitude
+        postLocationViewController.longitude = longitude
+        postLocationViewController.location = location
+        postLocationViewController.link = link
+        navigationController?.pushViewController(postLocationViewController, animated: true)
     }
+    
+    // Sending data to the next view
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        let newStudent = Student(createdAt: "", firstName: Client.Auth.firstName, lastName: Client.Auth.lastName, latitude: latitude, longitude: longitude, mapString: locationTextField.text, mediaURL: linkTextField.text, objectId: "", uniqueKey: Client.Auth.uniqueKey, updatedAt: "")
+//
+//        if segue.identifier == "toPost" {
+//            let vc = segue.destination as! PostLocationViewController
+//            vc.infoToSend = newStudent
+//        }
+//
+//    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
