@@ -127,9 +127,10 @@ class Client {
     }
     
     class func getAllLocations(completion: @escaping ([Student], Error?) -> Void) -> Void {
-        taskForGETRequest(url: EndPoints.getStudentLocations.url, responseType: StudentsList.self, isUserInfo: false) { response, error in
+        taskForGETRequest(url: EndPoints.getStudentLocations.url, responseType: StudentResult.self, isUserInfo: false) { response, error in
             
             if let response = response {
+                StudentList.allStudents = response.results
                 completion(response.results, nil)
             } else {
                 completion([], error)

@@ -14,8 +14,6 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     @IBOutlet weak var tableView: UITableView!
     
-    var students = [Student]()
-    
     // MARK: Lifecycle methods
     
     override func viewDidLoad() {
@@ -47,7 +45,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
             if students.count == 0 {
                 self.showAlert(title: "Error", message: error!.localizedDescription)
             } else {
-                self.students = students
+//                self.students = students
                 self.tableView.reloadData()
             }
         }
@@ -56,13 +54,14 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     // MARK: - TableView delegate methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return students.count
+//        return students.count
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath)
-        cell.textLabel?.text = students[indexPath.row].firstName ?? ""
-        cell.detailTextLabel?.text = students[indexPath.row].mediaURL ?? ""
+//        cell.textLabel?.text = students[indexPath.row].firstName ?? ""
+//        cell.detailTextLabel?.text = students[indexPath.row].mediaURL ?? ""
 
         return cell
     }

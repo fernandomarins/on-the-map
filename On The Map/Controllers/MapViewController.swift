@@ -26,8 +26,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         return mapView
     }()
     
-    var students = [Student]()
-    
     // MARK: Lifecycle methods
     
     override func viewDidLoad() {
@@ -91,7 +89,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                     self?.showAlert(title: "Error", message: error.localizedDescription)
                 }
             } else {
-                self?.students = students
                 self?.addPinsToMap()
             }
         }
@@ -100,7 +97,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     func addPinsToMap() {
         // Removing the old pins before adding new ones
         mapView.removeAnnotations(mapView.annotations)
-        for student in students {
+        for student in StudentList.allStudents {
             let pin = MKPointAnnotation()
             pin.title = student.firstName ?? ""
             pin.subtitle = student.mediaURL ?? ""

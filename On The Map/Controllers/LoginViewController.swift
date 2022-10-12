@@ -169,7 +169,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                                                    activityIndicator: self.activityIndicator)
                     self.presentTabBarController()
                 } else {
-                    if let error = error {
+                    if let error  {
                         self.showHideActivityIndicator(show: false,
                                                        activityIndicator: self.activityIndicator)
                         self.showAlert(title: "Error",
@@ -178,7 +178,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 }
             }
         } else {
-            if let error = error {
+            if let error {
                 showHideActivityIndicator(show: false,
                                                 activityIndicator: activityIndicator)
                 showAlert(title: "Error login",
