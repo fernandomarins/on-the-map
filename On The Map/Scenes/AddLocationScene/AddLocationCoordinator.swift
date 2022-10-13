@@ -8,14 +8,15 @@
 import UIKit
 
 protocol AddLocationCoordinating: AnyObject {
-    var navigationController: UINavigationController? { get set }
+    var viewController: UIViewController? { get set }
     func presentPostLocationViewController(_ location: String,
                                            _ mediaURL: String,
                                            _ coordinates: (Double, Double))
+    func dismiss()
 }
 
 class AddLocationCoordinator {
-    weak var navigationController: UINavigationController?
+    weak var viewController: UIViewController?
 }
 
 extension AddLocationCoordinator: AddLocationCoordinating {
@@ -24,6 +25,12 @@ extension AddLocationCoordinator: AddLocationCoordinating {
                                            _ coordinates: (Double, Double)) {
         let postLocationViewController = PostLocationViewControllerFactory.make(location,
                                                                                 mediaURL, coordinates)
-        navigationController?.pushViewController(postLocationViewController, animated: true)
+        viewController?.present(postLocationViewController, animated: true)
+    }
+    
+    func dismiss() {
+        DispatchQueue.main.async { [weak self] in
+            self?.viewController?.dismiss(animated: true)
+        }
     }
 }

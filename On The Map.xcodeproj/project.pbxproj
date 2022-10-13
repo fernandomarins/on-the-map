@@ -28,7 +28,9 @@
 		55FB594C28F8518600ADA6A4 /* AddLocationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FB594B28F8518600ADA6A4 /* AddLocationPresenter.swift */; };
 		55FB594E28F8518B00ADA6A4 /* AddLocationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FB594D28F8518B00ADA6A4 /* AddLocationCoordinator.swift */; };
 		55FB595028F878B500ADA6A4 /* PostLocationViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FB594F28F878B500ADA6A4 /* PostLocationViewControllerFactory.swift */; };
-		55FB595528F88A0A00ADA6A4 /* PostLocationViewControllerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FB595428F88A0A00ADA6A4 /* PostLocationViewControllerCoordinator.swift */; };
+		55FB595528F88A0A00ADA6A4 /* PostLocationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FB595428F88A0A00ADA6A4 /* PostLocationCoordinator.swift */; };
+		55FB595728F88B1700ADA6A4 /* PostLocationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FB595628F88B1700ADA6A4 /* PostLocationPresenter.swift */; };
+		55FB595928F88B1E00ADA6A4 /* PostLocationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FB595828F88B1E00ADA6A4 /* PostLocationInteractor.swift */; };
 		55FFD867275914D9003654AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FFD866275914D9003654AA /* AppDelegate.swift */; };
 		55FFD869275914DA003654AA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FFD868275914DA003654AA /* SceneDelegate.swift */; };
 		55FFD86B275914DA003654AA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FFD86A275914DA003654AA /* LoginViewController.swift */; };
@@ -68,7 +70,9 @@
 		55FB594B28F8518600ADA6A4 /* AddLocationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationPresenter.swift; sourceTree = "<group>"; };
 		55FB594D28F8518B00ADA6A4 /* AddLocationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationCoordinator.swift; sourceTree = "<group>"; };
 		55FB594F28F878B500ADA6A4 /* PostLocationViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLocationViewControllerFactory.swift; sourceTree = "<group>"; };
-		55FB595428F88A0A00ADA6A4 /* PostLocationViewControllerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLocationViewControllerCoordinator.swift; sourceTree = "<group>"; };
+		55FB595428F88A0A00ADA6A4 /* PostLocationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLocationCoordinator.swift; sourceTree = "<group>"; };
+		55FB595628F88B1700ADA6A4 /* PostLocationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLocationPresenter.swift; sourceTree = "<group>"; };
+		55FB595828F88B1E00ADA6A4 /* PostLocationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLocationInteractor.swift; sourceTree = "<group>"; };
 		55FFD863275914D9003654AA /* On The Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On The Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55FFD866275914D9003654AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		55FFD868275914DA003654AA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -167,7 +171,10 @@
 			isa = PBXGroup;
 			children = (
 				55FB594F28F878B500ADA6A4 /* PostLocationViewControllerFactory.swift */,
-				55FB595428F88A0A00ADA6A4 /* PostLocationViewControllerCoordinator.swift */,
+				55FFD89E275977F4003654AA /* PostLocationViewController.swift */,
+				55FB595428F88A0A00ADA6A4 /* PostLocationCoordinator.swift */,
+				55FB595628F88B1700ADA6A4 /* PostLocationPresenter.swift */,
+				55FB595828F88B1E00ADA6A4 /* PostLocationInteractor.swift */,
 			);
 			path = PostLocationScene;
 			sourceTree = "<group>";
@@ -258,7 +265,6 @@
 				55B9253E28F723AB003765B7 /* LoginScene */,
 				55FB595228F889E900ADA6A4 /* MapScene */,
 				55FB595328F889F500ADA6A4 /* TableScene */,
-				55FFD89E275977F4003654AA /* PostLocationViewController.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -367,6 +373,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55FB595028F878B500ADA6A4 /* PostLocationViewControllerFactory.swift in Sources */,
+				55FB595728F88B1700ADA6A4 /* PostLocationPresenter.swift in Sources */,
 				55FB594128F843DF00ADA6A4 /* TabBarInteractor.swift in Sources */,
 				55FFD87D27591650003654AA /* User.swift in Sources */,
 				55B9254028F723BA003765B7 /* LoginInteractor.swift in Sources */,
@@ -378,7 +385,7 @@
 				55FB594528F843F800ADA6A4 /* TabBarCoordinator.swift in Sources */,
 				55B9254228F723C1003765B7 /* LoginPresenter.swift in Sources */,
 				55FB593D28F838AD00ADA6A4 /* TabBarControllerFactory.swift in Sources */,
-				55FB595528F88A0A00ADA6A4 /* PostLocationViewControllerCoordinator.swift in Sources */,
+				55FB595528F88A0A00ADA6A4 /* PostLocationCoordinator.swift in Sources */,
 				55B9253D28F64F59003765B7 /* TableViewCell.swift in Sources */,
 				55FFD89127593FAA003654AA /* TableViewController.swift in Sources */,
 				55FFD89F275977F4003654AA /* PostLocationViewController.swift in Sources */,
@@ -386,6 +393,7 @@
 				55FB594E28F8518B00ADA6A4 /* AddLocationCoordinator.swift in Sources */,
 				55FB593728F81F7300ADA6A4 /* LoadingView.swift in Sources */,
 				55B9254428F723CB003765B7 /* LoginCoordinator.swift in Sources */,
+				55FB595928F88B1E00ADA6A4 /* PostLocationInteractor.swift in Sources */,
 				55FB594C28F8518600ADA6A4 /* AddLocationPresenter.swift in Sources */,
 				55FFD89D275958EF003654AA /* AddLocationViewController.swift in Sources */,
 				55FFD8A227598544003654AA /* PostResponse.swift in Sources */,

@@ -9,10 +9,13 @@ import Foundation
 
 protocol AddLocationPresenting: AnyObject {
     var viewController: AddLocationDisplaying? { get set }
-    func presentPostLocationViewController(_ location: String, _ mediaURL: String, _ coordinates: (Double, Double))
+    func presentPostLocationViewController(_ location: String,
+                                           _ mediaURL: String,
+                                           _ coordinates: (Double, Double))
     func displayError(_ error: String)
     func startLoading()
     func stopLoading()
+    func dismiss()
 }
 
 class AddLocationPresenter {
@@ -25,7 +28,9 @@ class AddLocationPresenter {
 }
 
 extension AddLocationPresenter: AddLocationPresenting {
-    func presentPostLocationViewController(_ location: String, _ mediaURL: String, _ coordinates: (Double, Double)) {
+    func presentPostLocationViewController(_ location: String,
+                                           _ mediaURL: String,
+                                           _ coordinates: (Double, Double)) {
         coordinator.presentPostLocationViewController(location, mediaURL, coordinates)
     }
     
@@ -39,5 +44,9 @@ extension AddLocationPresenter: AddLocationPresenting {
     
     func stopLoading() {
         viewController?.stopLoadingView()
+    }
+    
+    func dismiss() {
+        coordinator.dismiss()
     }
 }

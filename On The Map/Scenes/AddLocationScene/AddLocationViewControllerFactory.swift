@@ -15,9 +15,8 @@ class AddLocationViewControllerFactory {
         let interactor: AddLocationInteracting = AddLocationInteractor(presenter: presenter)
         
         let viewController = AddLocationViewController(interactor: interactor)
-        let navigationCtroller = UINavigationController(rootViewController: viewController)
         
-        coordinator.navigationController = navigationCtroller
+        coordinator.viewController = viewController
         presenter.viewController = viewController
         
         return viewController

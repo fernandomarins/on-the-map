@@ -9,7 +9,31 @@ import SnapKit
 import UIKit
 import MapKit
 
+protocol PostLocationDisplaying: AnyObject, AlertViewProtocol, LoadingViewProtocol {
+    func displayError(_ error: String)
+}
+
 class PostLocationViewController: UIViewController, MKMapViewDelegate {
+    
+    let interactor: PostLocationInteracting
+    let coordinates: (latitude: Double, longitude: Double)
+    let mediaURL: String
+    let location: String
+    
+    init(interactor: PostLocationInteracting,
+         coordinates: (Double, Double),
+         mediaURL: String,
+         location: String) {
+        self.interactor = interactor
+        self.coordinates = coordinates
+        self.mediaURL = mediaURL
+        self.location = location
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Variables
     
@@ -25,11 +49,7 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
         return mapView
     }()
     
-    private lazy var activityIndicator: UIActivityIndicatorView = {
-        let activityIndicator = UIActivityIndicatorView()
-        activityIndicator.hidesWhenStopped = true
-        return activityIndicator
-    }()
+    lazy var activityIndicator = LoadingView()
     
     private lazy var submitButton: UIButton = {
         let button = UIButton(type: .system)
@@ -40,11 +60,6 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
         button.addTarget(self, action: #selector(submit), for: .touchUpInside)
         return button
     }()
-    
-    lazy var coordinates = CLLocationCoordinate2D()
-    lazy var mediaURL = String()
-    lazy var location = String()
-    
     
     // MARK: Lifecycle methods
     
@@ -64,7 +79,6 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
     private func addViews() {
         view.addSubview(contentView)
         contentView.addSubview(mapView)
-        contentView.addSubview(activityIndicator)
         contentView.addSubview(submitButton)
     }
     
@@ -75,11 +89,6 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
         
         mapView.snp.makeConstraints {
             $0.edges.equalToSuperview()
-        }
-        
-        activityIndicator.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.centerX.equalToSuperview()
         }
         
         submitButton.snp.makeConstraints {
@@ -99,17 +108,17 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
     }
     
     @objc private func dismissView() {
-        dismiss(animated: true)
+        interactor.dismiss()
     }
     
     private func setupMap() {
         let pin = MKPointAnnotation()
-        pin.coordinate = CLLocationCoordinate2D(latitude: coordinates.latitude, longitude: coordinates.longitude)
+        pin.coordinate = CLLocationCoordinate2D(latitude: coordinates.0, longitude: coordinates.1)
         
         let latDelta: CLLocationDegrees = 0.05
         let lonDelta: CLLocationDegrees = 0.05
         let span = MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: lonDelta)
-        let location = CLLocationCoordinate2DMake(coordinates.latitude, coordinates.longitude)
+        let location = CLLocationCoordinate2DMake(coordinates.0, coordinates.1)
         let region = MKCoordinateRegion(center: location, span: span)
         
         mapView.setRegion(region, animated: false)
@@ -118,28 +127,12 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: - Submitting the location
     @objc private func submit() {
-//        showHideActivityIndicator(show: true, activityIndicator: activityIndicator)
-        let postLocation = PostLocation(uniqueKey: Client.Auth.uniqueKey,
-                                        firstName: Client.Auth.firstName,
-                                        lastName: Client.Auth.lastName,
-                                        mapString: location,
-                                        mediaURL: mediaURL,
-                                        latitude: coordinates.latitude,
-                                        longitude: coordinates.longitude)
-        
-        Client.post(student: postLocation) { [weak self] success, error in
+        interactor.getUserInfo { [weak self] success in
             guard let self else { return }
             if success {
-                DispatchQueue.main.async {
-//                    self.showHideActivityIndicator(show: false, activityIndicator: self.activityIndicator)
-                    NotificationCenter.default.post(name: Notification.Name("update"), object: nil)
-                    self.dismissView()
-                }
-            } else {
-                if let error {
-//                    self.showHideActivityIndicator(show: false, activityIndicator: self.activityIndicator)
-//                    self.showAlert(title: "Error posting", message: error.localizedDescription)
-                }
+                self.interactor.post(self.location,
+                                      self.mediaURL,
+                                      (self.coordinates.latitude, self.coordinates.longitude))
             }
         }
     }
@@ -163,4 +156,10 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
         return annotationView
     }
     
+}
+
+extension PostLocationViewController: PostLocationDisplaying {
+    func displayError(_ error: String) {
+        showAlert(self, "Error", error)
+    }
 }

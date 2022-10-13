@@ -10,6 +10,7 @@ import CoreLocation
 
 protocol AddLocationInteracting: AnyObject {
     func geocode(_ location: String, _ mediaURL: String)
+    func dismiss()
 }
 
 class AddLocationInteractor {
@@ -37,5 +38,9 @@ extension AddLocationInteractor: AddLocationInteracting {
                                                                   (coordinates.latitude, coordinates.longitude))
             }
         }
+    }
+    
+    func dismiss() {
+        presenter.dismiss()
     }
 }
