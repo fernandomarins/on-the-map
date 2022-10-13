@@ -93,7 +93,6 @@ class AddLocationViewController: UIViewController, UITextFieldDelegate {
         contentView.addSubview(locationLabel)
         contentView.addSubview(locationTextField)
         contentView.addSubview(linkTextField)
-        contentView.addSubview(activityIndicator)
         contentView.addSubview(searchButton)
     }
     
@@ -127,11 +126,6 @@ class AddLocationViewController: UIViewController, UITextFieldDelegate {
             $0.height.equalTo(35)
             $0.leading.equalTo(contentView.snp.leading).offset(16)
             $0.trailing.equalTo(contentView.snp.trailing).offset(-16)
-        }
-        
-        activityIndicator.snp.makeConstraints {
-            $0.top.equalTo(linkTextField.snp.bottom).offset(8)
-            $0.centerX.equalToSuperview()
         }
         
         searchButton.snp.makeConstraints {

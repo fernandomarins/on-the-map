@@ -68,17 +68,7 @@ class TableViewController: TabBarViewController, UITableViewDelegate, UITableVie
     }
     
     @objc private func logout() {
-//        Client.logout { [weak self] success, error in
-//            if success {
-//                DispatchQueue.main.async {
-//                    self?.dismiss(animated: true)
-//                }
-//            } else {
-//                if let error = error {
-//                    self?.showAlert(title: "Error logout", message: error.localizedDescription)
-//                }
-//            }
-//        }
+        interactor.logout()
     }
     
     @objc private func presentAddLocationView() {

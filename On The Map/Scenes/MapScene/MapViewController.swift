@@ -70,17 +70,7 @@ class MapViewController: TabBarViewController, MKMapViewDelegate {
     }
     
     @objc private func logout() {
-        Client.logout { [weak self] success, error in
-            if success {
-                DispatchQueue.main.async {
-                    self?.dismiss(animated: true)
-                }
-            } else {
-                if let error {
-//                    self?.showAlert(title: "Error logout", message: error.localizedDescription)
-                }
-            }
-        }
+        interactor.logout()
     }
     
     // Getting all the pins
@@ -106,10 +96,6 @@ class MapViewController: TabBarViewController, MKMapViewDelegate {
     
     @objc private func presentAddLocationView() {
         interactor.presentAddLocation()
-//        let addLocationViewController = AddLocationViewController()
-//        let nav = UINavigationController(rootViewController: addLocationViewController)
-//        nav.modalPresentationStyle = .fullScreen
-//        present(nav, animated: true)
     }
     
     // MARK: - MapView delegate methods

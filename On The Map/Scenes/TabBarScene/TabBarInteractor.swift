@@ -9,6 +9,7 @@ import Foundation
 
 protocol TabBarInteracting: AnyObject {
     func getAllLocations(completion: @escaping (Bool?) -> Void)
+    func logout()
     func presentAddLocation()
 }
 
@@ -31,6 +32,18 @@ extension TabBarInteractor: TabBarInteracting {
                 if let error {
                     self?.presenter.displayError(error.localizedDescription)
                     completion(nil)
+                }
+            }
+        }
+    }
+    
+    func logout() {
+        Client.logout { [weak self] success, error in
+            if success {
+                self?.presenter.logout()
+            } else {
+                if let error {
+                    self?.presenter.displayError(error.localizedDescription)
                 }
             }
         }

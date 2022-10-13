@@ -10,6 +10,7 @@ import UIKit
 protocol TabBarCoordinating: AnyObject {
     var viewController: UIViewController? { get set }
     func presentAddViewController()
+    func logout()
 }
 
 class TabBarCoordinator {
@@ -22,5 +23,11 @@ extension TabBarCoordinator: TabBarCoordinating {
         let navigationController = UINavigationController(rootViewController: addLocationViewController)
         navigationController.modalPresentationStyle = .fullScreen
         viewController?.present(navigationController, animated: true)
+    }
+    
+    func logout() {
+        DispatchQueue.main.async { [weak self] in
+            self?.viewController?.dismiss(animated: true)
+        }
     }
 }

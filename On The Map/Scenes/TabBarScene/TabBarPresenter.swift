@@ -13,6 +13,7 @@ protocol TabBarPresenting: AnyObject {
     func displayError(_ error: String)
     func startLoading()
     func stopLoading()
+    func logout()
 }
 
 class TabBarPresenter {
@@ -43,5 +44,7 @@ extension TabBarPresenter: TabBarPresenting {
         viewController?.stopLoadingView()
     }
     
-
+    func logout() {
+        coordinator.logout()
+    }
 }
