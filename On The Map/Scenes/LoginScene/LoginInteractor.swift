@@ -29,7 +29,7 @@ extension LoginInteractor: LoginInteracting {
                 self?.presenter.presentTabBar()
             } else {
                 if let error {
-                    self?.presenter.displayError(error)
+                    self?.presenter.displayError(error.localizedDescription)
                 }
             }
         }

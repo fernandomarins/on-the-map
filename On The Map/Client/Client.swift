@@ -49,10 +49,20 @@ class Client {
     }
     
     @discardableResult
-    class func taskForGETRequest<ResponseType: Decodable>(url: URL, responseType: ResponseType.Type, isUserInfo: Bool, completion: @escaping (Result<ResponseType, Errors>) -> Void) -> URLSessionDataTask {
+    class func taskForGETRequest<ResponseType: Decodable>(url: URL, responseType: ResponseType.Type, isUserInfo: Bool, completion: @escaping (Result<ResponseType, Error>) -> Void) -> URLSessionDataTask {
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            
+            if let error {
+                completion(.failure(error))
+                return
+            }
+            
             guard let data = data else {
-                completion(.failure(.noResponse))
+                DispatchQueue.main.async {
+                    if let error {
+                        completion(.failure(error))
+                    }
+                }
                 return
             }
             
@@ -72,7 +82,7 @@ class Client {
                     completion(.success(responseObject))
                 }
             } catch {
-                completion(.failure(.decodeError))
+                completion(.failure(error))
             }
         }
         
@@ -81,7 +91,7 @@ class Client {
         return task
     }
     
-    class func taskForPOSTRequest<ResponseType: Decodable, PostType: Encodable>(url: URL, responseType: ResponseType.Type, body: PostType, login: Bool, completion: @escaping(Result<ResponseType, Errors>) -> Void) -> Void {
+    class func taskForPOSTRequest<ResponseType: Decodable, PostType: Encodable>(url: URL, responseType: ResponseType.Type, body: PostType, login: Bool, completion: @escaping(Result<ResponseType, Error>) -> Void) -> Void {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.httpBody = try? JSONEncoder().encode(body)
@@ -91,9 +101,17 @@ class Client {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            
+            if let error {
+                completion(.failure(error))
+                return
+            }
+            
             guard let data = data else {
                 DispatchQueue.main.async {
-                    completion(.failure(.errorPosting))
+                    if let error {
+                        completion(.failure(error))
+                    }
                 }
                 return
             }
@@ -115,7 +133,7 @@ class Client {
 
             } catch {
                 DispatchQueue.main.async {
-                    completion(.failure(.decodeError))
+                    completion(.failure(error))
                 }
             }
         }
@@ -124,7 +142,7 @@ class Client {
         
     }
     
-    class func getAllLocations(completion: @escaping (Errors?) -> Void) -> Void {
+    class func getAllLocations(completion: @escaping (Error?) -> Void) -> Void {
         taskForGETRequest(url: EndPoints.getStudentLocations.url, responseType: StudentResult.self, isUserInfo: false) { result in
             
             switch result {
@@ -137,7 +155,7 @@ class Client {
         }
     }
 
-    class func login(username: String, password: String, completion: @escaping (Bool, Errors?) -> Void) {
+    class func login(username: String, password: String, completion: @escaping (Bool, Error?) -> Void) {
         let body = UdacityLogin(udacity: UserLogin(username: username, password: password))
         taskForPOSTRequest(url: EndPoints.login.url, responseType: LoginResponse.self, body: body, login: true) { result in
             
@@ -152,7 +170,7 @@ class Client {
         }
     }
     
-    class func post(student: PostLocation, completion: @escaping(Bool, Errors?) -> Void) {
+    class func post(student: PostLocation, completion: @escaping(Bool, Error?) -> Void) {
         taskForPOSTRequest(url: EndPoints.post.url, responseType: PostResponse.self, body: student, login: false) { result in
             
             switch result {
@@ -191,7 +209,7 @@ class Client {
         task.resume()
     }
     
-    class func getUserInfo(completion: @escaping(Bool, Errors?) -> Void) {
+    class func getUserInfo(completion: @escaping(Bool, Error?) -> Void) {
         taskForGETRequest(url: EndPoints.getUserInfo.url, responseType: UserDetails.self, isUserInfo: true) { result in
             
             switch result {

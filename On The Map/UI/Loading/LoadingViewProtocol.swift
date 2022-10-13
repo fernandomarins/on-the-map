@@ -40,10 +40,15 @@ extension LoadingViewProtocol where Self: UIViewController {
     
     func stopLoadingView(withAnimation: Bool) {
         UIView.animate(withDuration: withAnimation ? 0.3 : 0) { [weak self] in
-            self?.activityIndicator.alpha = 0
+            DispatchQueue.main.async {
+                self?.activityIndicator.alpha = 0
+            }
+            
         } completion: { [weak self] completed in
             guard completed else { return }
-            self?.activityIndicator.removeFromSuperview()
+            DispatchQueue.main.async {
+                self?.activityIndicator.removeFromSuperview()
+            }
         }
     }
     

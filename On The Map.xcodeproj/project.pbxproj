@@ -14,7 +14,6 @@
 		55B9254028F723BA003765B7 /* LoginInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B9253F28F723BA003765B7 /* LoginInteractor.swift */; };
 		55B9254228F723C1003765B7 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B9254128F723C1003765B7 /* LoginPresenter.swift */; };
 		55B9254428F723CB003765B7 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B9254328F723CB003765B7 /* LoginCoordinator.swift */; };
-		55B9254828F726D9003765B7 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B9254728F726D9003765B7 /* Errors.swift */; };
 		55B9254A28F7713D003765B7 /* AlertViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B9254928F7713D003765B7 /* AlertViewProtocol.swift */; };
 		55B9254C28F771D2003765B7 /* LoadingViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B9254B28F771D2003765B7 /* LoadingViewProtocol.swift */; };
 		55B9254E28F77BF5003765B7 /* LoginViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B9254D28F77BF5003765B7 /* LoginViewControllerFactory.swift */; };
@@ -45,7 +44,6 @@
 		55B9253F28F723BA003765B7 /* LoginInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInteractor.swift; sourceTree = "<group>"; };
 		55B9254128F723C1003765B7 /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
 		55B9254328F723CB003765B7 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
-		55B9254728F726D9003765B7 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		55B9254928F7713D003765B7 /* AlertViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewProtocol.swift; sourceTree = "<group>"; };
 		55B9254B28F771D2003765B7 /* LoadingViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewProtocol.swift; sourceTree = "<group>"; };
 		55B9254D28F77BF5003765B7 /* LoginViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewControllerFactory.swift; sourceTree = "<group>"; };
@@ -86,8 +84,8 @@
 		55B9253E28F723AB003765B7 /* LoginScene */ = {
 			isa = PBXGroup;
 			children = (
-				55FFD86A275914DA003654AA /* LoginViewController.swift */,
 				55B9254D28F77BF5003765B7 /* LoginViewControllerFactory.swift */,
+				55FFD86A275914DA003654AA /* LoginViewController.swift */,
 				55B9253F28F723BA003765B7 /* LoginInteractor.swift */,
 				55B9254128F723C1003765B7 /* LoginPresenter.swift */,
 				55B9254328F723CB003765B7 /* LoginCoordinator.swift */,
@@ -95,13 +93,30 @@
 			path = LoginScene;
 			sourceTree = "<group>";
 		};
-		55B9254F28F81E3A003765B7 /* Protocols */ = {
+		55FB593828F8338A00ADA6A4 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				55FB593A28F833A400ADA6A4 /* Alert */,
+				55FB593928F8339E00ADA6A4 /* Loading */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		55FB593928F8339E00ADA6A4 /* Loading */ = {
+			isa = PBXGroup;
+			children = (
+				55B9254B28F771D2003765B7 /* LoadingViewProtocol.swift */,
+				55FB593628F81F7300ADA6A4 /* LoadingView.swift */,
+			);
+			path = Loading;
+			sourceTree = "<group>";
+		};
+		55FB593A28F833A400ADA6A4 /* Alert */ = {
 			isa = PBXGroup;
 			children = (
 				55B9254928F7713D003765B7 /* AlertViewProtocol.swift */,
-				55B9254B28F771D2003765B7 /* LoadingViewProtocol.swift */,
 			);
-			path = Protocols;
+			path = Alert;
 			sourceTree = "<group>";
 		};
 		55FFD85A275914D9003654AA = {
@@ -123,6 +138,7 @@
 		55FFD865275914D9003654AA /* On The Map */ = {
 			isa = PBXGroup;
 			children = (
+				55FB593828F8338A00ADA6A4 /* UI */,
 				55FFD87A275915F8003654AA /* Model */,
 				55FFD882275916A9003654AA /* Client */,
 				55FFD866275914D9003654AA /* AppDelegate.swift */,
@@ -159,7 +175,6 @@
 			isa = PBXGroup;
 			children = (
 				55FFD8802759169F003654AA /* Client.swift */,
-				55B9254728F726D9003765B7 /* Errors.swift */,
 			);
 			path = Client;
 			sourceTree = "<group>";
@@ -174,8 +189,6 @@
 				55FFD89C275958EF003654AA /* AddLocationViewController.swift */,
 				55FFD89E275977F4003654AA /* PostLocationViewController.swift */,
 				55FFD89727594DF3003654AA /* UIViewController+Extensions.swift */,
-				55B9254F28F81E3A003765B7 /* Protocols */,
-				55FB593628F81F7300ADA6A4 /* LoadingView.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -286,7 +299,6 @@
 				55FFD87D27591650003654AA /* User.swift in Sources */,
 				55B9254028F723BA003765B7 /* LoginInteractor.swift in Sources */,
 				55B9254A28F7713D003765B7 /* AlertViewProtocol.swift in Sources */,
-				55B9254828F726D9003765B7 /* Errors.swift in Sources */,
 				55FFD86B275914DA003654AA /* LoginViewController.swift in Sources */,
 				55FFD8812759169F003654AA /* Client.swift in Sources */,
 				55B9254228F723C1003765B7 /* LoginPresenter.swift in Sources */,

@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 protocol LoginViewDisplyaing: AnyObject, AlertViewProtocol, LoadingViewProtocol {
-    func displayError(_ error: Errors)
+    func displayError(_ error: String)
 }
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
@@ -179,7 +179,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 }
 
 extension LoginViewController: LoginViewDisplyaing {
-    func displayError(_ error: Errors) {
-        showAlert(self, "Error", error.localizedDescription)
+    func displayError(_ error: String) {
+        showAlert(self, "Error", error)
     }
 }

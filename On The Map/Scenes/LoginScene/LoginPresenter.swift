@@ -10,7 +10,7 @@ import Foundation
 protocol LoginPresenting: AnyObject {
     var viewController: LoginViewDisplyaing? { get set }
     func presentTabBar()
-    func displayError(_ error: Errors)
+    func displayError(_ error: String)
     func startLoading()
     func stopLoading()
 }
@@ -30,7 +30,7 @@ extension LoginPresenter: LoginPresenting {
         coordinator.presentTabBarController()
     }
     
-    func displayError(_ error: Errors) {
+    func displayError(_ error: String) {
         viewController?.displayError(error)
     }
     
