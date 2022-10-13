@@ -9,6 +9,7 @@ import Foundation
 
 protocol LoginInteracting: AnyObject {
     func login(username: String, password: String)
+    func openLink()
 }
 
 class LoginInteractor {
@@ -20,7 +21,6 @@ class LoginInteractor {
 }
 
 extension LoginInteractor: LoginInteracting {
-    
     func login(username: String, password: String) {
         presenter.startLoading()
         Client.login(username: username, password: password) { [weak self] success, error in
@@ -33,5 +33,9 @@ extension LoginInteractor: LoginInteracting {
                 }
             }
         }
+    }
+    
+    func openLink() {
+        presenter.openLink()
     }
 }

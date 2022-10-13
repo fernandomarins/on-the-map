@@ -10,7 +10,6 @@ import UIKit
 class LoginViewControllerFactory {
     
     static func make() -> UIViewController {
-        
         let coordinator: LoginCoordinating = LoginCoordinator()
         let presenter: LoginPresenting = LoginPresenter(coordinator: coordinator)
         let interactor: LoginInteracting = LoginInteractor(presenter: presenter)

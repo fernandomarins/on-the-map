@@ -95,6 +95,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         view.backgroundColor = .white
         addViews()
         addConstraints()
+        
+        usernameTextField.text = "f.augustomarins@gmail.com"
+        passwordTextField.text = "123Pirralho"
     }
     
     // MARK: - Add views
@@ -165,8 +168,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Tabbar Controller
     
     @objc private func openURL() {
-        let url = URL(string: "https://auth.udacity.com/sign-up")
-        UIApplication.shared.open(url!, options: [:])
+        interactor.openLink()
     }
     
     // MARK: - Text field delegate
@@ -175,10 +177,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
-
 }
 
-extension LoginViewController: LoginViewDisplyaing {
+extension LoginViewController: LoginViewDisplyaing {    
     func displayError(_ error: String) {
         showAlert(self, "Error", error)
     }

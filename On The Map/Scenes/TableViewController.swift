@@ -68,24 +68,21 @@ class TableViewController: TabBarViewController, UITableViewDelegate, UITableVie
     }
     
     @objc private func logout() {
-        Client.logout { [weak self] success, error in
-            if success {
-                DispatchQueue.main.async {
-                    self?.dismiss(animated: true)
-                }
-            } else {
-                if let error = error {
-                    self?.showAlert(title: "Error logout", message: error.localizedDescription)
-                }
-            }
-        }
+//        Client.logout { [weak self] success, error in
+//            if success {
+//                DispatchQueue.main.async {
+//                    self?.dismiss(animated: true)
+//                }
+//            } else {
+//                if let error = error {
+//                    self?.showAlert(title: "Error logout", message: error.localizedDescription)
+//                }
+//            }
+//        }
     }
     
     @objc private func presentAddLocationView() {
-        let addLocationViewController = AddLocationViewController()
-        let nav = UINavigationController(rootViewController: addLocationViewController)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true)
+        interactor.presentAddLocation()
     }
     
     private func getData() {

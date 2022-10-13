@@ -10,6 +10,7 @@ import UIKit
 protocol LoginCoordinating: AnyObject {
     var viewController: UIViewController? { get set }
     func presentTabBarController()
+    func openLink()
 }
 
 class LoginCoordinator {
@@ -21,5 +22,10 @@ extension LoginCoordinator: LoginCoordinating {
         let tabBarController = TabBarControllerFactory.make()
         tabBarController.modalPresentationStyle = .fullScreen
         viewController?.present(tabBarController, animated: true)
+    }
+    
+    func openLink() {
+        let url = URL(string: "https://auth.udacity.com/sign-up")
+        UIApplication.shared.open(url!, options: [:])
     }
 }

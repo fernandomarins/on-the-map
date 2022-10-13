@@ -10,7 +10,6 @@ import UIKit
 class TabBarControllerFactory {
     
     static func make() -> UITabBarController {
-        
         let coordinator: TabBarCoordinating = TabBarCoordinator()
         let presenter: TabBarPresenting = TabBarPresenter(coordinator: coordinator)
         let interactor: TabBarInteracting = TabBarInteractor(presenter: presenter)
@@ -33,21 +32,5 @@ class TabBarControllerFactory {
         tabBarController.setViewControllers(viewControllersList, animated: true)
         
         return tabBarController
-        
-//        let tabBarController = UITabBarController()
-//        let mapViewController = MapViewController()
-//        mapViewController.tabBarItem = UITabBarItem(title: "Map", image: UIImage(named: "icon_listview-deselected"), tag: 0)
-//
-//        let tableViewController = TableViewController()
-//        tableViewController.tabBarItem = UITabBarItem(title: "Table", image: UIImage(named: "icon_mapview-deselected"), tag: 1)
-//
-//        let viewControllersList = [mapViewController, tableViewController].map {
-//            UINavigationController(rootViewController: $0)
-//        }
-//
-//        tabBarController.setViewControllers(viewControllersList, animated: true)
-//        tabBarController.modalPresentationStyle = .fullScreen
-//
-//        return tabBarController
     }
 }

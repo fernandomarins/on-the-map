@@ -8,7 +8,7 @@
 import UIKit
 
 protocol AlertViewProtocol: AnyObject {
-    func showAlert(title: String, message: String)
+    func showAlert(_ viewController: UIViewController, _ title: String, _ message: String)
 }
 
 extension AlertViewProtocol {

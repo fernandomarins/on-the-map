@@ -9,6 +9,7 @@ import Foundation
 
 protocol TabBarInteracting: AnyObject {
     func getAllLocations(completion: @escaping (Bool?) -> Void)
+    func presentAddLocation()
 }
 
 class TabBarInteractor {
@@ -21,7 +22,9 @@ class TabBarInteractor {
 
 extension TabBarInteractor: TabBarInteracting {
     func getAllLocations(completion: @escaping (Bool?) -> Void) {
+        presenter.startLoading()
         Client.getAllLocations { [weak self] error in
+            self?.presenter.stopLoading()
             if error == nil {
                 completion(true)
             } else {
@@ -31,5 +34,9 @@ extension TabBarInteractor: TabBarInteracting {
                 }
             }
         }
+    }
+    
+    func presentAddLocation() {
+        presenter.presentAddLocation()
     }
 }

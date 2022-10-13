@@ -11,6 +11,7 @@ protocol LoginPresenting: AnyObject {
     var viewController: LoginViewDisplyaing? { get set }
     func presentTabBar()
     func displayError(_ error: String)
+    func openLink()
     func startLoading()
     func stopLoading()
 }
@@ -32,6 +33,10 @@ extension LoginPresenter: LoginPresenting {
     
     func displayError(_ error: String) {
         viewController?.displayError(error)
+    }
+    
+    func openLink() {
+        coordinator.openLink()
     }
     
     func startLoading() {

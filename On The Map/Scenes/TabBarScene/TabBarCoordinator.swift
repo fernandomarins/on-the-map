@@ -18,6 +18,9 @@ class TabBarCoordinator {
 
 extension TabBarCoordinator: TabBarCoordinating {
     func presentAddViewController() {
-        // call AddViewController factory
+        let addLocationViewController = AddLocationViewControllerFactory.make()
+        let navigationController = UINavigationController(rootViewController: addLocationViewController)
+        navigationController.modalPresentationStyle = .fullScreen
+        viewController?.present(navigationController, animated: true)
     }
 }

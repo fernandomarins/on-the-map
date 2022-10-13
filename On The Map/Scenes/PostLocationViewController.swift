@@ -41,10 +41,10 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
         return button
     }()
     
-    lazy var latitude = CLLocationDegrees()
-    lazy var longitude = CLLocationDegrees()
+    lazy var coordinates = CLLocationCoordinate2D()
+    lazy var mediaURL = String()
     lazy var location = String()
-    lazy var link = String()
+    
     
     // MARK: Lifecycle methods
     
@@ -104,12 +104,12 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
     
     private func setupMap() {
         let pin = MKPointAnnotation()
-        pin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        pin.coordinate = CLLocationCoordinate2D(latitude: coordinates.latitude, longitude: coordinates.longitude)
         
         let latDelta: CLLocationDegrees = 0.05
         let lonDelta: CLLocationDegrees = 0.05
         let span = MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: lonDelta)
-        let location = CLLocationCoordinate2DMake(latitude, longitude)
+        let location = CLLocationCoordinate2DMake(coordinates.latitude, coordinates.longitude)
         let region = MKCoordinateRegion(center: location, span: span)
         
         mapView.setRegion(region, animated: false)
@@ -118,27 +118,27 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: - Submitting the location
     @objc private func submit() {
-        showHideActivityIndicator(show: true, activityIndicator: activityIndicator)
+//        showHideActivityIndicator(show: true, activityIndicator: activityIndicator)
         let postLocation = PostLocation(uniqueKey: Client.Auth.uniqueKey,
                                         firstName: Client.Auth.firstName,
                                         lastName: Client.Auth.lastName,
                                         mapString: location,
-                                        mediaURL: link,
-                                        latitude: latitude,
-                                        longitude: longitude)
+                                        mediaURL: mediaURL,
+                                        latitude: coordinates.latitude,
+                                        longitude: coordinates.longitude)
         
         Client.post(student: postLocation) { [weak self] success, error in
             guard let self else { return }
             if success {
                 DispatchQueue.main.async {
-                    self.showHideActivityIndicator(show: false, activityIndicator: self.activityIndicator)
+//                    self.showHideActivityIndicator(show: false, activityIndicator: self.activityIndicator)
                     NotificationCenter.default.post(name: Notification.Name("update"), object: nil)
                     self.dismissView()
                 }
             } else {
                 if let error {
-                    self.showHideActivityIndicator(show: false, activityIndicator: self.activityIndicator)
-                    self.showAlert(title: "Error posting", message: error.localizedDescription)
+//                    self.showHideActivityIndicator(show: false, activityIndicator: self.activityIndicator)
+//                    self.showAlert(title: "Error posting", message: error.localizedDescription)
                 }
             }
         }

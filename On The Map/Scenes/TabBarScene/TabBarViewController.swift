@@ -8,7 +8,6 @@
 import UIKit
 
 protocol TabBarDisplaying: AnyObject, AlertViewProtocol, LoadingViewProtocol {
-//    func addPinsToMap()
     func displayError(_ error: String)
 }
 
@@ -29,7 +28,6 @@ class TabBarViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         delegate = self
     }
 
@@ -42,10 +40,6 @@ extension TabBarViewController: UITabBarControllerDelegate {
 }
 
 extension TabBarViewController: TabBarDisplaying {
-//    func addPinsToMap() {
-//        tabBarController?.addPinsToMap()
-//    }
-    
     func displayError(_ error: String) {
         showAlert(self, "Error", error)
     }

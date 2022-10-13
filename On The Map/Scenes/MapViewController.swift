@@ -11,8 +11,6 @@ import SnapKit
 
 class MapViewController: TabBarViewController, MKMapViewDelegate {
     
-//    var tabBarInteractor: TabBarInteracting?
-    
     // MARK: - Variables
     
     private lazy var contentView: UIView = {
@@ -79,7 +77,7 @@ class MapViewController: TabBarViewController, MKMapViewDelegate {
                 }
             } else {
                 if let error {
-                    self?.showAlert(title: "Error logout", message: error.localizedDescription)
+//                    self?.showAlert(title: "Error logout", message: error.localizedDescription)
                 }
             }
         }
@@ -107,10 +105,11 @@ class MapViewController: TabBarViewController, MKMapViewDelegate {
     }
     
     @objc private func presentAddLocationView() {
-        let addLocationViewController = AddLocationViewController()
-        let nav = UINavigationController(rootViewController: addLocationViewController)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true)
+        interactor.presentAddLocation()
+//        let addLocationViewController = AddLocationViewController()
+//        let nav = UINavigationController(rootViewController: addLocationViewController)
+//        nav.modalPresentationStyle = .fullScreen
+//        present(nav, animated: true)
     }
     
     // MARK: - MapView delegate methods
