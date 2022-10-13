@@ -25,7 +25,9 @@ extension AddLocationCoordinator: AddLocationCoordinating {
                                            _ coordinates: (Double, Double)) {
         let postLocationViewController = PostLocationViewControllerFactory.make(location,
                                                                                 mediaURL, coordinates)
-        viewController?.present(postLocationViewController, animated: true)
+        let navigationController = UINavigationController(rootViewController: postLocationViewController)
+        navigationController.modalPresentationStyle = .fullScreen
+        viewController?.present(navigationController, animated: true)
     }
     
     func dismiss() {

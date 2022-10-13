@@ -25,7 +25,9 @@ class PostLocationInteractor {
 
 extension PostLocationInteractor: PostLocationInteracting {
     func getUserInfo(completion: @escaping (Bool) -> Void) {
+        presenter.startLoading()
         Client.getUserInfo { [weak self] success, error in
+            self?.presenter.stopLoading()
             if success {
                 completion(true)
                 return

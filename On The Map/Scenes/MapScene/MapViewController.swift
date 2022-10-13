@@ -35,7 +35,10 @@ class MapViewController: TabBarViewController, MKMapViewDelegate {
         setupBarButtons()
         getPins()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: Notification.Name("update"), object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(refresh),
+                                               name: Notification.Name("update"),
+                                               object: nil)
     }
     
     private func addViews() {

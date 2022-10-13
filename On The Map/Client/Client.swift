@@ -52,11 +52,6 @@ class Client {
     class func taskForGETRequest<ResponseType: Decodable>(url: URL, responseType: ResponseType.Type, isUserInfo: Bool, completion: @escaping (Result<ResponseType, Error>) -> Void) -> URLSessionDataTask {
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             
-            if let error {
-                completion(.failure(error))
-                return
-            }
-            
             guard let data = data else {
                 DispatchQueue.main.async {
                     if let error {
@@ -66,20 +61,19 @@ class Client {
                 return
             }
             
-            let decoder = JSONDecoder()
-            
             do {
                 
                 if isUserInfo {
                     let newData = removeFirstFiveCharacters(data)
-                    let responseObject = try decoder.decode(ResponseType.self, from: newData)
+                    let responseObject = try JSONDecoder().decode(ResponseType.self, from: newData)
                     DispatchQueue.main.async {
                         completion(.success(responseObject))
                     }
-                }
-                let responseObject = try decoder.decode(ResponseType.self, from: data)
-                DispatchQueue.main.async {
-                    completion(.success(responseObject))
+                } else {
+                    let responseObject = try JSONDecoder().decode(ResponseType.self, from: data)
+                    DispatchQueue.main.async {
+                        completion(.success(responseObject))
+                    }
                 }
             } catch {
                 completion(.failure(error))
@@ -102,11 +96,6 @@ class Client {
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             
-            if let error {
-                completion(.failure(error))
-                return
-            }
-            
             guard let data = data else {
                 DispatchQueue.main.async {
                     if let error {
@@ -116,16 +105,15 @@ class Client {
                 return
             }
             
-            let decoder = JSONDecoder()
             do {
                 if login {
                     let newData = removeFirstFiveCharacters(data)
-                    let responseObj = try decoder.decode(ResponseType.self, from: newData)
+                    let responseObj = try JSONDecoder().decode(ResponseType.self, from: newData)
                     DispatchQueue.main.async {
                         completion(.success(responseObj))
                     }
                 } else {
-                    let responseObj = try decoder.decode(ResponseType.self, from: data)
+                    let responseObj = try JSONDecoder().decode(ResponseType.self, from: data)
                     DispatchQueue.main.async {
                         completion(.success(responseObj))
                     }
