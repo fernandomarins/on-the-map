@@ -18,6 +18,11 @@
 		55B9254C28F771D2003765B7 /* LoadingViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B9254B28F771D2003765B7 /* LoadingViewProtocol.swift */; };
 		55B9254E28F77BF5003765B7 /* LoginViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B9254D28F77BF5003765B7 /* LoginViewControllerFactory.swift */; };
 		55FB593728F81F7300ADA6A4 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FB593628F81F7300ADA6A4 /* LoadingView.swift */; };
+		55FB593D28F838AD00ADA6A4 /* TabBarControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FB593C28F838AD00ADA6A4 /* TabBarControllerFactory.swift */; };
+		55FB593F28F8395E00ADA6A4 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FB593E28F8395E00ADA6A4 /* TabBarViewController.swift */; };
+		55FB594128F843DF00ADA6A4 /* TabBarInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FB594028F843DF00ADA6A4 /* TabBarInteractor.swift */; };
+		55FB594328F843F000ADA6A4 /* TabBarPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FB594228F843F000ADA6A4 /* TabBarPresenter.swift */; };
+		55FB594528F843F800ADA6A4 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FB594428F843F800ADA6A4 /* TabBarCoordinator.swift */; };
 		55FFD867275914D9003654AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FFD866275914D9003654AA /* AppDelegate.swift */; };
 		55FFD869275914DA003654AA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FFD868275914DA003654AA /* SceneDelegate.swift */; };
 		55FFD86B275914DA003654AA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FFD86A275914DA003654AA /* LoginViewController.swift */; };
@@ -48,6 +53,11 @@
 		55B9254B28F771D2003765B7 /* LoadingViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewProtocol.swift; sourceTree = "<group>"; };
 		55B9254D28F77BF5003765B7 /* LoginViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewControllerFactory.swift; sourceTree = "<group>"; };
 		55FB593628F81F7300ADA6A4 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		55FB593C28F838AD00ADA6A4 /* TabBarControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarControllerFactory.swift; sourceTree = "<group>"; };
+		55FB593E28F8395E00ADA6A4 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		55FB594028F843DF00ADA6A4 /* TabBarInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarInteractor.swift; sourceTree = "<group>"; };
+		55FB594228F843F000ADA6A4 /* TabBarPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarPresenter.swift; sourceTree = "<group>"; };
+		55FB594428F843F800ADA6A4 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
 		55FFD863275914D9003654AA /* On The Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On The Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55FFD866275914D9003654AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		55FFD868275914DA003654AA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -119,6 +129,18 @@
 			path = Alert;
 			sourceTree = "<group>";
 		};
+		55FB593B28F8389800ADA6A4 /* TabBarScene */ = {
+			isa = PBXGroup;
+			children = (
+				55FB593C28F838AD00ADA6A4 /* TabBarControllerFactory.swift */,
+				55FB593E28F8395E00ADA6A4 /* TabBarViewController.swift */,
+				55FB594028F843DF00ADA6A4 /* TabBarInteractor.swift */,
+				55FB594228F843F000ADA6A4 /* TabBarPresenter.swift */,
+				55FB594428F843F800ADA6A4 /* TabBarCoordinator.swift */,
+			);
+			path = TabBarScene;
+			sourceTree = "<group>";
+		};
 		55FFD85A275914D9003654AA = {
 			isa = PBXGroup;
 			children = (
@@ -182,6 +204,7 @@
 		55FFD88D27593F8B003654AA /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				55FB593B28F8389800ADA6A4 /* TabBarScene */,
 				55B9253E28F723AB003765B7 /* LoginScene */,
 				55FFD88E27593F9D003654AA /* MapViewController.swift */,
 				55FFD89027593FAA003654AA /* TableViewController.swift */,
@@ -296,12 +319,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55FB594128F843DF00ADA6A4 /* TabBarInteractor.swift in Sources */,
 				55FFD87D27591650003654AA /* User.swift in Sources */,
 				55B9254028F723BA003765B7 /* LoginInteractor.swift in Sources */,
 				55B9254A28F7713D003765B7 /* AlertViewProtocol.swift in Sources */,
 				55FFD86B275914DA003654AA /* LoginViewController.swift in Sources */,
+				55FB594328F843F000ADA6A4 /* TabBarPresenter.swift in Sources */,
+				55FB593F28F8395E00ADA6A4 /* TabBarViewController.swift in Sources */,
 				55FFD8812759169F003654AA /* Client.swift in Sources */,
+				55FB594528F843F800ADA6A4 /* TabBarCoordinator.swift in Sources */,
 				55B9254228F723C1003765B7 /* LoginPresenter.swift in Sources */,
+				55FB593D28F838AD00ADA6A4 /* TabBarControllerFactory.swift in Sources */,
 				55B9253D28F64F59003765B7 /* TableViewCell.swift in Sources */,
 				55FFD89127593FAA003654AA /* TableViewController.swift in Sources */,
 				55FFD89F275977F4003654AA /* PostLocationViewController.swift in Sources */,

@@ -9,7 +9,9 @@ import UIKit
 import MapKit
 import SnapKit
 
-class MapViewController: UIViewController, MKMapViewDelegate {
+class MapViewController: TabBarViewController, MKMapViewDelegate {
+    
+//    var tabBarInteractor: TabBarInteracting?
     
     // MARK: - Variables
     
@@ -84,18 +86,15 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     // Getting all the pins
-    
     private func getPins() {
-        Client.getAllLocations { [weak self] error in
-            if let error  {
-                self?.showAlert(title: "Error", message: error.localizedDescription)
-            } else {
+        interactor.getAllLocations { [weak self] success in
+            if success != nil {
                 self?.addPinsToMap()
             }
         }
     }
     
-    private func addPinsToMap() {
+    @objc private func addPinsToMap() {
         // Removing the old pins before adding new ones
         mapView.removeAnnotations(mapView.annotations)
         for student in StudentList.allStudents {

@@ -22,22 +22,4 @@ class LoginViewControllerFactory {
         
         return viewController
     }
-    
-    static func createTabBarController() -> UITabBarController {
-        let tabBarController = UITabBarController()
-        let mapViewController = MapViewController()
-        mapViewController.tabBarItem = UITabBarItem(title: "Map", image: UIImage(named: "icon_listview-deselected"), tag: 0)
-        
-        let tableViewController = TableViewController()
-        tableViewController.tabBarItem = UITabBarItem(title: "Table", image: UIImage(named: "icon_mapview-deselected"), tag: 1)
-        
-        let viewControllersList = [mapViewController, tableViewController].map {
-            UINavigationController(rootViewController: $0)
-        }
-        
-        tabBarController.setViewControllers(viewControllersList, animated: true)
-        tabBarController.modalPresentationStyle = .fullScreen
-        
-        return tabBarController
-    }
 }

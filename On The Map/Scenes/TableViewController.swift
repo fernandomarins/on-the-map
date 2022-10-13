@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class TableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class TableViewController: TabBarViewController, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - Variables
     
@@ -32,10 +32,10 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        tableView.register(TableViewCell.self, forCellReuseIdentifier: cellId)
         addViews()
         addConstraints()
-        
-        tableView.register(TableViewCell.self, forCellReuseIdentifier: cellId)
+        setupBarButtons()
         getData()
     }
     
@@ -89,12 +89,16 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     private func getData() {
-        Client.getAllLocations { [weak self] error in
-            if let error  {
-                self?.showAlert(title: "Error", message: error.localizedDescription)
-            } else {
-                self?.tableView.reloadData()
+        interactor.getAllLocations { [weak self] sucess in
+            if sucess != nil {
+                self?.reloadTableView()
             }
+        }
+    }
+    
+    func reloadTableView() {
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
         }
     }
     

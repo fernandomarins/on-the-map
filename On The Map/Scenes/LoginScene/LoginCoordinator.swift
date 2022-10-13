@@ -18,7 +18,8 @@ class LoginCoordinator {
 
 extension LoginCoordinator: LoginCoordinating {
     func presentTabBarController() {
-        let tabBarController = LoginViewControllerFactory.createTabBarController()
+        let tabBarController = TabBarControllerFactory.make()
+        tabBarController.modalPresentationStyle = .fullScreen
         viewController?.present(tabBarController, animated: true)
     }
 }
