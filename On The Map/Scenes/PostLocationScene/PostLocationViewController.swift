@@ -102,7 +102,7 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
     // MARK: - Private methods
     
     private func setupBarButtons() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel",
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel",
                                                             style: .done, target: self,
                                                             action: #selector(dismissView))
     }
@@ -133,6 +133,7 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
                 self.interactor.post(self.location,
                                       self.mediaURL,
                                       (self.coordinates.latitude, self.coordinates.longitude))
+                self.interactor.dismissAll()
             }
         }
     }

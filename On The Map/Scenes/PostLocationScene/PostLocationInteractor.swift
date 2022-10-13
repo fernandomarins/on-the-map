@@ -13,6 +13,7 @@ protocol PostLocationInteracting: AnyObject {
               _ mediaURL: String,
               _ coordinates: (latitude: Double, longitude: Double))
     func dismiss()
+    func dismissAll()
 }
 
 class PostLocationInteractor {
@@ -67,5 +68,9 @@ extension PostLocationInteractor: PostLocationInteracting {
     
     func dismiss() {
         presenter.dismiss()
+    }
+    
+    func dismissAll() {
+        presenter.dismissAll()
     }
 }

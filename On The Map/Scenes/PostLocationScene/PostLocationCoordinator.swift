@@ -10,6 +10,7 @@ import UIKit
 protocol PostLocationCoordinating: AnyObject {
     var viewController: UIViewController? { get set }
     func dismiss()
+    func dismissAll()
 }
 
 class PostLocationCoordinator {
@@ -21,5 +22,9 @@ extension PostLocationCoordinator: PostLocationCoordinating {
         DispatchQueue.main.async { [weak self] in
             self?.viewController?.dismiss(animated: true)
         }
+    }
+    
+    func dismissAll() {        
+        viewController?.presentingViewController?.presentingViewController?.dismiss(animated: true)
     }
 }

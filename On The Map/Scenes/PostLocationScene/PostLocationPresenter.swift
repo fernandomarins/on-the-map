@@ -13,6 +13,7 @@ protocol PostLocationPresenting: AnyObject {
     func startLoading()
     func stopLoading()
     func dismiss()
+    func dismissAll()
 }
 
 class PostLocationPresenter {
@@ -40,5 +41,9 @@ extension PostLocationPresenter: PostLocationPresenting {
     
     func dismiss() {
         coordinator.dismiss()
+    }
+    
+    func dismissAll() {
+        coordinator.dismissAll()
     }
 }
