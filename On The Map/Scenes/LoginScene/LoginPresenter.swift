@@ -31,14 +31,14 @@ extension LoginPresenter: LoginPresenting {
     }
     
     func displayError(_ error: Errors) {
-        
+        viewController?.displayError(error)
     }
     
     func startLoading() {
-        viewController?.startLoading()
+        viewController?.startLoadingView()
     }
     
     func stopLoading() {
-        viewController?.stopLoading()
+        viewController?.stopLoadingView()
     }
 }

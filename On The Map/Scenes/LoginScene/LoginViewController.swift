@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-protocol LoginViewDisplyaing: AnyObject, LoadingViewProtocol {
+protocol LoginViewDisplyaing: AnyObject, AlertViewProtocol, LoadingViewProtocol {
     func displayError(_ error: Errors)
 }
 
@@ -75,11 +75,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return button
     }()
     
-    lazy var activityIndicator: UIActivityIndicatorView = {
-        let activityIndicator = UIActivityIndicatorView()
-        activityIndicator.hidesWhenStopped = true
-        return activityIndicator
-    }()
+    lazy var activityIndicator = LoadingView()
     
     private lazy var createAccountLabel: UILabel = {
         let label = UILabel()
@@ -99,9 +95,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         view.backgroundColor = .white
         addViews()
         addConstraints()
-        
-        usernameTextField.text = "f.augustomarins@gmail.com"
-        passwordTextField.text = "123Pirralho"
     }
     
     // MARK: - Add views
@@ -113,7 +106,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         contentView.addSubview(usernameTextField)
         contentView.addSubview(passwordTextField)
         contentView.addSubview(loginButton)
-        contentView.addSubview(activityIndicator)
         contentView.addSubview(createAccountLabel)
     }
     
@@ -148,13 +140,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             $0.trailing.equalTo(contentView.snp.trailing).offset(-16)
         }
         
-        activityIndicator.snp.makeConstraints {
-            $0.top.equalTo(passwordTextField.snp.bottom).offset(8)
-            $0.centerX.equalToSuperview()
-        }
-        
         loginButton.snp.makeConstraints {
-            $0.top.equalTo(passwordTextField.snp.bottom).offset(64)
+            $0.bottom.equalTo(createAccountLabel.snp.top).offset(-26)
             $0.height.equalTo(35)
             $0.width.equalTo(220)
             $0.centerX.equalToSuperview()
@@ -171,37 +158,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Login
     
     @objc private func login() {
-        interactor.login(username: usernameTextField.text ?? "", password: passwordTextField.text ?? "")
-//        showHideActivityIndicator(show: true, activityIndicator: activityIndicator)
-//        Client.login(username: usernameTextField.text ?? "", password: passwordTextField.text ?? "", completion: handleSessionResponse(success:error:))
+        interactor.login(username: usernameTextField.text ?? "",
+                         password: passwordTextField.text ?? "")
     }
-    
-//    private func handleSessionResponse(success: Bool, error: Error?) {
-//        if success {
-//            Client.getUserInfo { [weak self] success, error in
-//                guard let self = self else { return }
-//                if success {
-////                    self.showHideActivityIndicator(show: false,
-////                                                   activityIndicator: self.activityIndicator)
-//
-//                } else {
-//                    if let error  {
-////                        self.showHideActivityIndicator(show: false,
-////                                                       activityIndicator: self.activityIndicator)
-//                        self.showAlert(title: "Error",
-//                                       message: error.localizedDescription)
-//                    }
-//                }
-//            }
-//        } else {
-//            if let error {
-//                showHideActivityIndicator(show: false,
-//                                                activityIndicator: activityIndicator)
-//                showAlert(title: "Error login",
-//                          message: error.localizedDescription)
-//            }
-//        }
-//    }
     
     // MARK: - Tabbar Controller
     
@@ -221,6 +180,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
 extension LoginViewController: LoginViewDisplyaing {
     func displayError(_ error: Errors) {
-        
+        showAlert(self, "Error", error.localizedDescription)
     }
 }

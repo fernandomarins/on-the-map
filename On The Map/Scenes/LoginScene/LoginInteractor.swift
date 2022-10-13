@@ -22,7 +22,9 @@ class LoginInteractor {
 extension LoginInteractor: LoginInteracting {
     
     func login(username: String, password: String) {
+        presenter.startLoading()
         Client.login(username: username, password: password) { [weak self] success, error in
+            self?.presenter.stopLoading()
             if success {
                 self?.presenter.presentTabBar()
             } else {

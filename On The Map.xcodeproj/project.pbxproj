@@ -15,9 +15,10 @@
 		55B9254228F723C1003765B7 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B9254128F723C1003765B7 /* LoginPresenter.swift */; };
 		55B9254428F723CB003765B7 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B9254328F723CB003765B7 /* LoginCoordinator.swift */; };
 		55B9254828F726D9003765B7 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B9254728F726D9003765B7 /* Errors.swift */; };
-		55B9254A28F7713D003765B7 /* Alerttable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B9254928F7713D003765B7 /* Alerttable.swift */; };
+		55B9254A28F7713D003765B7 /* AlertViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B9254928F7713D003765B7 /* AlertViewProtocol.swift */; };
 		55B9254C28F771D2003765B7 /* LoadingViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B9254B28F771D2003765B7 /* LoadingViewProtocol.swift */; };
 		55B9254E28F77BF5003765B7 /* LoginViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B9254D28F77BF5003765B7 /* LoginViewControllerFactory.swift */; };
+		55FB593728F81F7300ADA6A4 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FB593628F81F7300ADA6A4 /* LoadingView.swift */; };
 		55FFD867275914D9003654AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FFD866275914D9003654AA /* AppDelegate.swift */; };
 		55FFD869275914DA003654AA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FFD868275914DA003654AA /* SceneDelegate.swift */; };
 		55FFD86B275914DA003654AA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FFD86A275914DA003654AA /* LoginViewController.swift */; };
@@ -45,9 +46,10 @@
 		55B9254128F723C1003765B7 /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
 		55B9254328F723CB003765B7 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
 		55B9254728F726D9003765B7 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
-		55B9254928F7713D003765B7 /* Alerttable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerttable.swift; sourceTree = "<group>"; };
+		55B9254928F7713D003765B7 /* AlertViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewProtocol.swift; sourceTree = "<group>"; };
 		55B9254B28F771D2003765B7 /* LoadingViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewProtocol.swift; sourceTree = "<group>"; };
 		55B9254D28F77BF5003765B7 /* LoginViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewControllerFactory.swift; sourceTree = "<group>"; };
+		55FB593628F81F7300ADA6A4 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		55FFD863275914D9003654AA /* On The Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On The Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55FFD866275914D9003654AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		55FFD868275914DA003654AA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -91,6 +93,15 @@
 				55B9254328F723CB003765B7 /* LoginCoordinator.swift */,
 			);
 			path = LoginScene;
+			sourceTree = "<group>";
+		};
+		55B9254F28F81E3A003765B7 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				55B9254928F7713D003765B7 /* AlertViewProtocol.swift */,
+				55B9254B28F771D2003765B7 /* LoadingViewProtocol.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		55FFD85A275914D9003654AA = {
@@ -163,8 +174,8 @@
 				55FFD89C275958EF003654AA /* AddLocationViewController.swift */,
 				55FFD89E275977F4003654AA /* PostLocationViewController.swift */,
 				55FFD89727594DF3003654AA /* UIViewController+Extensions.swift */,
-				55B9254928F7713D003765B7 /* Alerttable.swift */,
-				55B9254B28F771D2003765B7 /* LoadingViewProtocol.swift */,
+				55B9254F28F81E3A003765B7 /* Protocols */,
+				55FB593628F81F7300ADA6A4 /* LoadingView.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -274,7 +285,7 @@
 			files = (
 				55FFD87D27591650003654AA /* User.swift in Sources */,
 				55B9254028F723BA003765B7 /* LoginInteractor.swift in Sources */,
-				55B9254A28F7713D003765B7 /* Alerttable.swift in Sources */,
+				55B9254A28F7713D003765B7 /* AlertViewProtocol.swift in Sources */,
 				55B9254828F726D9003765B7 /* Errors.swift in Sources */,
 				55FFD86B275914DA003654AA /* LoginViewController.swift in Sources */,
 				55FFD8812759169F003654AA /* Client.swift in Sources */,
@@ -283,6 +294,7 @@
 				55FFD89127593FAA003654AA /* TableViewController.swift in Sources */,
 				55FFD89F275977F4003654AA /* PostLocationViewController.swift in Sources */,
 				55FFD89B27595012003654AA /* UserInfo.swift in Sources */,
+				55FB593728F81F7300ADA6A4 /* LoadingView.swift in Sources */,
 				55B9254428F723CB003765B7 /* LoginCoordinator.swift in Sources */,
 				55FFD89D275958EF003654AA /* AddLocationViewController.swift in Sources */,
 				55FFD8A227598544003654AA /* PostResponse.swift in Sources */,
