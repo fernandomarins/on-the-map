@@ -8,7 +8,6 @@
 import UIKit
 
 class AddLocationViewControllerFactory {
-    
     static func make() -> UIViewController {
         let coordinator: AddLocationCoordinating = AddLocationCoordinator()
         let presenter: AddLocationPresenting = AddLocationPresenter(coordinator: coordinator)

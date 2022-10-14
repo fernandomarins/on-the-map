@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		556D991428F9A1560048C73C /* StartCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556D991328F9A1560048C73C /* StartCoordinator.swift */; };
 		55B9253428F62B8F003765B7 /* PostLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B9253328F62B8F003765B7 /* PostLocation.swift */; };
 		55B9253628F62EFB003765B7 /* UserLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B9253528F62EFB003765B7 /* UserLogin.swift */; };
 		55B9253928F633AA003765B7 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 55B9253828F633AA003765B7 /* SnapKit */; };
@@ -50,6 +51,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		556D991328F9A1560048C73C /* StartCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartCoordinator.swift; sourceTree = "<group>"; };
 		55B9253328F62B8F003765B7 /* PostLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLocation.swift; sourceTree = "<group>"; };
 		55B9253528F62EFB003765B7 /* UserLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLogin.swift; sourceTree = "<group>"; };
 		55B9253C28F64F59003765B7 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
@@ -105,6 +107,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5534A7C928F9781B008D9B86 /* PostingLocation */ = {
+			isa = PBXGroup;
+			children = (
+				55FB595128F878BA00ADA6A4 /* PostLocationScene */,
+				55FB594828F8516200ADA6A4 /* AddLocationScene */,
+			);
+			path = PostingLocation;
+			sourceTree = "<group>";
+		};
+		5534A7CA28F9782E008D9B86 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				556D991328F9A1560048C73C /* StartCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
 		55B9253E28F723AB003765B7 /* LoginScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -217,11 +236,11 @@
 		55FFD865275914D9003654AA /* On The Map */ = {
 			isa = PBXGroup;
 			children = (
+				55FFD866275914D9003654AA /* AppDelegate.swift */,
+				55FFD868275914DA003654AA /* SceneDelegate.swift */,
 				55FB593828F8338A00ADA6A4 /* UI */,
 				55FFD87A275915F8003654AA /* Model */,
 				55FFD882275916A9003654AA /* Client */,
-				55FFD866275914D9003654AA /* AppDelegate.swift */,
-				55FFD868275914DA003654AA /* SceneDelegate.swift */,
 				55FFD88D27593F8B003654AA /* Scenes */,
 				55FFD86F275914DB003654AA /* Assets.xcassets */,
 				55FFD871275914DB003654AA /* LaunchScreen.storyboard */,
@@ -261,8 +280,8 @@
 		55FFD88D27593F8B003654AA /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				55FB595128F878BA00ADA6A4 /* PostLocationScene */,
-				55FB594828F8516200ADA6A4 /* AddLocationScene */,
+				5534A7CA28F9782E008D9B86 /* Coordinator */,
+				5534A7C928F9781B008D9B86 /* PostingLocation */,
 				55FB593B28F8389800ADA6A4 /* TabBarScene */,
 				55B9253E28F723AB003765B7 /* LoginScene */,
 			);
@@ -373,6 +392,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55FB595028F878B500ADA6A4 /* PostLocationViewControllerFactory.swift in Sources */,
+				556D991428F9A1560048C73C /* StartCoordinator.swift in Sources */,
 				55FB595728F88B1700ADA6A4 /* PostLocationPresenter.swift in Sources */,
 				55FB594128F843DF00ADA6A4 /* TabBarInteractor.swift in Sources */,
 				55FFD87D27591650003654AA /* User.swift in Sources */,

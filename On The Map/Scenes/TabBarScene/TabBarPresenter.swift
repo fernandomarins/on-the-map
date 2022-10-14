@@ -30,7 +30,7 @@ class TabBarPresenter {
 extension TabBarPresenter: TabBarPresenting {
     
     func presentAddLocation() {
-        coordinator.presentAddViewController()
+        coordinator.perform(action: .presentAddLocationFlow)
     }
     
     func displayError(_ error: String) {
@@ -46,10 +46,10 @@ extension TabBarPresenter: TabBarPresenting {
     }
     
     func openLink(_ urlString: String) {
-        coordinator.openLink(urlString)
+        coordinator.perform(action: .openLink(urlString))
     }
     
     func logout() {
-        coordinator.logout()
+        coordinator.perform(action: .logout)
     }
 }

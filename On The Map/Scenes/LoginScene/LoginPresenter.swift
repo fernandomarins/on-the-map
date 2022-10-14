@@ -28,15 +28,16 @@ class LoginPresenter {
 extension LoginPresenter: LoginPresenting {
 
     func presentTabBar() {
-        coordinator.presentTabBarController()
+        coordinator.perform(action: .presentTabBar)
     }
     
     func displayError(_ error: String) {
         viewController?.displayError(error)
+        // TODO: chamar o showAlert do AlertViewProtocol ao invés de declarar
     }
     
     func openLink() {
-        coordinator.openLink()
+        coordinator.perform(action: .openLink)
     }
     
     func startLoading() {

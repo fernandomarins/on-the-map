@@ -40,10 +40,10 @@ extension PostLocationPresenter: PostLocationPresenting {
     }
     
     func dismiss() {
-        coordinator.dismiss()
+        coordinator.perform(action: .dismiss)
     }
     
     func dismissToTabBar() {
-        coordinator.dismissToTabBar()
+        coordinator.perform(action: .dismissTabBar)
     }
 }

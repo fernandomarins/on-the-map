@@ -72,6 +72,7 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
         setupBarButtons()
         
         setupMap()
+        navigationController?.isNavigationBarHidden = false
     }
     
     // MARK: - Add views
@@ -102,7 +103,7 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
     // MARK: - Private methods
     
     private func setupBarButtons() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel",
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel",
                                                             style: .done, target: self,
                                                             action: #selector(dismissView))
     }

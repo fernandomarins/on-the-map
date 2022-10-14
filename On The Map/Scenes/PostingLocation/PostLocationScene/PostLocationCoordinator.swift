@@ -7,10 +7,14 @@
 
 import UIKit
 
+enum PostLocationAction {
+    case dismiss
+    case dismissTabBar
+}
+
 protocol PostLocationCoordinating: AnyObject {
     var viewController: UIViewController? { get set }
-    func dismiss()
-    func dismissToTabBar()
+    func perform(action: PostLocationAction)
 }
 
 class PostLocationCoordinator {
@@ -18,6 +22,15 @@ class PostLocationCoordinator {
 }
 
 extension PostLocationCoordinator: PostLocationCoordinating {
+    func perform(action: PostLocationAction) {
+        switch action {
+        case .dismiss:
+            dismiss()
+        case .dismissTabBar:
+            dismissToTabBar()
+        }
+    }
+    
     func dismiss() {
         DispatchQueue.main.async { [weak self] in
             self?.viewController?.dismiss(animated: true)
@@ -25,6 +38,6 @@ extension PostLocationCoordinator: PostLocationCoordinating {
     }
     
     func dismissToTabBar() {        
-        viewController?.presentingViewController?.presentingViewController?.dismiss(animated: true)
+        viewController?.navigationController?.dismiss(animated: true)
     }
 }

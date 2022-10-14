@@ -31,7 +31,7 @@ extension AddLocationPresenter: AddLocationPresenting {
     func presentPostLocationViewController(_ location: String,
                                            _ mediaURL: String,
                                            _ coordinates: (Double, Double)) {
-        coordinator.presentPostLocationViewController(location, mediaURL, coordinates)
+        coordinator.perform(action: .presentPostLocationViewController(location, mediaURL, coordinates))
     }
     
     func displayError(_ error: String) {
@@ -47,6 +47,6 @@ extension AddLocationPresenter: AddLocationPresenting {
     }
     
     func dismiss() {
-        coordinator.dismiss()
+        coordinator.perform(action: .dismiss)
     }
 }

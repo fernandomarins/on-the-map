@@ -59,6 +59,7 @@ class AddLocationViewController: UIViewController, UITextFieldDelegate {
         let textField = UITextField()
         textField.placeholder = "Type a link"
         textField.borderStyle = .roundedRect
+        textField.autocapitalizationType = .none
         textField.delegate = self
         return textField
     }()
