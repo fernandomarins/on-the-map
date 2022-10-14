@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class TableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class TableViewController: TabBarViewController, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - Variables
     
@@ -32,11 +32,12 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        tableView.register(TableViewCell.self, forCellReuseIdentifier: cellId)
         addViews()
         addConstraints()
-        
-        tableView.register(TableViewCell.self, forCellReuseIdentifier: cellId)
+        setupBarButtons()
         getData()
+        addNotification()
     }
     
     private func addViews() {
@@ -68,36 +69,32 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     @objc private func logout() {
-        Client.logout { [weak self] success, error in
-            if success {
-                DispatchQueue.main.async {
-                    self?.dismiss(animated: true)
-                }
-            } else {
-                if let error = error {
-                    self?.showAlert(title: "Error logout", message: error.localizedDescription)
-                }
-            }
-        }
+        interactor.logout()
     }
     
     @objc private func presentAddLocationView() {
-        let addLocationViewController = AddLocationViewController()
-        let nav = UINavigationController(rootViewController: addLocationViewController)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true)
+        interactor.presentAddLocation()
     }
     
     private func getData() {
-        Client.getAllLocations { [weak self] students, error in
-            if StudentList.allStudents.isEmpty {
-                if let error {
-                    self?.showAlert(title: "Error", message: error.localizedDescription)
-                }
-            } else {
-                self?.tableView.reloadData()
+        interactor.getAllLocations { [weak self] sucess in
+            if sucess != nil {
+                self?.reloadTableView()
             }
         }
+    }
+    
+    private func reloadTableView() {
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
+        }
+    }
+    
+    private func addNotification() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(refresh),
+                                               name: Notification.Name("update"),
+                                               object: nil)
     }
     
     // MARK: - TableView delegate methods
@@ -124,11 +121,11 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if let toOpen = StudentList.allStudents[indexPath.row].mediaURL {
-            if let url = URL(string: toOpen) {
-                if UIApplication.shared.canOpenURL(url) {
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                }
+            guard UIApplication.shared.canOpenURL(URL(string: toOpen) ?? URL(fileURLWithPath: "")) else {
+                showAlert(self, "The link is not valid")
+                return
             }
+            interactor.openLink(toOpen)
         }
     }
 }

@@ -9,7 +9,7 @@ import UIKit
 import MapKit
 import SnapKit
 
-class MapViewController: UIViewController, MKMapViewDelegate {
+class MapViewController: TabBarViewController, MKMapViewDelegate {
     
     // MARK: - Variables
     
@@ -34,8 +34,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         addConstraints()
         setupBarButtons()
         getPins()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: Notification.Name("update"), object: nil)
+        addNotification()
     }
     
     private func addViews() {
@@ -70,34 +69,19 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     @objc private func logout() {
-        Client.logout { [weak self] success, error in
-            if success {
-                DispatchQueue.main.async {
-                    self?.dismiss(animated: true)
-                }
-            } else {
-                if let error {
-                    self?.showAlert(title: "Error logout", message: error.localizedDescription)
-                }
-            }
-        }
+        interactor.logout()
     }
     
     // Getting all the pins
-    
     private func getPins() {
-        Client.getAllLocations { [weak self] students, error in
-            if students.isEmpty {
-                if let error {
-                    self?.showAlert(title: "Error", message: error.localizedDescription)
-                }
-            } else {
+        interactor.getAllLocations { [weak self] success in
+            if success != nil {
                 self?.addPinsToMap()
             }
         }
     }
     
-    private func addPinsToMap() {
+    @objc private func addPinsToMap() {
         // Removing the old pins before adding new ones
         mapView.removeAnnotations(mapView.annotations)
         for student in StudentList.allStudents {
@@ -110,10 +94,14 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     @objc private func presentAddLocationView() {
-        let addLocationViewController = AddLocationViewController()
-        let nav = UINavigationController(rootViewController: addLocationViewController)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true)
+        interactor.presentAddLocation()
+    }
+    
+    private func addNotification() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(refresh),
+                                               name: Notification.Name("update"),
+                                               object: nil)
     }
     
     // MARK: - MapView delegate methods
@@ -138,11 +126,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView {
             if let toOpen = view.annotation?.subtitle! {
-                if let url = URL(string: toOpen) {
-                    if UIApplication.shared.canOpenURL(url) {
-                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                    }
+                guard UIApplication.shared.canOpenURL(URL(string: toOpen) ?? URL(fileURLWithPath: "")) else {
+                    showAlert(self, "The link is not valid")
+                    return
                 }
+                interactor.openLink(toOpen)
             }
         }
     }

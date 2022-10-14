@@ -7,9 +7,23 @@
 
 import SnapKit
 import UIKit
-import CoreLocation
+
+protocol AddLocationDisplaying: AnyObject, AlertViewProtocol, LoadingViewProtocol {
+    func displayError(_ error: String)
+}
 
 class AddLocationViewController: UIViewController, UITextFieldDelegate {
+    
+    let interactor: AddLocationInteracting
+    
+    init(interactor: AddLocationInteracting) {
+        self.interactor = interactor
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        nil
+    }
     
     // MARK: - Variables
     
@@ -45,15 +59,12 @@ class AddLocationViewController: UIViewController, UITextFieldDelegate {
         let textField = UITextField()
         textField.placeholder = "Type a link"
         textField.borderStyle = .roundedRect
+        textField.autocapitalizationType = .none
         textField.delegate = self
         return textField
     }()
     
-    private lazy var activityIndicator: UIActivityIndicatorView = {
-        let activityIndicator = UIActivityIndicatorView()
-        activityIndicator.hidesWhenStopped = true
-        return activityIndicator
-    }()
+    lazy var activityIndicator = LoadingView()
     
     private lazy var searchButton: UIButton = {
         let button = UIButton(type: .system)
@@ -64,8 +75,6 @@ class AddLocationViewController: UIViewController, UITextFieldDelegate {
         button.addTarget(self, action: #selector(geocode), for: .touchUpInside)
         return button
     }()
-    
-    private lazy var geocoder = CLGeocoder()
     
     // MARK: Lifecycle methods
     
@@ -85,7 +94,6 @@ class AddLocationViewController: UIViewController, UITextFieldDelegate {
         contentView.addSubview(locationLabel)
         contentView.addSubview(locationTextField)
         contentView.addSubview(linkTextField)
-        contentView.addSubview(activityIndicator)
         contentView.addSubview(searchButton)
     }
     
@@ -121,11 +129,6 @@ class AddLocationViewController: UIViewController, UITextFieldDelegate {
             $0.trailing.equalTo(contentView.snp.trailing).offset(-16)
         }
         
-        activityIndicator.snp.makeConstraints {
-            $0.top.equalTo(linkTextField.snp.bottom).offset(8)
-            $0.centerX.equalToSuperview()
-        }
-        
         searchButton.snp.makeConstraints {
             $0.top.equalTo(linkTextField.snp.bottom).offset(64)
             $0.height.equalTo(35)
@@ -141,37 +144,12 @@ class AddLocationViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc private func dismissView() {
-        dismiss(animated: true)
+        interactor.dismiss()
     }
     
     @objc private func geocode() {
-        showHideActivityIndicator(show: true, activityIndicator: activityIndicator)
-        geocoder.geocodeAddressString(locationTextField.text ?? "") { [weak self] placemarks, error in
-            guard let self else { return }
-            if let error {
-                self.showHideActivityIndicator(show: false, activityIndicator: self.activityIndicator)
-                self.showAlert(title: "Error", message: error.localizedDescription)
-                return
-            }
-            
-            if let placemarks = placemarks?.first?.location {
-                let latitude = placemarks.coordinate.latitude
-                let longitude = placemarks.coordinate.longitude
-                let location = self.locationTextField.text ?? ""
-                let link = self.linkTextField.text ?? ""
-                self.showHideActivityIndicator(show: false, activityIndicator: self.activityIndicator)
-                self.presentPostLocationViewController(latitude, longitude, location, link)
-            }
-        }
-    }
-    
-    private func presentPostLocationViewController(_ latitude: CLLocationDegrees, _ longitude: CLLocationDegrees, _ location: String, _ link: String) {
-        let postLocationViewController = PostLocationViewController()
-        postLocationViewController.latitude = latitude
-        postLocationViewController.longitude = longitude
-        postLocationViewController.location = location
-        postLocationViewController.link = link
-        navigationController?.pushViewController(postLocationViewController, animated: true)
+        interactor.geocode(locationTextField.text ?? "",
+                           linkTextField.text ?? "")
     }
     
     // MARK: - Textfield delegate method
@@ -181,4 +159,10 @@ class AddLocationViewController: UIViewController, UITextFieldDelegate {
         return true
     }
         
+}
+
+extension AddLocationViewController: AddLocationDisplaying {
+    func displayError(_ error: String) {
+        showAlert(self, error)
+    }    
 }

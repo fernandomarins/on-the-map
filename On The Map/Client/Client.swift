@@ -49,30 +49,34 @@ class Client {
     }
     
     @discardableResult
-    class func taskForGETRequest<ResponseType: Decodable>(url: URL, responseType: ResponseType.Type, isUserInfo: Bool, completion: @escaping (ResponseType?, Error?) -> Void) -> URLSessionDataTask {
+    class func taskForGETRequest<ResponseType: Decodable>(url: URL, responseType: ResponseType.Type, isUserInfo: Bool, completion: @escaping (Result<ResponseType, Error>) -> Void) -> URLSessionDataTask {
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            
             guard let data = data else {
-                completion(nil, error)
+                DispatchQueue.main.async {
+                    if let error {
+                        completion(.failure(error))
+                    }
+                }
                 return
             }
-            
-            let decoder = JSONDecoder()
             
             do {
                 
                 if isUserInfo {
                     let newData = removeFirstFiveCharacters(data)
-                    let responseObject = try decoder.decode(ResponseType.self, from: newData)
+                    let responseObject = try JSONDecoder().decode(ResponseType.self, from: newData)
                     DispatchQueue.main.async {
-                        completion(responseObject, nil)
+                        completion(.success(responseObject))
+                    }
+                } else {
+                    let responseObject = try JSONDecoder().decode(ResponseType.self, from: data)
+                    DispatchQueue.main.async {
+                        completion(.success(responseObject))
                     }
                 }
-                let responseObject = try decoder.decode(ResponseType.self, from: data)
-                DispatchQueue.main.async {
-                    completion(responseObject, nil)
-                }
             } catch {
-                completion(nil, error)
+                completion(.failure(error))
             }
         }
         
@@ -81,7 +85,7 @@ class Client {
         return task
     }
     
-    class func taskForPOSTRequest<ResponseType: Decodable, PostType: Encodable>(url: URL, responseType: ResponseType.Type, body: PostType, login: Bool, completion: @escaping(ResponseType?, Error?) -> Void) -> Void {
+    class func taskForPOSTRequest<ResponseType: Decodable, PostType: Encodable>(url: URL, responseType: ResponseType.Type, body: PostType, login: Bool, completion: @escaping(Result<ResponseType, Error>) -> Void) -> Void {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.httpBody = try? JSONEncoder().encode(body)
@@ -91,31 +95,33 @@ class Client {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            
             guard let data = data else {
                 DispatchQueue.main.async {
-                    completion(nil, error)
+                    if let error {
+                        completion(.failure(error))
+                    }
                 }
                 return
             }
             
-            let decoder = JSONDecoder()
             do {
                 if login {
                     let newData = removeFirstFiveCharacters(data)
-                    let responseObj = try decoder.decode(ResponseType.self, from: newData)
+                    let responseObj = try JSONDecoder().decode(ResponseType.self, from: newData)
                     DispatchQueue.main.async {
-                        completion(responseObj, nil)
+                        completion(.success(responseObj))
                     }
                 } else {
-                    let responseObj = try decoder.decode(ResponseType.self, from: data)
+                    let responseObj = try JSONDecoder().decode(ResponseType.self, from: data)
                     DispatchQueue.main.async {
-                        completion(responseObj, nil)
+                        completion(.success(responseObj))
                     }
                 }
 
             } catch {
                 DispatchQueue.main.async {
-                    completion(nil, error)
+                    completion(.failure(error))
                 }
             }
         }
@@ -124,42 +130,43 @@ class Client {
         
     }
     
-    class func getAllLocations(completion: @escaping ([Student], Error?) -> Void) -> Void {
-        taskForGETRequest(url: EndPoints.getStudentLocations.url, responseType: StudentResult.self, isUserInfo: false) { response, error in
+    class func getAllLocations(completion: @escaping (Error?) -> Void) -> Void {
+        taskForGETRequest(url: EndPoints.getStudentLocations.url, responseType: StudentResult.self, isUserInfo: false) { result in
             
-            if let response = response {
-                StudentList.allStudents = response.results
-                completion(response.results, nil)
-            } else {
-                completion([], error)
+            switch result {
+            case .success(let results):
+                StudentList.allStudents = results.results
+                completion(nil)
+            case .failure(let error):
+                completion(error)
             }
-            
         }
     }
 
     class func login(username: String, password: String, completion: @escaping (Bool, Error?) -> Void) {
         let body = UdacityLogin(udacity: UserLogin(username: username, password: password))
-        taskForPOSTRequest(url: EndPoints.login.url, responseType: LoginResponse.self, body: body, login: true) { response, error in
+        taskForPOSTRequest(url: EndPoints.login.url, responseType: LoginResponse.self, body: body, login: true) { result in
             
-            if let response = response {
+            switch result {
+            case .success(let response):
                 Auth.sessionId = response.session.id
                 Auth.accountId = response.account.key
                 completion(true, nil)
-            } else {
+            case .failure(let error):
                 completion(false, error)
             }
         }
     }
     
     class func post(student: PostLocation, completion: @escaping(Bool, Error?) -> Void) {
-        taskForPOSTRequest(url: EndPoints.post.url, responseType: PostResponse.self, body: student, login: false) { response, error in
+        taskForPOSTRequest(url: EndPoints.post.url, responseType: PostResponse.self, body: student, login: false) { result in
             
-            if response != nil {
+            switch result {
+            case .success(_):
                 completion(true, nil)
-            } else {
+            case .failure(let error):
                 completion(false, error)
             }
-            
         }
     }
     
@@ -191,15 +198,15 @@ class Client {
     }
     
     class func getUserInfo(completion: @escaping(Bool, Error?) -> Void) {
-        taskForGETRequest(url: EndPoints.getUserInfo.url, responseType: UserDetails.self, isUserInfo: true) { response, error in
+        taskForGETRequest(url: EndPoints.getUserInfo.url, responseType: UserDetails.self, isUserInfo: true) { result in
             
-            if let response = response {
+            switch result {
+            case .success(let response):
                 Auth.firstName = response.firstName
                 Auth.lastName = response.lastName
                 Auth.uniqueKey = response.key
-                print(Auth.firstName)
                 completion(true, nil)
-            } else {
+            case .failure(let error):
                 completion(false, error)
             }
         }
