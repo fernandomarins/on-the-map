@@ -55,8 +55,7 @@ extension PostLocationInteractor: PostLocationInteracting {
         Client.post(student: postLocation) { [weak self] success, error in
             self?.presenter.stopLoading()
             if success {
-                NotificationCenter.default.post(name: NSNotification.Name("update"),
-                                                object: nil)
+                self?.sendNotification()
                 self?.presenter.dismiss()
             } else {
                 if let error {
@@ -72,5 +71,10 @@ extension PostLocationInteractor: PostLocationInteracting {
     
     func dismissToTabBar() {
         presenter.dismissToTabBar()
+    }
+    
+    private func sendNotification() {
+        NotificationCenter.default.post(name: NSNotification.Name("update"),
+                                        object: nil)
     }
 }

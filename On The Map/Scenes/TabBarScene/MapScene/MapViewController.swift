@@ -34,11 +34,7 @@ class MapViewController: TabBarViewController, MKMapViewDelegate {
         addConstraints()
         setupBarButtons()
         getPins()
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(refresh),
-                                               name: Notification.Name("update"),
-                                               object: nil)
+        addNotification()
     }
     
     private func addViews() {
@@ -99,6 +95,13 @@ class MapViewController: TabBarViewController, MKMapViewDelegate {
     
     @objc private func presentAddLocationView() {
         interactor.presentAddLocation()
+    }
+    
+    private func addNotification() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(refresh),
+                                               name: Notification.Name("update"),
+                                               object: nil)
     }
     
     // MARK: - MapView delegate methods

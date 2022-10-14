@@ -37,6 +37,7 @@ class TableViewController: TabBarViewController, UITableViewDelegate, UITableVie
         addConstraints()
         setupBarButtons()
         getData()
+        addNotification()
     }
     
     private func addViews() {
@@ -83,10 +84,17 @@ class TableViewController: TabBarViewController, UITableViewDelegate, UITableVie
         }
     }
     
-    func reloadTableView() {
+    private func reloadTableView() {
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadData()
         }
+    }
+    
+    private func addNotification() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(refresh),
+                                               name: Notification.Name("update"),
+                                               object: nil)
     }
     
     // MARK: - TableView delegate methods
