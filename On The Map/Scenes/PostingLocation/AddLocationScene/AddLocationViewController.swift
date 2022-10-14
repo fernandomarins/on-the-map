@@ -163,6 +163,6 @@ class AddLocationViewController: UIViewController, UITextFieldDelegate {
 
 extension AddLocationViewController: AddLocationDisplaying {
     func displayError(_ error: String) {
-        showAlert(self, "Error", error)
+        showAlert(self, error)
     }    
 }

@@ -114,7 +114,7 @@ class TableViewController: TabBarViewController, UITableViewDelegate, UITableVie
         tableView.deselectRow(at: indexPath, animated: true)
         if let toOpen = StudentList.allStudents[indexPath.row].mediaURL {
             guard UIApplication.shared.canOpenURL(URL(string: toOpen) ?? URL(fileURLWithPath: "")) else {
-                showAlert(self, "Error", "The link is not valid")
+                showAlert(self, "The link is not valid")
                 return
             }
             interactor.openLink(toOpen)

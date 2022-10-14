@@ -9,6 +9,8 @@ import UIKit
 import SnapKit
 
 protocol LoginViewDisplyaing: AnyObject, AlertViewProtocol, LoadingViewProtocol {
+    func login()
+    func openURL()
     func displayError(_ error: String)
 }
 
@@ -158,19 +160,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    // MARK: - Login
-    
-    @objc private func login() {
-        interactor.login(username: usernameTextField.text ?? "",
-                         password: passwordTextField.text ?? "")
-    }
-    
-    // MARK: - Tabbar Controller
-    
-    @objc private func openURL() {
-        interactor.openLink()
-    }
-    
     // MARK: - Text field delegate
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -179,8 +168,22 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
 }
 
-extension LoginViewController: LoginViewDisplyaing {    
+extension LoginViewController: LoginViewDisplyaing {
+    
+    // MARK: - Login
+    
+    @objc func login() {
+        interactor.login(username: usernameTextField.text ?? "",
+                         password: passwordTextField.text ?? "")
+    }
+    
+    // MARK: - Tabbar Controller
+    
+    @objc func openURL() {
+        interactor.openLink()
+    }
+    
     func displayError(_ error: String) {
-        showAlert(self, "Error", error)
+        showAlert(self, error)
     }
 }

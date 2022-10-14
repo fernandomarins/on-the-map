@@ -162,6 +162,6 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
 
 extension PostLocationViewController: PostLocationDisplaying {
     func displayError(_ error: String) {
-        showAlert(self, "Error", error)
+        showAlert(self, error)
     }
 }

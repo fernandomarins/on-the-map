@@ -41,6 +41,6 @@ extension TabBarViewController: UITabBarControllerDelegate {
 
 extension TabBarViewController: TabBarDisplaying {
     func displayError(_ error: String) {
-        showAlert(self, "Error", error)
+        showAlert(self, error)
     }
 }

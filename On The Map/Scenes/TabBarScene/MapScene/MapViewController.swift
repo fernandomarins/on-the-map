@@ -124,7 +124,7 @@ class MapViewController: TabBarViewController, MKMapViewDelegate {
         if control == view.rightCalloutAccessoryView {
             if let toOpen = view.annotation?.subtitle! {
                 guard UIApplication.shared.canOpenURL(URL(string: toOpen) ?? URL(fileURLWithPath: "")) else {
-                    showAlert(self, "Error", "The link is not valid")
+                    showAlert(self, "The link is not valid")
                     return
                 }
                 interactor.openLink(toOpen)
