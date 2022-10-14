@@ -113,11 +113,11 @@ class TableViewController: TabBarViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if let toOpen = StudentList.allStudents[indexPath.row].mediaURL {
-            if let url = URL(string: toOpen) {
-                if UIApplication.shared.canOpenURL(url) {
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                }
+            guard UIApplication.shared.canOpenURL(URL(string: toOpen) ?? URL(fileURLWithPath: "")) else {
+                showAlert(self, "Error", "The link is not valid")
+                return
             }
+            interactor.openLink(toOpen)
         }
     }
 }

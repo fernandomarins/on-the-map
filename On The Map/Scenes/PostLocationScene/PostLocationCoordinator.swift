@@ -10,7 +10,7 @@ import UIKit
 protocol PostLocationCoordinating: AnyObject {
     var viewController: UIViewController? { get set }
     func dismiss()
-    func dismissAll()
+    func dismissToTabBar()
 }
 
 class PostLocationCoordinator {
@@ -24,7 +24,7 @@ extension PostLocationCoordinator: PostLocationCoordinating {
         }
     }
     
-    func dismissAll() {        
+    func dismissToTabBar() {        
         viewController?.presentingViewController?.presentingViewController?.dismiss(animated: true)
     }
 }

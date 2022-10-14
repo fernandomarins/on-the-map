@@ -13,6 +13,7 @@ protocol TabBarPresenting: AnyObject {
     func displayError(_ error: String)
     func startLoading()
     func stopLoading()
+    func openLink(_ urlString: String)
     func logout()
 }
 
@@ -42,6 +43,10 @@ extension TabBarPresenter: TabBarPresenting {
     
     func stopLoading() {
         viewController?.stopLoadingView()
+    }
+    
+    func openLink(_ urlString: String) {
+        coordinator.openLink(urlString)
     }
     
     func logout() {

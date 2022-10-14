@@ -21,7 +21,7 @@ class TabBarViewController: UITabBarController {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        nil
     }
     
     lazy var activityIndicator = LoadingView()

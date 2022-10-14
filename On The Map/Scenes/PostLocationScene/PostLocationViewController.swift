@@ -32,7 +32,7 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        nil
     }
     
     // MARK: - Variables
@@ -133,7 +133,7 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
                 self.interactor.post(self.location,
                                       self.mediaURL,
                                       (self.coordinates.latitude, self.coordinates.longitude))
-                self.interactor.dismissAll()
+                self.interactor.dismissToTabBar()
             }
         }
     }

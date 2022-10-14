@@ -146,6 +146,8 @@
 		55FB593B28F8389800ADA6A4 /* TabBarScene */ = {
 			isa = PBXGroup;
 			children = (
+				55FB595228F889E900ADA6A4 /* MapScene */,
+				55FB595328F889F500ADA6A4 /* TableScene */,
 				55FB593C28F838AD00ADA6A4 /* TabBarControllerFactory.swift */,
 				55FB593E28F8395E00ADA6A4 /* TabBarViewController.swift */,
 				55FB594028F843DF00ADA6A4 /* TabBarInteractor.swift */,
@@ -263,8 +265,6 @@
 				55FB594828F8516200ADA6A4 /* AddLocationScene */,
 				55FB593B28F8389800ADA6A4 /* TabBarScene */,
 				55B9253E28F723AB003765B7 /* LoginScene */,
-				55FB595228F889E900ADA6A4 /* MapScene */,
-				55FB595328F889F500ADA6A4 /* TableScene */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";

@@ -10,6 +10,7 @@ import UIKit
 protocol TabBarCoordinating: AnyObject {
     var viewController: UIViewController? { get set }
     func presentAddViewController()
+    func openLink(_ urlString: String)
     func logout()
 }
 
@@ -23,6 +24,11 @@ extension TabBarCoordinator: TabBarCoordinating {
         let navigationController = UINavigationController(rootViewController: addLocationViewController)
         navigationController.modalPresentationStyle = .fullScreen
         viewController?.present(navigationController, animated: true)
+    }
+    
+    func openLink(_ urlString: String) {
+        guard let url = URL(string: urlString) else { return }
+        UIApplication.shared.open(url, options: [:])
     }
     
     func logout() {

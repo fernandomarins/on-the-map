@@ -123,11 +123,11 @@ class MapViewController: TabBarViewController, MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView {
             if let toOpen = view.annotation?.subtitle! {
-                if let url = URL(string: toOpen) {
-                    if UIApplication.shared.canOpenURL(url) {
-                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                    }
+                guard UIApplication.shared.canOpenURL(URL(string: toOpen) ?? URL(fileURLWithPath: "")) else {
+                    showAlert(self, "Error", "The link is not valid")
+                    return
                 }
+                interactor.openLink(toOpen)
             }
         }
     }

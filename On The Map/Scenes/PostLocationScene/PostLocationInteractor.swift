@@ -13,7 +13,7 @@ protocol PostLocationInteracting: AnyObject {
               _ mediaURL: String,
               _ coordinates: (latitude: Double, longitude: Double))
     func dismiss()
-    func dismissAll()
+    func dismissToTabBar()
 }
 
 class PostLocationInteractor {
@@ -70,7 +70,7 @@ extension PostLocationInteractor: PostLocationInteracting {
         presenter.dismiss()
     }
     
-    func dismissAll() {
-        presenter.dismissAll()
+    func dismissToTabBar() {
+        presenter.dismissToTabBar()
     }
 }

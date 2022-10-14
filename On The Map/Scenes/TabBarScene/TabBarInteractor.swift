@@ -9,6 +9,7 @@ import Foundation
 
 protocol TabBarInteracting: AnyObject {
     func getAllLocations(completion: @escaping (Bool?) -> Void)
+    func openLink(_ urlString: String)
     func logout()
     func presentAddLocation()
 }
@@ -35,6 +36,10 @@ extension TabBarInteractor: TabBarInteracting {
                 }
             }
         }
+    }
+    
+    func openLink(_ urlString: String) {
+        presenter.openLink(urlString)
     }
     
     func logout() {
