@@ -10,7 +10,7 @@ import SnapKit
 
 protocol LoginViewDisplyaing: AnyObject, AlertViewProtocol, LoadingViewProtocol {
     func login()
-    func openURL()
+    func openLink()
     func displayError(_ error: String)
 }
 
@@ -84,7 +84,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         label.text = "Don't have an account? Create one here"
         label.textAlignment = .center
         label.numberOfLines = 0
-        let tap = UITapGestureRecognizer(target: self, action: #selector(openURL))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(openLink))
         label.addGestureRecognizer(tap)
         label.isUserInteractionEnabled = true
         return label
@@ -176,7 +176,7 @@ extension LoginViewController: LoginViewDisplyaing {
     
     // MARK: - Tabbar Controller
     
-    @objc func openURL() {
+    @objc func openLink() {
         interactor.openLink()
     }
     
