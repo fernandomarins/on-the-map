@@ -14,10 +14,12 @@ protocol AddLocationInteracting: AnyObject {
 }
 
 class AddLocationInteractor {
+    private let service: APIServiceProtocol
     private let presenter: AddLocationPresenting
     
-    init(presenter: AddLocationPresenting) {
+    init(presenter: AddLocationPresenting, service: APIServiceProtocol = APIService()) {
         self.presenter = presenter
+        self.service = service
     }
 }
 

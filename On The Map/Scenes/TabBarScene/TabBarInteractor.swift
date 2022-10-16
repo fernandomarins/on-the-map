@@ -15,18 +15,19 @@ protocol TabBarInteracting: AnyObject {
 }
 
 class TabBarInteractor {
-    private lazy var apiService = APIService()
+    private let service: APIServiceProtocol
     private let presenter: TabBarPresenting
     
-    init(presenter: TabBarPresenting) {
+    init(presenter: TabBarPresenting, service: APIServiceProtocol = APIService()) {
         self.presenter = presenter
+        self.service = service
     }
 }
 
 extension TabBarInteractor: TabBarInteracting {
     func getAllLocations(completion: @escaping (Bool?) -> Void) {
         presenter.startLoading()
-        apiService.getAllLocations { [weak self] error in
+        service.getAllLocations { [weak self] error in
             self?.presenter.stopLoading()
             if error == nil {
                 completion(true)
@@ -44,7 +45,7 @@ extension TabBarInteractor: TabBarInteracting {
     }
     
     func logout() {
-        apiService.logout { [weak self] success, error in
+        service.logout { [weak self] success, error in
             if success {
                 self?.presenter.logout()
             } else {
