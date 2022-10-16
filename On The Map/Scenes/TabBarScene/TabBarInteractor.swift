@@ -41,13 +41,13 @@ extension TabBarInteractor: TabBarInteracting {
     }
     
     func openLink(_ urlString: String) {
-        presenter.openLink(urlString)
+        presenter.openLink(action: .openLink(urlString))
     }
     
     func logout() {
         service.logout { [weak self] success, error in
             if success {
-                self?.presenter.logout()
+                self?.presenter.logout(action: .logout)
             } else {
                 if let error {
                     self?.presenter.displayError(error.localizedDescription)
@@ -57,6 +57,6 @@ extension TabBarInteractor: TabBarInteracting {
     }
     
     func presentAddLocation() {
-        presenter.presentAddLocation()
+        presenter.presentAddLocation(action: .presentAddLocationFlow)
     }
 }

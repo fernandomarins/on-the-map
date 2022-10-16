@@ -58,7 +58,7 @@ extension PostLocationInteractor: PostLocationInteracting {
             self?.presenter.stopLoading()
             if success {
                 self?.sendNotification()
-                self?.presenter.dismiss()
+                self?.presenter.dismiss(action: .dismissTabBar)
             } else {
                 if let error {
                     self?.presenter.displayError(error.localizedDescription)
@@ -68,11 +68,11 @@ extension PostLocationInteractor: PostLocationInteracting {
     }
     
     func dismiss() {
-        presenter.dismiss()
+        presenter.dismiss(action: .dismiss)
     }
     
     func dismissToTabBar() {
-        presenter.dismissToTabBar()
+        presenter.dismissToTabBar(action: .dismissTabBar)
     }
     
     private func sendNotification() {

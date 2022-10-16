@@ -28,7 +28,7 @@ extension LoginInteractor: LoginInteracting {
         service.login(username: username, password: password) { [weak self] success, error in
             self?.presenter.stopLoading()
             if success {
-                self?.presenter.presentTabBar()
+                self?.presenter.presentTabBar(action: .presentTabBar)
             } else {
                 if let error {
                     self?.presenter.displayError(error.localizedDescription)
@@ -38,6 +38,6 @@ extension LoginInteractor: LoginInteracting {
     }
     
     func openLink() {
-        presenter.openLink()
+        presenter.openLink(action: .openLink)
     }
 }

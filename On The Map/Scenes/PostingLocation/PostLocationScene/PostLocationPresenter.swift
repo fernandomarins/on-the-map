@@ -12,8 +12,8 @@ protocol PostLocationPresenting: AnyObject {
     func displayError(_ error: String)
     func startLoading()
     func stopLoading()
-    func dismiss()
-    func dismissToTabBar()
+    func dismiss(action: PostLocationAction)
+    func dismissToTabBar(action: PostLocationAction)
 }
 
 class PostLocationPresenter {
@@ -39,11 +39,11 @@ extension PostLocationPresenter: PostLocationPresenting {
         viewController?.stopLoadingView()
     }
     
-    func dismiss() {
-        coordinator.perform(action: .dismiss)
+    func dismiss(action: PostLocationAction) {
+        coordinator.perform(action: action)
     }
     
-    func dismissToTabBar() {
-        coordinator.perform(action: .dismissTabBar)
+    func dismissToTabBar(action: PostLocationAction) {
+        coordinator.perform(action: action)
     }
 }
