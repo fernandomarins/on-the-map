@@ -13,17 +13,19 @@ protocol LoginInteracting: AnyObject {
 }
 
 class LoginInteractor {
+    private let service: APIServiceProtocol
     private let presenter: LoginPresenting
     
-    init(presenter: LoginPresenting) {
+    init(presenter: LoginPresenting, service: APIServiceProtocol = APIService()) {
         self.presenter = presenter
+        self.service = service
     }
 }
 
 extension LoginInteractor: LoginInteracting {
     func login(username: String, password: String) {
         presenter.startLoading()
-        Client.login(username: username, password: password) { [weak self] success, error in
+        service.login(username: username, password: password) { [weak self] success, error in
             self?.presenter.stopLoading()
             if success {
                 self?.presenter.presentTabBar()

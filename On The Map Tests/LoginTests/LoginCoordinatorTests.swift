@@ -20,7 +20,6 @@ final class LoginCoordinatorTests: XCTestCase {
 
     func testPerformPresentTabBar() {
         sut.perform(action: .presentTabBar)
-        
         XCTAssertEqual(viewControllerSpy.callPresentViewControllerCount, 1)
     }
 }
