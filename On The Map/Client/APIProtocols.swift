@@ -16,6 +16,7 @@ protocol APIProtocol {
     var session: URLSessionProtocol { get }
     func taskForGETRequest<ResponseType: Decodable>(url: URL, responseType: ResponseType.Type, isUserInfo: Bool, completion: @escaping (Result<ResponseType, Error>) -> Void) -> Void
     func taskForPOSTRequest<ResponseType: Decodable, PostType: Encodable>(url: URL, responseType: ResponseType.Type, body: PostType, login: Bool, completion: @escaping(Result<ResponseType, Error>) -> Void) -> Void
+    func taskForDELETERequest(url: URL, completion: @escaping (Result<Bool, Error>) -> Void) -> Void
 }
 
 protocol APIServiceProtocol: APIProtocol {
@@ -42,12 +43,18 @@ extension APIProtocol {
     func taskForGETRequest<ResponseType: Decodable>(url: URL, responseType: ResponseType.Type, isUserInfo: Bool, completion: @escaping (Result<ResponseType, Error>) -> Void) -> Void {
         session.fetchData(with: url) { data, response, error in
             
+            if let error = error {
+                 completion(.failure(error))
+                 return
+             }
+            
+            guard let response = response as? HTTPURLResponse, (200...210).contains(response.statusCode) else {
+                completion(.failure(ApiError.unknow))
+                return
+            }
+            
             guard let data = data else {
-                DispatchQueue.main.async {
-                    if let error {
-                        completion(.failure(error))
-                    }
-                }
+                completion(.failure(ApiError.invalidData))
                 return
             }
             
@@ -67,7 +74,7 @@ extension APIProtocol {
                     }
                 }
             } catch {
-                completion(.failure(error))
+                completion(.failure(ApiError.parse))
             }
         }
     }
@@ -83,12 +90,18 @@ extension APIProtocol {
         
         session.fetchDataRequest(with: request) { data, response, error in
             
+            if let error = error {
+                 completion(.failure(error))
+                 return
+             }
+            
+            guard let response = response as? HTTPURLResponse, (200...210).contains(response.statusCode) else {
+                completion(.failure(ApiError.unknow))
+                return
+            }
+            
             guard let data = data else {
-                DispatchQueue.main.async {
-                    if let error {
-                        completion(.failure(error))
-                    }
-                }
+                completion(.failure(ApiError.invalidData))
                 return
             }
             
@@ -114,4 +127,47 @@ extension APIProtocol {
             }
         }
     }
+    
+//    func taskForGETRequest<ResponseType: Decodable>(url: URL, responseType: ResponseType.Type, isUserInfo: Bool, completion: @escaping (Result<ResponseType, Error>) -> Void) -> Void {
+    
+    func taskForDELETERequest(url: URL, completion: @escaping (Result<Bool, Error>) -> Void) -> Void {
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        var xsrfCookie: HTTPCookie? = nil
+        let sharedCookieStorage = HTTPCookieStorage.shared
+        for cookie in sharedCookieStorage.cookies! {
+            if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
+        }
+        
+        if let xsrfCookie = xsrfCookie {
+            request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
+        }
+        
+        session.fetchDataRequest(with: request) { data, response, error in
+            
+            if let error = error {
+                 completion(.failure(error))
+                 return
+             }
+            
+            guard let response = response as? HTTPURLResponse, (200...210).contains(response.statusCode) else {
+                completion(.failure(ApiError.unknow))
+                return
+            }
+            
+            guard data != nil else {
+                completion(.failure(ApiError.invalidData))
+                return
+            }
+
+//            Auth.sessionId = ""
+            completion(.success(true))
+        }
+    }
+}
+
+enum ApiError: Error {
+    case unknow
+    case invalidData
+    case parse
 }
