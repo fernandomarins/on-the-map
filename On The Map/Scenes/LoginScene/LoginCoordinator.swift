@@ -32,8 +32,8 @@ extension LoginCoordinator: LoginCoordinating {
     }
     
     private func linkOpener() {
-        let url = URL(string: "https://auth.udacity.com/sign-up")
-        UIApplication.shared.open(url!, options: [:])
+        guard let url = URL(string: "https://auth.udacity.com/sign-up") else { return }
+        UIApplication.shared.open(url, options: [:])
     }
     
     private func showTabBarFlow() {

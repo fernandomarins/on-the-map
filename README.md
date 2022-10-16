@@ -16,4 +16,4 @@ This is an app allows the user to post a location along with a link to a server.
 
 Xcode 13 Swift 5
 
-## UPDATING TO VIEWCODE AND VIP+C
+## ADDING UNIT TESTS AND REFACTORING THE CLIENT CLASS

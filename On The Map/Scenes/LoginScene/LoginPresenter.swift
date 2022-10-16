@@ -33,7 +33,6 @@ extension LoginPresenter: LoginPresenting {
     
     func displayError(_ error: String) {
         viewController?.displayError(error)
-        // TODO: chamar o showAlert do AlertViewProtocol ao invés de declarar
     }
     
     func openLink() {
