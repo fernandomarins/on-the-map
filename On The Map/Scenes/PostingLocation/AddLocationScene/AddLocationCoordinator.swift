@@ -9,9 +9,7 @@ import UIKit
 
 enum AddLocationAction {
     case dismiss
-    case presentPostLocationViewController(_ location: String,
-                                           _ mediaURL: String,
-                                           _ coordinates: (Double, Double))
+    case presentPost(location: Location)
 }
 
 protocol AddLocationCoordinating: AnyObject {
@@ -28,8 +26,8 @@ extension AddLocationCoordinator: AddLocationCoordinating {
         switch action {
         case .dismiss:
             viewController?.navigationController?.dismiss(animated: true)
-        case .presentPostLocationViewController(let location, let mediaURL, let coordinates):
-            let scene = PostLocationViewControllerFactory.make(location, mediaURL, coordinates)
+        case .presentPost(let location):
+            let scene = PostLocationViewControllerFactory.make(location.location, location.mediaURL, location.coordinates)
             viewController?.navigationController?.pushViewController(scene, animated: true)
         }
     }

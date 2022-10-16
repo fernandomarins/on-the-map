@@ -144,7 +144,7 @@ class AddLocationViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc private func dismissView() {
-        interactor.dismiss()
+        interactor.dismiss(action: .dismiss)
     }
     
     @objc private func geocode() {

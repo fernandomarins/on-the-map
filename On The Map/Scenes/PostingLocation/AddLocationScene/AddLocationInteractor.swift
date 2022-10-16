@@ -10,7 +10,7 @@ import CoreLocation
 
 protocol AddLocationInteracting: AnyObject {
     func geocode(_ location: String, _ mediaURL: String)
-    func dismiss()
+    func dismiss(action: AddLocationAction)
 }
 
 class AddLocationInteractor {
@@ -35,14 +35,15 @@ extension AddLocationInteractor: AddLocationInteracting {
             
             if let placemarks = placemarks?.first?.location {
                 let coordinates: CLLocationCoordinate2D = placemarks.coordinate
-                self?.presenter.presentPostLocationViewController(location,
-                                                                  mediaURL,
-                                                                  (coordinates.latitude, coordinates.longitude))
+                let location: Location = Location(location: location,
+                                                  mediaURL: mediaURL,
+                                                  coordinates: (coordinates.latitude, coordinates.longitude))
+                self?.presenter.presentPostLocation(action: .presentPost(location: location))
             }
         }
     }
     
-    func dismiss() {
-        presenter.dismiss()
+    func dismiss(action: AddLocationAction) {
+        presenter.dismiss(action: .dismiss)
     }
 }
