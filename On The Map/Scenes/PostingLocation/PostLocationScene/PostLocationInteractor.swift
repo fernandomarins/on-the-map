@@ -9,9 +9,7 @@ import Foundation
 
 protocol PostLocationInteracting: AnyObject {
     func getUserInfo(completion: @escaping (Bool) -> Void)
-    func post(_ location: String,
-              _ mediaURL: String,
-              _ coordinates: (latitude: Double, longitude: Double))
+    func post(_ location: Location)
     func dismiss()
     func dismissToTabBar()
 }
@@ -43,17 +41,15 @@ extension PostLocationInteractor: PostLocationInteracting {
         }
     }
     
-    func post(_ location: String,
-              _ mediaURL: String,
-              _ coordinates: (latitude: Double, longitude: Double)) {
+    func post(_ location: Location) {
         presenter.startLoading()
         let postLocation = PostLocation(uniqueKey: APIService.Auth.uniqueKey,
                                         firstName: APIService.Auth.firstName,
                                         lastName: APIService.Auth.lastName,
-                                        mapString: location,
-                                        mediaURL: mediaURL,
-                                        latitude: coordinates.latitude,
-                                        longitude: coordinates.longitude)
+                                        mapString: location.location,
+                                        mediaURL: location.mediaURL,
+                                        latitude: location.coordinates.latitude,
+                                        longitude: location.coordinates.longitude)
         service.post(student: postLocation) { [weak self] success, error in
             self?.presenter.stopLoading()
             if success {

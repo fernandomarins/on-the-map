@@ -97,9 +97,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         view.backgroundColor = .white
         addViews()
         addConstraints()
-        
-        usernameTextField.text = "f.augustomarins@gmail.com"
-        passwordTextField.text = "123Pirralho"
     }
     
     // MARK: - Add views

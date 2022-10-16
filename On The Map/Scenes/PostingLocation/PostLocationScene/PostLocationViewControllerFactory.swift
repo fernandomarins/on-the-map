@@ -9,16 +9,12 @@ import UIKit
 
 class PostLocationViewControllerFactory {
     
-    static func make(_ location: String,
-                     _ mediaURL: String,
-                     _ coordinates: (latitude: Double, longitude: Double)) -> UIViewController {
+    static func make(_ location: Location) -> UIViewController {
         let coordinator: PostLocationCoordinating = PostLocationCoordinator()
         let presenter: PostLocationPresenting = PostLocationPresenter(coordinator: coordinator)
         let interactor: PostLocationInteracting = PostLocationInteractor(presenter: presenter)
         
         let viewController = PostLocationViewController(interactor: interactor,
-                                                        coordinates: coordinates,
-                                                        mediaURL: mediaURL,
                                                         location: location)
         
         coordinator.viewController = viewController

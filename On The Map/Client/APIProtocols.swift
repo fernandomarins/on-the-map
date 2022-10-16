@@ -128,8 +128,6 @@ extension APIProtocol {
         }
     }
     
-//    func taskForGETRequest<ResponseType: Decodable>(url: URL, responseType: ResponseType.Type, isUserInfo: Bool, completion: @escaping (Result<ResponseType, Error>) -> Void) -> Void {
-    
     func taskForDELETERequest(url: URL, completion: @escaping (Result<Bool, Error>) -> Void) -> Void {
         var request = URLRequest(url: url)
         request.httpMethod = "DELETE"
@@ -160,14 +158,7 @@ extension APIProtocol {
                 return
             }
 
-//            Auth.sessionId = ""
             completion(.success(true))
         }
     }
-}
-
-enum ApiError: Error {
-    case unknow
-    case invalidData
-    case parse
 }

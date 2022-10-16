@@ -27,7 +27,7 @@ extension AddLocationCoordinator: AddLocationCoordinating {
         case .dismiss:
             viewController?.navigationController?.dismiss(animated: true)
         case .presentPost(let location):
-            let scene = PostLocationViewControllerFactory.make(location.location, location.mediaURL, location.coordinates)
+            let scene = PostLocationViewControllerFactory.make(location)
             viewController?.navigationController?.pushViewController(scene, animated: true)
         }
     }
