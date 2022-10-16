@@ -10,5 +10,5 @@ import Foundation
 struct Location {
     let location: String
     let mediaURL: String
-    let coordinates: (Double, Double)
+    let coordinates: (latitude: Double, longitude: Double)
 }
