@@ -9,7 +9,7 @@ import Foundation
 
 class APIService {
     
-    var session: URLSessionProtocol
+    let session: URLSessionProtocol
     
     init(session: URLSessionProtocol = URLSession.shared) {
         self.session = session
@@ -98,27 +98,15 @@ extension APIService: APIServiceProtocol {
     }
     
     func logout(completion: @escaping(Bool, Error?) -> Void) {
-        var request = URLRequest(url: EndPoints.logout.url)
-        request.httpMethod = "DELETE"
-        var xsrfCookie: HTTPCookie? = nil
-        let sharedCookieStorage = HTTPCookieStorage.shared
-        for cookie in sharedCookieStorage.cookies! {
-            if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
-        }
-        
-        if let xsrfCookie = xsrfCookie {
-            request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
-        }
-        let session = URLSession.shared
-        let task = session.dataTask(with: request) { data, response, error in
-            guard data != nil else {
+        taskForDELETERequest(url: EndPoints.logout.url) { result in
+            switch result {
+            case .success(let success):
+                Auth.sessionId = ""
+                completion(success, nil)
+            case .failure(let error):
                 completion(false, error)
-                return
             }
-            Auth.sessionId = ""
-            completion(true, nil)
         }
-        task.resume()
     }
     
     func getUserInfo(completion: @escaping(Bool, Error?) -> Void) {
