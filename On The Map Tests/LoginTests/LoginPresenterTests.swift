@@ -12,8 +12,8 @@ private final class LoginViewControllerSpy: LoginViewDisplyaing {
     var activityIndicator = LoadingView()
     
     enum Messages {
-        case login
-        case openURL
+        case presentTabBar
+        case openLink
         case displayError
         case startLoadingView
         case stopLoadingView
@@ -23,11 +23,11 @@ private final class LoginViewControllerSpy: LoginViewDisplyaing {
     private(set) var error: String?
     
     func login() {
-        messagesSent.append(.login)
+        messagesSent.append(.presentTabBar)
     }
     
-    func openURL() {
-        messagesSent.append(.openURL)
+    func openLink() {
+        messagesSent.append(.openLink)
     }
     
     func displayError(_ error: String) {
@@ -73,13 +73,15 @@ final class LoginPresenterTests: XCTestCase {
     func testPerformPresentTabBar() {
         sut.presentTabBar(action: .presentTabBar)
         
-        XCTAssertEqual(viewControllerSpy.messagesSent, [.login])
+        XCTAssertEqual(coordinatorSpy.messagesSent, [.perform])
+        XCTAssertEqual(coordinatorSpy.action, .presentTabBar)
     }
     
     func testOpenUrl() {
-        sut.presentTabBar(action: .openLink)
+        sut.openLink(action: .openLink)
         
-        XCTAssertEqual(viewControllerSpy.messagesSent, [.openURL])
+        XCTAssertEqual(coordinatorSpy.messagesSent, [.perform])
+        XCTAssertEqual(coordinatorSpy.action, .openLink)
     }
     
     func testDisplayError() {
