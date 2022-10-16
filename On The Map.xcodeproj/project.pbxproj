@@ -44,7 +44,6 @@
 		55FFD873275914DB003654AA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55FFD871275914DB003654AA /* LaunchScreen.storyboard */; };
 		55FFD87D27591650003654AA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FFD87C27591650003654AA /* User.swift */; };
 		55FFD87F2759166E003654AA /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FFD87E2759166E003654AA /* LoginResponse.swift */; };
-		55FFD8812759169F003654AA /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FFD8802759169F003654AA /* API.swift */; };
 		55FFD88F27593F9D003654AA /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FFD88E27593F9D003654AA /* MapViewController.swift */; };
 		55FFD89127593FAA003654AA /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FFD89027593FAA003654AA /* TableViewController.swift */; };
 		55FFD89427594274003654AA /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FFD89327594274003654AA /* Student.swift */; };
@@ -105,7 +104,6 @@
 		55FFD874275914DB003654AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		55FFD87C27591650003654AA /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		55FFD87E2759166E003654AA /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
-		55FFD8802759169F003654AA /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		55FFD88E27593F9D003654AA /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		55FFD89027593FAA003654AA /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		55FFD89327594274003654AA /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
@@ -328,7 +326,6 @@
 		55FFD882275916A9003654AA /* Client */ = {
 			isa = PBXGroup;
 			children = (
-				55FFD8802759169F003654AA /* API.swift */,
 				556D993528FACF1C0048C73C /* APIService.swift */,
 				556D993728FACF230048C73C /* APIProtocols.swift */,
 			);
@@ -500,7 +497,6 @@
 				556D993828FACF230048C73C /* APIProtocols.swift in Sources */,
 				55FB594328F843F000ADA6A4 /* TabBarPresenter.swift in Sources */,
 				55FB593F28F8395E00ADA6A4 /* TabBarViewController.swift in Sources */,
-				55FFD8812759169F003654AA /* API.swift in Sources */,
 				55FB594528F843F800ADA6A4 /* TabBarCoordinator.swift in Sources */,
 				55B9254228F723C1003765B7 /* LoginPresenter.swift in Sources */,
 				55FB593D28F838AD00ADA6A4 /* TabBarControllerFactory.swift in Sources */,

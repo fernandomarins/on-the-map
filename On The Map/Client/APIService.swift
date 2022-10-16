@@ -10,6 +10,7 @@ import Foundation
 class APIService {
     
     var session: URLSessionProtocol
+    
     init(session: URLSessionProtocol = URLSession.shared) {
         self.session = session
     }
@@ -110,12 +111,10 @@ extension APIService: APIServiceProtocol {
         }
         let session = URLSession.shared
         let task = session.dataTask(with: request) { data, response, error in
-            guard let data = data else {
+            guard data != nil else {
                 completion(false, error)
                 return
             }
-            
-            let newData = self.removeFirstFiveCharacters(data)
             Auth.sessionId = ""
             completion(true, nil)
         }

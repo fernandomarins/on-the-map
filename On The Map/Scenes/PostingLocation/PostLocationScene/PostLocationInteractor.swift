@@ -17,18 +17,19 @@ protocol PostLocationInteracting: AnyObject {
 }
 
 class PostLocationInteractor {
-    private let apiService = APIService()
+    private let service: APIServiceProtocol
     private let presenter: PostLocationPresenting
     
-    init(presenter: PostLocationPresenting) {
+    init(presenter: PostLocationPresenting, service: APIServiceProtocol = APIService()) {
         self.presenter = presenter
+        self.service = service
     }
 }
 
 extension PostLocationInteractor: PostLocationInteracting {
     func getUserInfo(completion: @escaping (Bool) -> Void) {
         presenter.startLoading()
-        apiService.getUserInfo { [weak self] success, error in
+        service.getUserInfo { [weak self] success, error in
             self?.presenter.stopLoading()
             if success {
                 completion(true)
@@ -53,7 +54,7 @@ extension PostLocationInteractor: PostLocationInteracting {
                                         mediaURL: mediaURL,
                                         latitude: coordinates.latitude,
                                         longitude: coordinates.longitude)
-        apiService.post(student: postLocation) { [weak self] success, error in
+        service.post(student: postLocation) { [weak self] success, error in
             self?.presenter.stopLoading()
             if success {
                 self?.sendNotification()
