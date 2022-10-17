@@ -20,11 +20,11 @@ protocol APIProtocol {
 }
 
 protocol APIServiceProtocol: APIProtocol {
-    func getAllLocations(completion: @escaping (Error?) -> Void) -> Void
-    func login(username: String, password: String, completion: @escaping (Bool, Error?) -> Void)
-    func post(student: PostLocation, completion: @escaping(Bool, Error?) -> Void)
-    func logout(completion: @escaping(Bool, Error?) -> Void)
-    func getUserInfo(completion: @escaping(Bool, Error?) -> Void)
+    func getAllLocations(completion: @escaping (Result<Bool, Error>) -> Void) -> Void
+    func login(username: String, password: String, completion: @escaping (Result<Bool, Error>) -> Void)
+    func post(student: PostLocation, completion: @escaping(Result<Bool, Error>) -> Void)
+    func logout(completion: @escaping(Result<Bool, Error>) -> Void)
+    func getUserInfo(completion: @escaping(Result<Bool, Error>) -> Void)
 }
 
 extension URLSession: URLSessionProtocol {

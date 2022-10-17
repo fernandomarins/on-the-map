@@ -57,20 +57,20 @@ class APIService {
 
 extension APIService: APIServiceProtocol {
     
-    func getAllLocations(completion: @escaping (Error?) -> Void) -> Void {
+    func getAllLocations(completion: @escaping (Result<Bool, Error>) -> Void) -> Void {
         taskForGETRequest(url: EndPoints.getStudentLocations.url, responseType: StudentResult.self, isUserInfo: false) { result in
             
             switch result {
             case .success(let results):
                 StudentList.allStudents = results.results
-                completion(nil)
+                completion(.success(true))
             case .failure(let error):
-                completion(error)
+                completion(.failure(error))
             }
         }
     }
     
-    func login(username: String, password: String, completion: @escaping (Bool, Error?) -> Void) {
+    func login(username: String, password: String, completion: @escaping (Result<Bool, Error>) -> Void) {
         let body = UdacityLogin(udacity: UserLogin(username: username, password: password))
         taskForPOSTRequest(url: EndPoints.login.url, responseType: LoginResponse.self, body: body, login: true) { result in
             
@@ -78,38 +78,38 @@ extension APIService: APIServiceProtocol {
             case .success(let response):
                 Auth.sessionId = response.session.id
                 Auth.accountId = response.account.key
-                completion(true, nil)
+                completion(.success(true))
             case .failure(let error):
-                completion(false, error)
+                completion(.failure(error))
             }
         }
     }
     
-    func post(student: PostLocation, completion: @escaping(Bool, Error?) -> Void) {
+    func post(student: PostLocation, completion: @escaping(Result<Bool, Error>) -> Void) {
         taskForPOSTRequest(url: EndPoints.post.url, responseType: PostResponse.self, body: student, login: false) { result in
             
             switch result {
             case .success(_):
-                completion(true, nil)
+                completion(.success(true))
             case .failure(let error):
-                completion(false, error)
+                completion(.failure(error))
             }
         }
     }
     
-    func logout(completion: @escaping(Bool, Error?) -> Void) {
+    func logout(completion: @escaping(Result<Bool, Error>) -> Void) {
         taskForDELETERequest(url: EndPoints.logout.url) { result in
             switch result {
-            case .success(let success):
+            case .success(_):
                 Auth.sessionId = ""
-                completion(success, nil)
+                completion(.success(true))
             case .failure(let error):
-                completion(false, error)
+                completion(.failure(error))
             }
         }
     }
     
-    func getUserInfo(completion: @escaping(Bool, Error?) -> Void) {
+    func getUserInfo(completion: @escaping(Result<Bool, Error>) -> Void) {
         taskForGETRequest(url: EndPoints.getUserInfo.url, responseType: UserDetails.self, isUserInfo: true) { result in
             
             switch result {
@@ -117,9 +117,9 @@ extension APIService: APIServiceProtocol {
                 Auth.firstName = response.firstName
                 Auth.lastName = response.lastName
                 Auth.uniqueKey = response.key
-                completion(true, nil)
+                completion(.success(true))
             case .failure(let error):
-                completion(false, error)
+                completion(.failure(error))
             }
         }
     }
