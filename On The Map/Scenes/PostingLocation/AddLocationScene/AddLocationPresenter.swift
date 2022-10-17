@@ -16,7 +16,7 @@ protocol AddLocationPresenting: AnyObject {
     func dismiss(action: AddLocationAction)
 }
 
-class AddLocationPresenter {
+final class AddLocationPresenter {
     weak var viewController: AddLocationDisplaying?
     private let coordinator: AddLocationCoordinating
     

@@ -13,7 +13,7 @@ protocol AddLocationInteracting: AnyObject {
     func dismiss(action: AddLocationAction)
 }
 
-class AddLocationInteractor {
+final class AddLocationInteractor {
     private let service: APIServiceProtocol
     private let presenter: AddLocationPresenting
     

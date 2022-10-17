@@ -14,7 +14,7 @@ protocol TabBarInteracting: AnyObject {
     func presentAddLocation()
 }
 
-class TabBarInteractor {
+final class TabBarInteractor {
     private let service: APIServiceProtocol
     private let presenter: TabBarPresenting
     

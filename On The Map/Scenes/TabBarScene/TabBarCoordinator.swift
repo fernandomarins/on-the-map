@@ -18,7 +18,7 @@ protocol TabBarCoordinating: AnyObject {
     func perform(action: TabBarAction)
 }
 
-class TabBarCoordinator {
+final class TabBarCoordinator {
     weak var viewController: UIViewController?
 }
 

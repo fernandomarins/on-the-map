@@ -13,7 +13,7 @@ protocol PostLocationDisplaying: AnyObject, AlertViewProtocol, LoadingViewProtoc
     func displayError(_ error: String)
 }
 
-class PostLocationViewController: UIViewController, MKMapViewDelegate {
+final class PostLocationViewController: UIViewController, MKMapViewDelegate {
     
     let interactor: PostLocationInteracting
     let location: Location

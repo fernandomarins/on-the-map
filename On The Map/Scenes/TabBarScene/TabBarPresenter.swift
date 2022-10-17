@@ -17,7 +17,7 @@ protocol TabBarPresenting: AnyObject {
     func logout(action: TabBarAction)
 }
 
-class TabBarPresenter {
+final class TabBarPresenter {
     weak var viewController: TabBarDisplaying?
     
     private let coordinator: TabBarCoordinating

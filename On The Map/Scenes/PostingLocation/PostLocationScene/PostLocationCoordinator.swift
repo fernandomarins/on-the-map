@@ -17,7 +17,7 @@ protocol PostLocationCoordinating: AnyObject {
     func perform(action: PostLocationAction)
 }
 
-class PostLocationCoordinator {
+final class PostLocationCoordinator {
     weak var viewController: UIViewController?
 }
 

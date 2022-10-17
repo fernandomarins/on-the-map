@@ -7,8 +7,7 @@
 
 import UIKit
 
-class PostLocationViewControllerFactory {
-    
+enum PostLocationViewControllerFactory {
     static func make(_ location: Location) -> UIViewController {
         let coordinator: PostLocationCoordinating = PostLocationCoordinator()
         let presenter: PostLocationPresenting = PostLocationPresenter(coordinator: coordinator)

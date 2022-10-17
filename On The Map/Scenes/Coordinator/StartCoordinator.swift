@@ -11,7 +11,7 @@ protocol StartCoordinating {
     func start(with scene: UIWindowScene) -> UIWindow
 }
 
-class StartCoordinator: StartCoordinating {
+final class StartCoordinator: StartCoordinating {
     func start(with scene: UIWindowScene) -> UIWindow {
         let window = UIWindow(windowScene: scene)
         let viewController = LoginViewControllerFactory.make()

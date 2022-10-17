@@ -17,7 +17,7 @@ protocol AddLocationCoordinating: AnyObject {
     func perform(action: AddLocationAction)
 }
 
-class AddLocationCoordinator {
+final class AddLocationCoordinator {
     weak var viewController: UIViewController?
 }
 

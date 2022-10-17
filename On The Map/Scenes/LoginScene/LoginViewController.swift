@@ -14,7 +14,7 @@ protocol LoginViewDisplyaing: AnyObject, AlertViewProtocol, LoadingViewProtocol 
     func displayError(_ error: String)
 }
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+final class LoginViewController: UIViewController, UITextFieldDelegate {
     
     private let interactor: LoginInteracting
     
