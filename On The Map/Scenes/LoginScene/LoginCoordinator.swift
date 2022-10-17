@@ -17,7 +17,7 @@ protocol LoginCoordinating: AnyObject {
     func perform(action: LoginAction)
 }
 
-class LoginCoordinator {
+final class LoginCoordinator {
     weak var viewController: UIViewController?
 }
 

@@ -14,7 +14,7 @@ protocol PostLocationInteracting: AnyObject {
     func dismissToTabBar()
 }
 
-class PostLocationInteractor {
+final class PostLocationInteractor {
     private let service: APIServiceProtocol
     private let presenter: PostLocationPresenting
     

@@ -11,7 +11,7 @@ protocol TabBarDisplaying: AnyObject, AlertViewProtocol, LoadingViewProtocol {
     func displayError(_ error: String)
 }
 
-class TabBarViewController: UITabBarController {
+final class TabBarViewController: UITabBarController {
     
     let interactor: TabBarInteracting
     

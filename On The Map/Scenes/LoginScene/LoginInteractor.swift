@@ -12,7 +12,7 @@ protocol LoginInteracting: AnyObject {
     func openLink()
 }
 
-class LoginInteractor {
+final class LoginInteractor {
     private let service: APIServiceProtocol
     private let presenter: LoginPresenting
     

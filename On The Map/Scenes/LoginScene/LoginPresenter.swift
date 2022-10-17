@@ -16,7 +16,7 @@ protocol LoginPresenting: AnyObject {
     func stopLoading()
 }
 
-class LoginPresenter {
+final class LoginPresenter {
     weak var viewController: LoginViewDisplyaing?
     private let coordinator: LoginCoordinating
     

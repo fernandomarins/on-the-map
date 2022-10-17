@@ -7,8 +7,7 @@
 
 import UIKit
 
-class TabBarControllerFactory {
-    
+enum TabBarControllerFactory {
     static func make() -> UITabBarController {
         let coordinator: TabBarCoordinating = TabBarCoordinator()
         let presenter: TabBarPresenting = TabBarPresenter(coordinator: coordinator)

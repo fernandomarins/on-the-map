@@ -9,7 +9,7 @@ import UIKit
 import MapKit
 import SnapKit
 
-class MapViewController: TabBarViewController, MKMapViewDelegate {
+final class MapViewController: TabBarViewController, MKMapViewDelegate {
     
     // MARK: - Variables
     

@@ -16,7 +16,7 @@ protocol PostLocationPresenting: AnyObject {
     func dismissToTabBar(action: PostLocationAction)
 }
 
-class PostLocationPresenter {
+final class PostLocationPresenter {
     weak var viewController: PostLocationDisplaying?
     private let coordinator: PostLocationCoordinating
     
