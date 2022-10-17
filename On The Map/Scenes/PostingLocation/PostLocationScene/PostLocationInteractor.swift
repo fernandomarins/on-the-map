@@ -27,14 +27,13 @@ class PostLocationInteractor {
 extension PostLocationInteractor: PostLocationInteracting {
     func getUserInfo(completion: @escaping (Bool) -> Void) {
         presenter.startLoading()
-        service.getUserInfo { [weak self] success, error in
+        service.getUserInfo { [weak self] result in
             self?.presenter.stopLoading()
-            if success {
-                completion(true)
-                return
-            }
             
-            if let error {
+            switch result {
+            case .success(_):
+                completion(true)
+            case .failure(let error):
                 self?.presenter.displayError(error.localizedDescription)
                 completion(false)
             }
@@ -50,15 +49,14 @@ extension PostLocationInteractor: PostLocationInteracting {
                                         mediaURL: location.mediaURL,
                                         latitude: location.coordinates.latitude,
                                         longitude: location.coordinates.longitude)
-        service.post(student: postLocation) { [weak self] success, error in
+        service.post(student: postLocation) { [weak self] result in
             self?.presenter.stopLoading()
-            if success {
+            switch result {
+            case .success(_):
                 self?.sendNotification()
                 self?.presenter.dismiss(action: .dismissTabBar)
-            } else {
-                if let error {
-                    self?.presenter.displayError(error.localizedDescription)
-                }
+            case .failure(let error):
+                self?.presenter.displayError(error.localizedDescription)
             }
         }
     }

@@ -25,14 +25,13 @@ class LoginInteractor {
 extension LoginInteractor: LoginInteracting {
     func login(username: String, password: String) {
         presenter.startLoading()
-        service.login(username: username, password: password) { [weak self] success, error in
+        service.login(username: username, password: password) { [weak self] result in
             self?.presenter.stopLoading()
-            if success {
+            switch result {
+            case .success(_):
                 self?.presenter.presentTabBar(action: .presentTabBar)
-            } else {
-                if let error {
-                    self?.presenter.displayError(error.localizedDescription)
-                }
+            case .failure(let error):
+                self?.presenter.displayError(error.localizedDescription)
             }
         }
     }

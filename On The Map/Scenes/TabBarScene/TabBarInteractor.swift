@@ -27,15 +27,14 @@ class TabBarInteractor {
 extension TabBarInteractor: TabBarInteracting {
     func getAllLocations(completion: @escaping (Bool?) -> Void) {
         presenter.startLoading()
-        service.getAllLocations { [weak self] error in
+        service.getAllLocations { [weak self] result in
             self?.presenter.stopLoading()
-            if error == nil {
+            switch result {
+            case .success(_):
                 completion(true)
-            } else {
-                if let error {
-                    self?.presenter.displayError(error.localizedDescription)
-                    completion(nil)
-                }
+            case .failure(let error):
+                self?.presenter.displayError(error.localizedDescription)
+                completion(nil)
             }
         }
     }
@@ -45,13 +44,14 @@ extension TabBarInteractor: TabBarInteracting {
     }
     
     func logout() {
-        service.logout { [weak self] success, error in
-            if success {
+        presenter.startLoading()
+        service.logout { [weak self] result in
+            self?.presenter.startLoading()
+            switch result {
+            case .success(_):
                 self?.presenter.logout(action: .logout)
-            } else {
-                if let error {
-                    self?.presenter.displayError(error.localizedDescription)
-                }
+            case .failure(let error):
+                self?.presenter.displayError(error.localizedDescription)
             }
         }
     }
