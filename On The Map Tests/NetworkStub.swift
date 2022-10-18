@@ -11,6 +11,8 @@ struct NetworkStub: APIServiceProtocol {
     
     var session: URLSessionProtocol //= URLSession.shared
     
+    var successfully: Result<Bool, Error>?
+    
     func getAllLocations(completion: @escaping (Result<Bool, Error>) -> Void) {
         completion(.success(true))
     }
