@@ -5,7 +5,7 @@
 //  Created by Fernando Marins on 17/10/22.
 //
 
-import Foundation
+import XCTest
 @testable import On_The_Map
 
 private final class LoginPresenterSpy: LoginPresenting {
@@ -46,5 +46,26 @@ private final class LoginPresenterSpy: LoginPresenting {
     
     func stopLoading() {
         messagsSent.append(.stopLoading)
+    }
+}
+
+final class LoginInteractorTests: XCTestCase {
+    private let presenterSpy = LoginPresenterSpy()
+    private var serviceMock = NetworkStub(session: URLSession.shared)
+    
+    private var sut: LoginInteractor {
+        let interactor = LoginInteractor(presenter: presenterSpy,
+                                         service: serviceMock)
+        return interactor
+    }
+    
+    func testLogin() {
+        serviceMock.successfully = .success(true)
+        
+        sut.login(username: "", password: "")
+        
+        XCTAssertEqual(presenterSpy.messagsSent, [.startLoading,
+                                                  .stopLoading,
+                                                  .presentTabBar])
     }
 }
