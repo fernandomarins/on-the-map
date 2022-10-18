@@ -11,26 +11,26 @@ struct NetworkStub: APIServiceProtocol {
     
     var session: URLSessionProtocol //= URLSession.shared
     
-    var successfully: Result<Bool, Error>?
+    var result: Result<Bool, Error> = .success(true)
     
     func getAllLocations(completion: @escaping (Result<Bool, Error>) -> Void) {
-        completion(.success(true))
+        completion(result)
     }
     
     func login(username: String, password: String, completion: @escaping (Result<Bool, Error>) -> Void) {
-        completion(.success(true))
+        completion(result)
     }
     
     func post(student: PostLocation, completion: @escaping (Result<Bool, Error>) -> Void) {
-        completion(.success(true))
+        completion(result)
     }
     
     func logout(completion: @escaping (Result<Bool, Error>) -> Void) {
-        completion(.success(true))
+        completion(result)
     }
     
     func getUserInfo(completion: @escaping (Result<Bool, Error>) -> Void) {
-        completion(.success(true))
+        completion(result)
     }
 }
 

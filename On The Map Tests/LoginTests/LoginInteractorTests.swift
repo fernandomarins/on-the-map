@@ -59,13 +59,34 @@ final class LoginInteractorTests: XCTestCase {
         return interactor
     }
     
-    func testLogin() {
-        serviceMock.successfully = .success(true)
+    func testLoginShouldPass() {
+        serviceMock.result = .success(true)
         
         sut.login(username: "", password: "")
         
         XCTAssertEqual(presenterSpy.messagsSent, [.startLoading,
                                                   .stopLoading,
                                                   .presentTabBar])
+    }
+    
+    func testLoginShouldFail() {
+        let expectedError: ApiError = .unknow
+        serviceMock.result = .failure(expectedError)
+        
+        sut.login(username: "", password: "")
+        
+        XCTAssertEqual(presenterSpy.messagsSent, [.startLoading,
+                                                  .stopLoading,
+                                                  .displayError])
+        XCTAssertEqual(presenterSpy.error, "The operation couldn’t be completed. (On_The_Map.ApiError error 0.)")
+    }
+    
+    func testOpenLinkShouldPass() {
+        serviceMock.result = .success(true)
+        
+        sut.openLink()
+        
+        XCTAssertEqual(presenterSpy.messagsSent, [.openLink])
+        XCTAssertEqual(presenterSpy.action, .openLink)
     }
 }
