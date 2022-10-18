@@ -22,4 +22,6 @@ final class LoginCoordinatorTests: XCTestCase {
         sut.perform(action: .presentTabBar)
         XCTAssertEqual(viewControllerSpy.callPresentViewControllerCount, 1)
     }
+    
+    // TODO: Add test for the open link
 }

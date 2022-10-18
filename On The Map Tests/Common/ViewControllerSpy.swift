@@ -7,9 +7,8 @@
 
 import UIKit
 
-class ViewControllerSpy: UIViewController {
+final class ViewControllerSpy: UIViewController {
     public private(set) var presentViewControllerInvocations: [UIViewController] = []
-    
     public private(set) var showViewControllerInvocations: [UIViewController] = []
     
     public private(set) var callDismissCount = 0

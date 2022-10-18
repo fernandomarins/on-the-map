@@ -163,8 +163,7 @@
 		556D991E28F9D48F0048C73C /* On The Map Tests */ = {
 			isa = PBXGroup;
 			children = (
-				556D993E28FCB48A0048C73C /* NetworkStub.swift */,
-				556D994328FD69060048C73C /* ClientTests.swift */,
+				55AC2E6228FF575A00B4A332 /* NetworkTests */,
 				556D993128FA3D340048C73C /* LoginTests */,
 				556D993228FA3D420048C73C /* Common */,
 			);
@@ -195,6 +194,15 @@
 				556D994128FCB7F00048C73C /* ApiError.swift */,
 			);
 			path = Error;
+			sourceTree = "<group>";
+		};
+		55AC2E6228FF575A00B4A332 /* NetworkTests */ = {
+			isa = PBXGroup;
+			children = (
+				556D993E28FCB48A0048C73C /* NetworkStub.swift */,
+				556D994328FD69060048C73C /* ClientTests.swift */,
+			);
+			path = NetworkTests;
 			sourceTree = "<group>";
 		};
 		55B9253E28F723AB003765B7 /* LoginScene */ = {
