@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		552C94262900195A00AAA4E0 /* TabBarInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552C94252900195A00AAA4E0 /* TabBarInteractorTests.swift */; };
 		552C9428290064C500AAA4E0 /* TabBarPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552C9427290064C400AAA4E0 /* TabBarPresenterTests.swift */; };
+		552C942A29006A2600AAA4E0 /* TabBarCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552C942929006A2600AAA4E0 /* TabBarCoordinatorTests.swift */; };
 		556D991428F9A1560048C73C /* StartCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556D991328F9A1560048C73C /* StartCoordinator.swift */; };
 		556D992028F9D48F0048C73C /* LoginCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556D991F28F9D48F0048C73C /* LoginCoordinatorTests.swift */; };
 		556D992728F9D6350048C73C /* ViewControllerSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556D992628F9D6350048C73C /* ViewControllerSpy.swift */; };
@@ -74,6 +75,7 @@
 /* Begin PBXFileReference section */
 		552C94252900195A00AAA4E0 /* TabBarInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarInteractorTests.swift; sourceTree = "<group>"; };
 		552C9427290064C400AAA4E0 /* TabBarPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarPresenterTests.swift; sourceTree = "<group>"; };
+		552C942929006A2600AAA4E0 /* TabBarCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinatorTests.swift; sourceTree = "<group>"; };
 		556D991328F9A1560048C73C /* StartCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartCoordinator.swift; sourceTree = "<group>"; };
 		556D991D28F9D48F0048C73C /* On The Map Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "On The Map Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		556D991F28F9D48F0048C73C /* LoginCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinatorTests.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 			children = (
 				552C94252900195A00AAA4E0 /* TabBarInteractorTests.swift */,
 				552C9427290064C400AAA4E0 /* TabBarPresenterTests.swift */,
+				552C942929006A2600AAA4E0 /* TabBarCoordinatorTests.swift */,
 			);
 			path = TabBarTests;
 			sourceTree = "<group>";
@@ -521,6 +524,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				552C942A29006A2600AAA4E0 /* TabBarCoordinatorTests.swift in Sources */,
 				556D992028F9D48F0048C73C /* LoginCoordinatorTests.swift in Sources */,
 				552C94262900195A00AAA4E0 /* TabBarInteractorTests.swift in Sources */,
 				556D994428FD69060048C73C /* ClientTests.swift in Sources */,

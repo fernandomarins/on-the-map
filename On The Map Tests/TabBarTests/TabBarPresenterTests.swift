@@ -33,7 +33,7 @@ private final class TabBarViewControllerSpy: TabBarDisplaying {
     }
 }
 
-final class TabBarCoordinatorSpy: TabBarCoordinating {
+private final class TabBarCoordinatorSpy: TabBarCoordinating {
     var viewController: UIViewController?
     private(set) var messagesSent: [Messages] = []
     private(set) var action: TabBarAction?
