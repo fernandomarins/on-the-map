@@ -85,14 +85,14 @@ extension APIService: APIServiceProtocol {
         }
     }
     
-    func post(student: PostLocation, completion: @escaping(Result<Bool, Error>) -> Void) {
+    func post(student: PostLocation, completion: @escaping(Result<Bool, ApiError>) -> Void) {
         taskForPOSTRequest(url: EndPoints.post.url, responseType: PostResponse.self, body: student, login: false) { result in
             
             switch result {
             case .success(_):
                 completion(.success(true))
-            case .failure(let error):
-                completion(.failure(error))
+            case .failure(_):
+                completion(.failure(.postError))
             }
         }
     }
@@ -109,7 +109,7 @@ extension APIService: APIServiceProtocol {
         }
     }
     
-    func getUserInfo(completion: @escaping(Result<Bool, Error>) -> Void) {
+    func getUserInfo(completion: @escaping(Result<Bool, ApiError>) -> Void) {
         taskForGETRequest(url: EndPoints.getUserInfo.url, responseType: UserDetails.self, isUserInfo: true) { result in
             
             switch result {
@@ -118,8 +118,8 @@ extension APIService: APIServiceProtocol {
                 Auth.lastName = response.lastName
                 Auth.uniqueKey = response.key
                 completion(.success(true))
-            case .failure(let error):
-                completion(.failure(error))
+            case .failure(_):
+                completion(.failure(.getUserInfoError))
             }
         }
     }
