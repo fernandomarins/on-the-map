@@ -26,19 +26,18 @@ final class AddLocationInteractor {
 extension AddLocationInteractor: AddLocationInteracting {
     func geocode(_ location: String, _ mediaURL: String) {
         presenter.startLoading()
-        CLGeocoder().geocodeAddressString(location) { [weak self] placemarks, error in
+        service.geocodeLocation(location) { [weak self] result in
             self?.presenter.stopLoading()
-            if let error {
-                self?.presenter.displayError(error.localizedDescription)
-                return
-            }
-            
-            if let placemarks = placemarks?.first?.location {
-                let coordinates: CLLocationCoordinate2D = placemarks.coordinate
+            switch result {
+            case .success(let placemark):
+                let coordinates: CLLocationCoordinate2D = placemark.coordinate
                 let location: Location = Location(location: location,
                                                   mediaURL: mediaURL,
                                                   coordinates: (coordinates.latitude, coordinates.longitude))
                 self?.presenter.presentPostLocation(action: .presentPost(location: location))
+            case .failure(let error):
+                self?.presenter.displayError(error.localizedDescription)
+                return
             }
         }
     }

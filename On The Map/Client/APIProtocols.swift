@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 protocol URLSessionProtocol {
     func fetchData(with url: URL, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void)
@@ -25,6 +26,7 @@ protocol APIServiceProtocol: APIProtocol {
     func post(student: PostLocation, completion: @escaping(Result<Bool, Error>) -> Void)
     func logout(completion: @escaping(Result<Bool, Error>) -> Void)
     func getUserInfo(completion: @escaping(Result<Bool, Error>) -> Void)
+    func geocodeLocation(_ location: String, completion: @escaping (Result<CLLocation, Error>) -> Void)
 }
 
 extension URLSession: URLSessionProtocol {
