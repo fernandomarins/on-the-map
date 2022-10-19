@@ -23,9 +23,9 @@ protocol APIProtocol {
 protocol APIServiceProtocol: APIProtocol {
     func getAllLocations(completion: @escaping (Result<Bool, Error>) -> Void) -> Void
     func login(username: String, password: String, completion: @escaping (Result<Bool, Error>) -> Void)
-    func post(student: PostLocation, completion: @escaping(Result<Bool, Error>) -> Void)
+    func post(student: PostLocation, completion: @escaping(Result<Bool, ApiError>) -> Void)
     func logout(completion: @escaping(Result<Bool, Error>) -> Void)
-    func getUserInfo(completion: @escaping(Result<Bool, Error>) -> Void)
+    func getUserInfo(completion: @escaping(Result<Bool, ApiError>) -> Void)
     func geocodeLocation(_ location: String, completion: @escaping (Result<CLLocation, ApiError>) -> Void)
 }
 

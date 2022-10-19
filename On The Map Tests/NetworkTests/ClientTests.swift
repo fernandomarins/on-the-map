@@ -46,7 +46,7 @@ final class ClientTests: XCTestCase {
     }
     
     func testPostShouldPass() {
-        var result: Result<Bool, Error>?
+        var result: Result<Bool, ApiError>?
         let postLocation = PostLocation(uniqueKey: "", firstName: "", lastName: "", mapString: "", mediaURL: "", latitude: 0.0, longitude: 0.0)
         sut.post(student: postLocation) {
             result = $0
@@ -75,7 +75,7 @@ final class ClientTests: XCTestCase {
     }
     
     func testGetUserInfoShouldPass() {
-        var result: Result<Bool, Error>?
+        var result: Result<Bool, ApiError>?
         sut.getUserInfo {
             result = $0
         }

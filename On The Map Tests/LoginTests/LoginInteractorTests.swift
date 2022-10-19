@@ -64,6 +64,7 @@ final class LoginInteractorTests: XCTestCase {
         XCTAssertEqual(presenterSpy.messagesSent, [.startLoading,
                                                   .stopLoading,
                                                   .presentTabBar])
+        XCTAssertEqual(presenterSpy.action, .presentTabBar)
     }
     
     func testLoginShouldFail() {

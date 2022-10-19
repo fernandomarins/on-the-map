@@ -13,6 +13,7 @@ struct NetworkStub: APIServiceProtocol {
     var session: URLSessionProtocol //= URLSession.shared
     
     var result: Result<Bool, Error> = .success(true)
+    var resultCustomError: Result<Bool, ApiError> = .success(true)
     var resultLocation: Result<CLLocation, ApiError> = .success(CLLocation(latitude: 0.0, longitude: 0.0))
     
     func getAllLocations(completion: @escaping (Result<Bool, Error>) -> Void) {
@@ -23,16 +24,16 @@ struct NetworkStub: APIServiceProtocol {
         completion(result)
     }
     
-    func post(student: PostLocation, completion: @escaping (Result<Bool, Error>) -> Void) {
-        completion(result)
+    func post(student: PostLocation, completion: @escaping (Result<Bool, ApiError>) -> Void) {
+        completion(resultCustomError)
     }
     
     func logout(completion: @escaping (Result<Bool, Error>) -> Void) {
         completion(result)
     }
     
-    func getUserInfo(completion: @escaping (Result<Bool, Error>) -> Void) {
-        completion(result)
+    func getUserInfo(completion: @escaping (Result<Bool, ApiError>) -> Void) {
+        completion(resultCustomError)
     }
     
     func geocodeLocation(_ location: String, completion: @escaping (Result<CLLocation, ApiError>) -> Void) {
