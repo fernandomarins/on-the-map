@@ -1,5 +1,5 @@
 //
-//  PostLocationCooridinatorTests.swift
+//  PostLocationCoordinatorTests.swift
 //  On The Map Tests
 //
 //  Created by Fernando Marins on 19/10/22.
@@ -8,7 +8,7 @@
 import XCTest
 @testable import On_The_Map
 
-final class PostLocationCooridinatorTests: XCTestCase {
+final class PostLocationCoordinatorTests: XCTestCase {
     private let viewControllerSpy = ViewControllerSpy()
     
     private var sut: PostLocationCoordinator {

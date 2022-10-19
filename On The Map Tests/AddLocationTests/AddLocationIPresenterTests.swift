@@ -82,7 +82,7 @@ final class AddLocationIPresenterTests: XCTestCase {
         XCTAssertEqual(viewControllerSpy.messagesSent, [.stopLoadingView])
     }
     
-    func testShoulddismiss() {
+    func testShouldDismiss() {
         sut.dismiss(action: .dismiss)
         XCTAssertEqual(coordinatorSpy.messagesSent, [.perform])
         XCTAssertEqual(coordinatorSpy.action, .dismiss)
