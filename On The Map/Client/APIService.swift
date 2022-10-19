@@ -124,10 +124,10 @@ extension APIService: APIServiceProtocol {
         }
     }
     
-    func geocodeLocation(_ location: String, completion: @escaping (Result<CLLocation, Error>) -> Void) {
+    func geocodeLocation(_ location: String, completion: @escaping (Result<CLLocation, ApiError>) -> Void) {
         CLGeocoder().geocodeAddressString(location) { placemarks, error in
-            if let error {
-                completion(.failure(error))
+            if error != nil {
+                completion(.failure(.geocodeError))
                 return
             }
             
