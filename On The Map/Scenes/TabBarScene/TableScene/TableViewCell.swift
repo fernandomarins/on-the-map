@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class TableViewCell: UITableViewCell {
+final class TableViewCell: UITableViewCell {
     
     lazy var locationLabel : UILabel = {
         let label = UILabel()

@@ -9,68 +9,64 @@ import Foundation
 
 protocol PostLocationInteracting: AnyObject {
     func getUserInfo(completion: @escaping (Bool) -> Void)
-    func post(_ location: String,
-              _ mediaURL: String,
-              _ coordinates: (latitude: Double, longitude: Double))
+    func post(_ location: Location)
     func dismiss()
     func dismissToTabBar()
 }
 
-class PostLocationInteractor {
+final class PostLocationInteractor {
+    private let service: APIServiceProtocol
     private let presenter: PostLocationPresenting
     
-    init(presenter: PostLocationPresenting) {
+    init(presenter: PostLocationPresenting, service: APIServiceProtocol = APIService()) {
         self.presenter = presenter
+        self.service = service
     }
 }
 
 extension PostLocationInteractor: PostLocationInteracting {
     func getUserInfo(completion: @escaping (Bool) -> Void) {
         presenter.startLoading()
-        Client.getUserInfo { [weak self] success, error in
+        service.getUserInfo { [weak self] result in
             self?.presenter.stopLoading()
-            if success {
-                completion(true)
-                return
-            }
             
-            if let error {
+            switch result {
+            case .success(_):
+                completion(true)
+            case .failure(let error):
                 self?.presenter.displayError(error.localizedDescription)
                 completion(false)
             }
         }
     }
     
-    func post(_ location: String,
-              _ mediaURL: String,
-              _ coordinates: (latitude: Double, longitude: Double)) {
+    func post(_ location: Location) {
         presenter.startLoading()
-        let postLocation = PostLocation(uniqueKey: Client.Auth.uniqueKey,
-                                        firstName: Client.Auth.firstName,
-                                        lastName: Client.Auth.lastName,
-                                        mapString: location,
-                                        mediaURL: mediaURL,
-                                        latitude: coordinates.latitude,
-                                        longitude: coordinates.longitude)
-        Client.post(student: postLocation) { [weak self] success, error in
+        let postLocation = PostLocation(uniqueKey: APIService.Auth.uniqueKey,
+                                        firstName: APIService.Auth.firstName,
+                                        lastName: APIService.Auth.lastName,
+                                        mapString: location.location,
+                                        mediaURL: location.mediaURL,
+                                        latitude: location.coordinates.latitude,
+                                        longitude: location.coordinates.longitude)
+        service.post(student: postLocation) { [weak self] result in
             self?.presenter.stopLoading()
-            if success {
+            switch result {
+            case .success(_):
                 self?.sendNotification()
-                self?.presenter.dismiss()
-            } else {
-                if let error {
-                    self?.presenter.displayError(error.localizedDescription)
-                }
+                self?.presenter.dismiss(action: .dismissTabBar)
+            case .failure(let error):
+                self?.presenter.displayError(error.localizedDescription)
             }
         }
     }
     
     func dismiss() {
-        presenter.dismiss()
+        presenter.dismiss(action: .dismiss)
     }
     
     func dismissToTabBar() {
-        presenter.dismissToTabBar()
+        presenter.dismissToTabBar(action: .dismissTabBar)
     }
     
     private func sendNotification() {

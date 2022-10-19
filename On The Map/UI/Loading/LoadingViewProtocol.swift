@@ -53,7 +53,10 @@ extension LoadingViewProtocol where Self: UIViewController {
     }
     
     func startLoadingView() {
-        startLoadingView(view: view)
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.startLoadingView(view: self.view)
+        }
     }
     
     func stopLoadingView() {

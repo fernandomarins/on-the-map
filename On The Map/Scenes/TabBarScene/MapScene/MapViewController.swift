@@ -9,7 +9,7 @@ import UIKit
 import MapKit
 import SnapKit
 
-class MapViewController: TabBarViewController, MKMapViewDelegate {
+final class MapViewController: TabBarViewController, MKMapViewDelegate {
     
     // MARK: - Variables
     
@@ -50,7 +50,7 @@ class MapViewController: TabBarViewController, MKMapViewDelegate {
         mapView.snp.makeConstraints {
             $0.top.equalTo(contentView.snp.top)
             $0.leading.equalTo(contentView.snp.leading)
-            $0.bottom.equalTo(contentView.snp.bottom).offset(-16)
+            $0.bottom.equalTo(contentView.snp.bottom)
             $0.trailing.equalTo(contentView.snp.trailing)
         }
     }

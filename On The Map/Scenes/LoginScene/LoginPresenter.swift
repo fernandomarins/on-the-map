@@ -9,14 +9,14 @@ import Foundation
 
 protocol LoginPresenting: AnyObject {
     var viewController: LoginViewDisplyaing? { get set }
-    func presentTabBar()
+    func presentTabBar(action: LoginAction)
     func displayError(_ error: String)
-    func openLink()
+    func openLink(action: LoginAction)
     func startLoading()
     func stopLoading()
 }
 
-class LoginPresenter {
+final class LoginPresenter {
     weak var viewController: LoginViewDisplyaing?
     private let coordinator: LoginCoordinating
     
@@ -27,17 +27,16 @@ class LoginPresenter {
 
 extension LoginPresenter: LoginPresenting {
 
-    func presentTabBar() {
-        coordinator.perform(action: .presentTabBar)
+    func presentTabBar(action: LoginAction) {
+        coordinator.perform(action: action)
     }
     
     func displayError(_ error: String) {
         viewController?.displayError(error)
-        // TODO: chamar o showAlert do AlertViewProtocol ao invés de declarar
     }
     
-    func openLink() {
-        coordinator.perform(action: .openLink)
+    func openLink(action: LoginAction) {
+        coordinator.perform(action: action)
     }
     
     func startLoading() {

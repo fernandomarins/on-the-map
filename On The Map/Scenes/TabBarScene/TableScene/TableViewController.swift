@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class TableViewController: TabBarViewController, UITableViewDelegate, UITableViewDataSource {
+final class TableViewController: TabBarViewController, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - Variables
     
