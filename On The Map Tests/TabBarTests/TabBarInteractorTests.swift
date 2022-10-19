@@ -10,7 +10,7 @@ import XCTest
 
 private final class TabBarPresenterSpy: TabBarPresenting {
     
-    enum Message {
+    enum Messages {
         case presentAddLocation
         case displayError
         case startLoading
@@ -19,7 +19,7 @@ private final class TabBarPresenterSpy: TabBarPresenting {
         case logout
     }
     
-    private(set) var messagsSent: [Message] = []
+    private(set) var messagsSent: [Messages] = []
     
     private(set) var action: TabBarAction?
     private(set) var error: String?

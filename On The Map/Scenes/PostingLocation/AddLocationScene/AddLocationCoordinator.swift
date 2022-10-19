@@ -12,6 +12,15 @@ enum AddLocationAction {
     case presentPost(location: Location)
 }
 
+extension AddLocationAction: Equatable {
+    static func == (lhs: AddLocationAction, rhs: AddLocationAction) -> Bool {
+        switch (lhs, rhs) {
+        case (_, _):
+            return true
+        }
+    }
+}
+
 protocol AddLocationCoordinating: AnyObject {
     var viewController: UIViewController? { get set }
     func perform(action: AddLocationAction)
