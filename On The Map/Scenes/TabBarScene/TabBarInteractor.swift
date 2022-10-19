@@ -46,7 +46,7 @@ extension TabBarInteractor: TabBarInteracting {
     func logout() {
         presenter.startLoading()
         service.logout { [weak self] result in
-            self?.presenter.startLoading()
+            self?.presenter.stopLoading()
             switch result {
             case .success(_):
                 self?.presenter.logout(action: .logout)

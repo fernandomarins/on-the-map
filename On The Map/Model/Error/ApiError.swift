@@ -9,7 +9,7 @@ import Foundation
 
 
 enum ApiError: Error {
-    case unknow
+    case responseError
     case invalidData
     case parse
 }
