@@ -10,37 +10,39 @@ import CoreLocation
 
 protocol AddLocationInteracting: AnyObject {
     func geocode(_ location: String, _ mediaURL: String)
-    func dismiss()
+    func dismiss(action: AddLocationAction)
 }
 
-class AddLocationInteractor {
+final class AddLocationInteractor {
+    private let service: APIServiceProtocol
     private let presenter: AddLocationPresenting
     
-    init(presenter: AddLocationPresenting) {
+    init(presenter: AddLocationPresenting, service: APIServiceProtocol = APIService()) {
         self.presenter = presenter
+        self.service = service
     }
 }
 
 extension AddLocationInteractor: AddLocationInteracting {
     func geocode(_ location: String, _ mediaURL: String) {
         presenter.startLoading()
-        CLGeocoder().geocodeAddressString(location) { [weak self] placemarks, error in
+        service.geocodeLocation(location) { [weak self] result in
             self?.presenter.stopLoading()
-            if let error {
+            switch result {
+            case .success(let placemark):
+                let coordinates: CLLocationCoordinate2D = placemark.coordinate
+                let location: Location = Location(location: location,
+                                                  mediaURL: mediaURL,
+                                                  coordinates: (coordinates.latitude, coordinates.longitude))
+                self?.presenter.presentPostLocation(action: .presentPost(location: location))
+            case .failure(let error):
                 self?.presenter.displayError(error.localizedDescription)
                 return
-            }
-            
-            if let placemarks = placemarks?.first?.location {
-                let coordinates: CLLocationCoordinate2D = placemarks.coordinate
-                self?.presenter.presentPostLocationViewController(location,
-                                                                  mediaURL,
-                                                                  (coordinates.latitude, coordinates.longitude))
             }
         }
     }
     
-    func dismiss() {
-        presenter.dismiss()
+    func dismiss(action: AddLocationAction) {
+        presenter.dismiss(action: .dismiss)
     }
 }

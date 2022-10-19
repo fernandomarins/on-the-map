@@ -12,8 +12,7 @@ protocol AddLocationDisplaying: AnyObject, AlertViewProtocol, LoadingViewProtoco
     func displayError(_ error: String)
 }
 
-class AddLocationViewController: UIViewController, UITextFieldDelegate {
-    
+final class AddLocationViewController: UIViewController, UITextFieldDelegate {
     let interactor: AddLocationInteracting
     
     init(interactor: AddLocationInteracting) {
@@ -144,7 +143,7 @@ class AddLocationViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc private func dismissView() {
-        interactor.dismiss()
+        interactor.dismiss(action: .dismiss)
     }
     
     @objc private func geocode() {

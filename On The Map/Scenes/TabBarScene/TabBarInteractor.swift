@@ -14,47 +14,49 @@ protocol TabBarInteracting: AnyObject {
     func presentAddLocation()
 }
 
-class TabBarInteractor {
+final class TabBarInteractor {
+    private let service: APIServiceProtocol
     private let presenter: TabBarPresenting
     
-    init(presenter: TabBarPresenting) {
+    init(presenter: TabBarPresenting, service: APIServiceProtocol = APIService()) {
         self.presenter = presenter
+        self.service = service
     }
 }
 
 extension TabBarInteractor: TabBarInteracting {
     func getAllLocations(completion: @escaping (Bool?) -> Void) {
         presenter.startLoading()
-        Client.getAllLocations { [weak self] error in
+        service.getAllLocations { [weak self] result in
             self?.presenter.stopLoading()
-            if error == nil {
+            switch result {
+            case .success(_):
                 completion(true)
-            } else {
-                if let error {
-                    self?.presenter.displayError(error.localizedDescription)
-                    completion(nil)
-                }
+            case .failure(let error):
+                self?.presenter.displayError(error.localizedDescription)
+                completion(nil)
             }
         }
     }
     
     func openLink(_ urlString: String) {
-        presenter.openLink(urlString)
+        presenter.openLink(action: .openLink(urlString))
     }
     
     func logout() {
-        Client.logout { [weak self] success, error in
-            if success {
-                self?.presenter.logout()
-            } else {
-                if let error {
-                    self?.presenter.displayError(error.localizedDescription)
-                }
+        presenter.startLoading()
+        service.logout { [weak self] result in
+            self?.presenter.stopLoading()
+            switch result {
+            case .success(_):
+                self?.presenter.logout(action: .logout)
+            case .failure(let error):
+                self?.presenter.displayError(error.localizedDescription)
             }
         }
     }
     
     func presentAddLocation() {
-        presenter.presentAddLocation()
+        presenter.presentAddLocation(action: .presentAddLocationFlow)
     }
 }

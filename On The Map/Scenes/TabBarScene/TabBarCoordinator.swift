@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum TabBarAction {
+enum TabBarAction: Equatable {
     case presentAddLocationFlow
     case openLink(_ urlString: String)
     case logout
@@ -18,7 +18,7 @@ protocol TabBarCoordinating: AnyObject {
     func perform(action: TabBarAction)
 }
 
-class TabBarCoordinator {
+final class TabBarCoordinator {
     weak var viewController: UIViewController?
 }
 

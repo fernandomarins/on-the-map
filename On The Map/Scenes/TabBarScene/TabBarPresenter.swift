@@ -9,15 +9,15 @@ import Foundation
 
 protocol TabBarPresenting: AnyObject {
     var viewController: TabBarDisplaying? { get set }
-    func presentAddLocation()
+    func presentAddLocation(action: TabBarAction)
     func displayError(_ error: String)
     func startLoading()
     func stopLoading()
-    func openLink(_ urlString: String)
-    func logout()
+    func openLink(action: TabBarAction)
+    func logout(action: TabBarAction)
 }
 
-class TabBarPresenter {
+final class TabBarPresenter {
     weak var viewController: TabBarDisplaying?
     
     private let coordinator: TabBarCoordinating
@@ -29,7 +29,7 @@ class TabBarPresenter {
 
 extension TabBarPresenter: TabBarPresenting {
     
-    func presentAddLocation() {
+    func presentAddLocation(action: TabBarAction) {
         coordinator.perform(action: .presentAddLocationFlow)
     }
     
@@ -45,11 +45,11 @@ extension TabBarPresenter: TabBarPresenting {
         viewController?.stopLoadingView()
     }
     
-    func openLink(_ urlString: String) {
-        coordinator.perform(action: .openLink(urlString))
+    func openLink(action: TabBarAction) {
+        coordinator.perform(action: action)
     }
     
-    func logout() {
-        coordinator.perform(action: .logout)
+    func logout(action: TabBarAction) {
+        coordinator.perform(action: action)
     }
 }

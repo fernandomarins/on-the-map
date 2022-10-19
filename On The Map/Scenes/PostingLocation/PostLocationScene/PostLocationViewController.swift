@@ -13,20 +13,14 @@ protocol PostLocationDisplaying: AnyObject, AlertViewProtocol, LoadingViewProtoc
     func displayError(_ error: String)
 }
 
-class PostLocationViewController: UIViewController, MKMapViewDelegate {
+final class PostLocationViewController: UIViewController, MKMapViewDelegate {
     
     let interactor: PostLocationInteracting
-    let coordinates: (latitude: Double, longitude: Double)
-    let mediaURL: String
-    let location: String
+    let location: Location
     
     init(interactor: PostLocationInteracting,
-         coordinates: (Double, Double),
-         mediaURL: String,
-         location: String) {
+         location: Location) {
         self.interactor = interactor
-        self.coordinates = coordinates
-        self.mediaURL = mediaURL
         self.location = location
         super.init(nibName: nil, bundle: nil)
     }
@@ -114,12 +108,14 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
     
     private func setupMap() {
         let pin = MKPointAnnotation()
-        pin.coordinate = CLLocationCoordinate2D(latitude: coordinates.0, longitude: coordinates.1)
+        pin.coordinate = CLLocationCoordinate2D(latitude: location.coordinates.latitude,
+                                                longitude: location.coordinates.longitude)
         
         let latDelta: CLLocationDegrees = 0.05
         let lonDelta: CLLocationDegrees = 0.05
         let span = MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: lonDelta)
-        let location = CLLocationCoordinate2DMake(coordinates.0, coordinates.1)
+        let location = CLLocationCoordinate2DMake(location.coordinates.latitude,
+                                                  location.coordinates.longitude)
         let region = MKCoordinateRegion(center: location, span: span)
         
         mapView.setRegion(region, animated: false)
@@ -131,9 +127,7 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
         interactor.getUserInfo { [weak self] success in
             guard let self else { return }
             if success {
-                self.interactor.post(self.location,
-                                      self.mediaURL,
-                                      (self.coordinates.latitude, self.coordinates.longitude))
+                self.interactor.post(self.location)
                 self.interactor.dismissToTabBar()
             }
         }

@@ -7,8 +7,7 @@
 
 import UIKit
 
-class LoginViewControllerFactory {
-    
+enum LoginViewControllerFactory {
     static func make() -> UIViewController {
         let coordinator: LoginCoordinating = LoginCoordinator()
         let presenter: LoginPresenting = LoginPresenter(coordinator: coordinator)
