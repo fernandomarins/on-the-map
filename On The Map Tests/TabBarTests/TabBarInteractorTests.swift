@@ -9,6 +9,10 @@ import XCTest
 @testable import On_The_Map
 
 private final class TabBarPresenterSpy: TabBarPresenting {
+    var viewController: TabBarDisplaying?
+    private(set) var messagesSent: [Messages] = []
+    private(set) var action: TabBarAction?
+    private(set) var error: String?
     
     enum Messages {
         case presentAddLocation
@@ -19,38 +23,31 @@ private final class TabBarPresenterSpy: TabBarPresenting {
         case logout
     }
     
-    private(set) var messagsSent: [Messages] = []
-    
-    private(set) var action: TabBarAction?
-    private(set) var error: String?
-    
-    var viewController: TabBarDisplaying?
-    
     func presentAddLocation(action: TabBarAction) {
-        messagsSent.append(.presentAddLocation)
+        messagesSent.append(.presentAddLocation)
         self.action = action
     }
     
     func displayError(_ error: String) {
-        messagsSent.append(.displayError)
+        messagesSent.append(.displayError)
         self.error = error
     }
     
     func startLoading() {
-        messagsSent.append(.startLoading)
+        messagesSent.append(.startLoading)
     }
     
     func stopLoading() {
-        messagsSent.append(.stopLoading)
+        messagesSent.append(.stopLoading)
     }
     
     func openLink(action: TabBarAction) {
-        messagsSent.append(.openLink)
+        messagesSent.append(.openLink)
         self.action = action
     }
     
     func logout(action: TabBarAction) {
-        messagsSent.append(.logout)
+        messagesSent.append(.logout)
         self.action = action
     }
 }
@@ -72,7 +69,7 @@ final class TabBarInteractorTests: XCTestCase {
             
         }
         
-        XCTAssertEqual(presenterSpy.messagsSent, [.startLoading,
+        XCTAssertEqual(presenterSpy.messagesSent, [.startLoading,
                                                   .stopLoading])
     }
     
@@ -84,7 +81,7 @@ final class TabBarInteractorTests: XCTestCase {
             
         }
         
-        XCTAssertEqual(presenterSpy.messagsSent, [.startLoading,
+        XCTAssertEqual(presenterSpy.messagesSent, [.startLoading,
                                                   .stopLoading,
                                                   .displayError])
         XCTAssertEqual(presenterSpy.error, "The operation couldn’t be completed. (On_The_Map.ApiError error 0.)")
@@ -93,7 +90,7 @@ final class TabBarInteractorTests: XCTestCase {
     func testOpenLinkShouldPass() {
         sut.openLink("url_test")
         
-        XCTAssertEqual(presenterSpy.messagsSent, [.openLink])
+        XCTAssertEqual(presenterSpy.messagesSent, [.openLink])
         XCTAssertEqual(presenterSpy.action, .openLink("url_test"))
     }
     
@@ -101,7 +98,7 @@ final class TabBarInteractorTests: XCTestCase {
         serviceMock.result = .success(true)
         sut.logout()
         
-        XCTAssertEqual(presenterSpy.messagsSent, [.startLoading, .stopLoading, .logout])
+        XCTAssertEqual(presenterSpy.messagesSent, [.startLoading, .stopLoading, .logout])
         XCTAssertEqual(presenterSpy.action, .logout)
     }
     
@@ -110,7 +107,7 @@ final class TabBarInteractorTests: XCTestCase {
         serviceMock.result = .failure(expectedError)
         sut.logout()
         
-        XCTAssertEqual(presenterSpy.messagsSent, [.startLoading,
+        XCTAssertEqual(presenterSpy.messagesSent, [.startLoading,
                                                   .stopLoading,
                                                   .displayError])
         XCTAssertEqual(presenterSpy.error, "The operation couldn’t be completed. (On_The_Map.ApiError error 0.)")
@@ -119,7 +116,7 @@ final class TabBarInteractorTests: XCTestCase {
     func testPresentAddLocationFlowShouldPass() {
         sut.presentAddLocation()
         
-        XCTAssertEqual(presenterSpy.messagsSent, [.presentAddLocation])
+        XCTAssertEqual(presenterSpy.messagesSent, [.presentAddLocation])
         XCTAssertEqual(presenterSpy.action, .presentAddLocationFlow)
     }
 }

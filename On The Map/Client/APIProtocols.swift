@@ -26,7 +26,7 @@ protocol APIServiceProtocol: APIProtocol {
     func post(student: PostLocation, completion: @escaping(Result<Bool, Error>) -> Void)
     func logout(completion: @escaping(Result<Bool, Error>) -> Void)
     func getUserInfo(completion: @escaping(Result<Bool, Error>) -> Void)
-    func geocodeLocation(_ location: String, completion: @escaping (Result<CLLocation, Error>) -> Void)
+    func geocodeLocation(_ location: String, completion: @escaping (Result<CLLocation, ApiError>) -> Void)
 }
 
 extension URLSession: URLSessionProtocol {

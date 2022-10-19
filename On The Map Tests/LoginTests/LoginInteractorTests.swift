@@ -9,7 +9,7 @@ import XCTest
 @testable import On_The_Map
 
 private final class LoginPresenterSpy: LoginPresenting {
-    private(set) var messagsSent: [Messages] = []
+    private(set) var messagesSent: [Messages] = []
     private(set) var action: LoginAction?
     private(set) var error: String?
     
@@ -24,26 +24,26 @@ private final class LoginPresenterSpy: LoginPresenting {
     var viewController: LoginViewDisplyaing?
     
     func presentTabBar(action: LoginAction) {
-        messagsSent.append(.presentTabBar)
+        messagesSent.append(.presentTabBar)
         self.action = action
     }
     
     func displayError(_ error: String) {
-        messagsSent.append(.displayError)
+        messagesSent.append(.displayError)
         self.error = error
     }
     
     func openLink(action: LoginAction) {
-        messagsSent.append(.openLink)
+        messagesSent.append(.openLink)
         self.action = action
     }
     
     func startLoading() {
-        messagsSent.append(.startLoading)
+        messagesSent.append(.startLoading)
     }
     
     func stopLoading() {
-        messagsSent.append(.stopLoading)
+        messagesSent.append(.stopLoading)
     }
 }
 
@@ -59,10 +59,9 @@ final class LoginInteractorTests: XCTestCase {
     
     func testLoginShouldPass() {
         serviceMock.result = .success(true)
-        
         sut.login(username: "", password: "")
         
-        XCTAssertEqual(presenterSpy.messagsSent, [.startLoading,
+        XCTAssertEqual(presenterSpy.messagesSent, [.startLoading,
                                                   .stopLoading,
                                                   .presentTabBar])
     }
@@ -70,10 +69,9 @@ final class LoginInteractorTests: XCTestCase {
     func testLoginShouldFail() {
         let expectedError: ApiError = .responseError
         serviceMock.result = .failure(expectedError)
-        
         sut.login(username: "", password: "")
         
-        XCTAssertEqual(presenterSpy.messagsSent, [.startLoading,
+        XCTAssertEqual(presenterSpy.messagesSent, [.startLoading,
                                                   .stopLoading,
                                                   .displayError])
         XCTAssertEqual(presenterSpy.error, "The operation couldn’t be completed. (On_The_Map.ApiError error 0.)")
@@ -81,10 +79,9 @@ final class LoginInteractorTests: XCTestCase {
     
     func testOpenLinkShouldPass() {
         serviceMock.result = .success(true)
-        
         sut.openLink()
         
-        XCTAssertEqual(presenterSpy.messagsSent, [.openLink])
+        XCTAssertEqual(presenterSpy.messagesSent, [.openLink])
         XCTAssertEqual(presenterSpy.action, .openLink)
     }
 }

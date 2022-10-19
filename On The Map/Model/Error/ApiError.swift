@@ -12,4 +12,5 @@ enum ApiError: Error {
     case responseError
     case invalidData
     case parse
+    case geocodeError
 }
