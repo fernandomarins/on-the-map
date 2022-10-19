@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 class APIService {
     
@@ -56,7 +57,6 @@ class APIService {
 }
 
 extension APIService: APIServiceProtocol {
-    
     func getAllLocations(completion: @escaping (Result<Bool, Error>) -> Void) -> Void {
         taskForGETRequest(url: EndPoints.getStudentLocations.url, responseType: StudentResult.self, isUserInfo: false) { result in
             
@@ -124,8 +124,16 @@ extension APIService: APIServiceProtocol {
         }
     }
     
-    func removeFirstFiveCharacters(_ data: Data) -> Data {
-        let range = 5..<data.count
-        return data.subdata(in: range)
+    func geocodeLocation(_ location: String, completion: @escaping (Result<CLLocation, Error>) -> Void) {
+        CLGeocoder().geocodeAddressString(location) { placemarks, error in
+            if let error {
+                completion(.failure(error))
+                return
+            }
+            
+            if let placemark = placemarks?.first?.location {
+                completion(.success(placemark))
+            }
+        }
     }
 }
