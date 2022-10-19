@@ -9,19 +9,17 @@ import XCTest
 @testable import On_The_Map
 
 private final class LoginPresenterSpy: LoginPresenting {
+    private(set) var messagsSent: [Messages] = []
+    private(set) var action: LoginAction?
+    private(set) var error: String?
     
-    enum Message {
+    enum Messages {
         case presentTabBar
         case displayError
         case openLink
         case startLoading
         case stopLoading
     }
-    
-    private(set) var messagsSent: [Message] = []
-    
-    private(set) var action: LoginAction?
-    private(set) var error: String?
     
     var viewController: LoginViewDisplyaing?
     

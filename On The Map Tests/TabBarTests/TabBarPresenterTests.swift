@@ -1,32 +1,22 @@
 //
-//  LoginPresenterTests.swift
+//  TabBarPresenterTests.swift
 //  On The Map Tests
 //
-//  Created by Fernando Marins on 14/10/22.
+//  Created by Fernando Marins on 19/10/22.
 //
 
 import XCTest
 @testable import On_The_Map
 
-private final class LoginViewControllerSpy: LoginViewDisplyaing {
+private final class TabBarViewControllerSpy: TabBarDisplaying {
     var activityIndicator = LoadingView()
     private(set) var messagesSent: [Messages] = []
     private(set) var error: String?
     
     enum Messages {
-        case presentTabBar
-        case openLink
-        case displayError
         case startLoadingView
         case stopLoadingView
-    }
-    
-    func login() {
-        messagesSent.append(.presentTabBar)
-    }
-    
-    func openLink() {
-        messagesSent.append(.openLink)
+        case displayError
     }
     
     func displayError(_ error: String) {
@@ -43,43 +33,36 @@ private final class LoginViewControllerSpy: LoginViewDisplyaing {
     }
 }
 
-final class LoginCoordinatorSpy: LoginCoordinating {
+final class TabBarCoordinatorSpy: TabBarCoordinating {
     var viewController: UIViewController?
     private(set) var messagesSent: [Messages] = []
-    private(set) var action: LoginAction?
+    private(set) var action: TabBarAction?
     
     enum Messages {
         case perform
     }
     
-    func perform(action: LoginAction) {
+    func perform(action: TabBarAction) {
         messagesSent.append(.perform)
         self.action = action
     }
 }
 
-final class LoginPresenterTests: XCTestCase {
-    private let viewControllerSpy = LoginViewControllerSpy()
-    private let coordinatorSpy = LoginCoordinatorSpy()
+final class TabBarPresenterTests: XCTestCase {
+    private let viewControllerSpy = TabBarViewControllerSpy()
+    private let coordinatorSpy = TabBarCoordinatorSpy()
     
-    private var sut: LoginPresenter {
-        let presenter = LoginPresenter(coordinator: coordinatorSpy)
+    private var sut: TabBarPresenter {
+        let presenter = TabBarPresenter(coordinator: coordinatorSpy)
         presenter.viewController = viewControllerSpy
         return presenter
     }
-
-    func testPerformPresentTabBar() {
-        sut.presentTabBar(action: .presentTabBar)
-        
-        XCTAssertEqual(coordinatorSpy.messagesSent, [.perform])
-        XCTAssertEqual(coordinatorSpy.action, .presentTabBar)
-    }
     
-    func testOpenUrl() {
-        sut.openLink(action: .openLink)
+    func testPerformPresentAddLocation() {
+        sut.presentAddLocation(action: .presentAddLocationFlow)
         
         XCTAssertEqual(coordinatorSpy.messagesSent, [.perform])
-        XCTAssertEqual(coordinatorSpy.action, .openLink)
+        XCTAssertEqual(coordinatorSpy.action, .presentAddLocationFlow)
     }
     
     func testDisplayError() {
@@ -100,5 +83,19 @@ final class LoginPresenterTests: XCTestCase {
         sut.stopLoading()
         
         XCTAssertEqual(viewControllerSpy.messagesSent, [.stopLoadingView])
+    }
+    
+    func testOpenUrl() {
+        sut.openLink(action: .openLink("url_string"))
+        
+        XCTAssertEqual(coordinatorSpy.messagesSent, [.perform])
+        XCTAssertEqual(coordinatorSpy.action, .openLink("url_string"))
+    }
+    
+    func testLogout() {
+        sut.logout(action: .logout)
+        
+        XCTAssertEqual(coordinatorSpy.messagesSent, [.perform])
+        XCTAssertEqual(coordinatorSpy.action, .logout)
     }
 }
