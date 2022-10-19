@@ -49,7 +49,7 @@ extension APIProtocol {
              }
             
             guard let response = response as? HTTPURLResponse, (200...210).contains(response.statusCode) else {
-                completion(.failure(ApiError.unknow))
+                completion(.failure(ApiError.responseError))
                 return
             }
             
@@ -96,7 +96,7 @@ extension APIProtocol {
              }
             
             guard let response = response as? HTTPURLResponse, (200...210).contains(response.statusCode) else {
-                completion(.failure(ApiError.unknow))
+                completion(.failure(ApiError.responseError))
                 return
             }
             
@@ -149,7 +149,7 @@ extension APIProtocol {
              }
             
             guard let response = response as? HTTPURLResponse, (200...210).contains(response.statusCode) else {
-                completion(.failure(ApiError.unknow))
+                completion(.failure(ApiError.responseError))
                 return
             }
             

@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum TabBarAction {
+enum TabBarAction: Equatable {
     case presentAddLocationFlow
     case openLink(_ urlString: String)
     case logout

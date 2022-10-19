@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		552C94262900195A00AAA4E0 /* TabBarInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552C94252900195A00AAA4E0 /* TabBarInteractorTests.swift */; };
 		556D991428F9A1560048C73C /* StartCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556D991328F9A1560048C73C /* StartCoordinator.swift */; };
 		556D992028F9D48F0048C73C /* LoginCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556D991F28F9D48F0048C73C /* LoginCoordinatorTests.swift */; };
 		556D992728F9D6350048C73C /* ViewControllerSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556D992628F9D6350048C73C /* ViewControllerSpy.swift */; };
@@ -70,6 +71,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		552C94252900195A00AAA4E0 /* TabBarInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarInteractorTests.swift; sourceTree = "<group>"; };
 		556D991328F9A1560048C73C /* StartCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartCoordinator.swift; sourceTree = "<group>"; };
 		556D991D28F9D48F0048C73C /* On The Map Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "On The Map Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		556D991F28F9D48F0048C73C /* LoginCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinatorTests.swift; sourceTree = "<group>"; };
@@ -143,6 +145,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		552C94242900194000AAA4E0 /* TabBarTests */ = {
+			isa = PBXGroup;
+			children = (
+				552C94252900195A00AAA4E0 /* TabBarInteractorTests.swift */,
+			);
+			path = TabBarTests;
+			sourceTree = "<group>";
+		};
 		5534A7C928F9781B008D9B86 /* PostingLocation */ = {
 			isa = PBXGroup;
 			children = (
@@ -163,6 +173,7 @@
 		556D991E28F9D48F0048C73C /* On The Map Tests */ = {
 			isa = PBXGroup;
 			children = (
+				552C94242900194000AAA4E0 /* TabBarTests */,
 				55AC2E6228FF575A00B4A332 /* NetworkTests */,
 				556D993128FA3D340048C73C /* LoginTests */,
 				556D993228FA3D420048C73C /* Common */,
@@ -508,6 +519,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				556D992028F9D48F0048C73C /* LoginCoordinatorTests.swift in Sources */,
+				552C94262900195A00AAA4E0 /* TabBarInteractorTests.swift in Sources */,
 				556D994428FD69060048C73C /* ClientTests.swift in Sources */,
 				556D993028FA3D2F0048C73C /* LoginPresenterTests.swift in Sources */,
 				556D993F28FCB48A0048C73C /* NetworkStub.swift in Sources */,

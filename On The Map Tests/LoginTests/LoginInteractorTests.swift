@@ -70,7 +70,7 @@ final class LoginInteractorTests: XCTestCase {
     }
     
     func testLoginShouldFail() {
-        let expectedError: ApiError = .unknow
+        let expectedError: ApiError = .responseError
         serviceMock.result = .failure(expectedError)
         
         sut.login(username: "", password: "")
