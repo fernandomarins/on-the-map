@@ -43,7 +43,7 @@ private final class LoginViewControllerSpy: LoginViewDisplyaing {
     }
 }
 
-final class LoginCoordinatorSpy: LoginCoordinating {
+final private class LoginCoordinatorSpy: LoginCoordinating {
     var viewController: UIViewController?
     private(set) var messagesSent: [Messages] = []
     private(set) var action: LoginAction?

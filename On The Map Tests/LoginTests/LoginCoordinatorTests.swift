@@ -9,7 +9,6 @@ import XCTest
 @testable import On_The_Map
 
 final class LoginCoordinatorTests: XCTestCase {
-    
     private let viewControllerSpy = ViewControllerSpy()
     
     private var sut: LoginCoordinator {
