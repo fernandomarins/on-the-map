@@ -170,8 +170,10 @@ extension LoginViewController: LoginViewDisplyaing {
     // MARK: - Login
     
     @objc func login() {
-        interactor.login(username: usernameTextField.text ?? "",
-                         password: passwordTextField.text ?? "")
+        interactor.login(
+            username: usernameTextField.text ?? "",
+            password: passwordTextField.text ?? ""
+        )
     }
     
     // MARK: - Tabbar Controller

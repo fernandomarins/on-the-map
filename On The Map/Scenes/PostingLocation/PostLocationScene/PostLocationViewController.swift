@@ -97,9 +97,11 @@ final class PostLocationViewController: UIViewController, MKMapViewDelegate {
     // MARK: - Private methods
     
     private func setupBarButtons() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel",
-                                                            style: .done, target: self,
-                                                            action: #selector(dismissView))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "Cancel",
+            style: .done, target: self,
+            action: #selector(dismissView)
+        )
     }
     
     @objc private func dismissView() {
@@ -108,15 +110,26 @@ final class PostLocationViewController: UIViewController, MKMapViewDelegate {
     
     private func setupMap() {
         let pin = MKPointAnnotation()
-        pin.coordinate = CLLocationCoordinate2D(latitude: location.coordinates.latitude,
-                                                longitude: location.coordinates.longitude)
+        pin.coordinate = CLLocationCoordinate2D(
+            latitude: location.coordinates.latitude,
+            longitude: location.coordinates.longitude
+        )
         
         let latDelta: CLLocationDegrees = 0.05
         let lonDelta: CLLocationDegrees = 0.05
-        let span = MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: lonDelta)
-        let location = CLLocationCoordinate2DMake(location.coordinates.latitude,
-                                                  location.coordinates.longitude)
-        let region = MKCoordinateRegion(center: location, span: span)
+        let span = MKCoordinateSpan(
+            latitudeDelta: latDelta,
+            longitudeDelta: lonDelta
+        )
+        let location = CLLocationCoordinate2DMake(
+            location.coordinates.latitude,
+            location.coordinates.longitude
+        )
+        
+        let region = MKCoordinateRegion(
+            center: location,
+            span: span
+        )
         
         mapView.setRegion(region, animated: false)
         mapView.addAnnotation(pin)
@@ -142,7 +155,10 @@ final class PostLocationViewController: UIViewController, MKMapViewDelegate {
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
         
         if annotationView == nil {
-            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView = MKPinAnnotationView(
+                annotation: annotation,
+                reuseIdentifier: identifier
+            )
             annotationView!.canShowCallout = true
             annotationView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         } else {

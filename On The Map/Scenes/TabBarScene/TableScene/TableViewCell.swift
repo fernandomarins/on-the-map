@@ -39,8 +39,7 @@ final class TableViewCell: UITableViewCell {
     
     private func addContraints() {
         locationLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(16)
-            $0.leading.equalToSuperview().offset(16)
+            $0.top.leading.equalToSuperview().offset(16)
         }
         
         linkLabel.snp.makeConstraints {

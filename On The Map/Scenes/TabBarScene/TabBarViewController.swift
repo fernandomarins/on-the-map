@@ -25,18 +25,6 @@ class TabBarViewController: UITabBarController {
     }
     
     lazy var activityIndicator = LoadingView()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        delegate = self
-    }
-
-}
-
-extension TabBarViewController: UITabBarControllerDelegate {
-    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        print("Selected \(viewController.tabBarItem.tag)")
-    }
 }
 
 extension TabBarViewController: TabBarDisplaying {

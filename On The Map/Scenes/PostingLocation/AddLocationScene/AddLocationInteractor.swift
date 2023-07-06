@@ -31,9 +31,11 @@ extension AddLocationInteractor: AddLocationInteracting {
             switch result {
             case .success(let placemark):
                 let coordinates: CLLocationCoordinate2D = placemark.coordinate
-                let location: Location = Location(location: location,
-                                                  mediaURL: mediaURL,
-                                                  coordinates: (coordinates.latitude, coordinates.longitude))
+                let location: Location = Location(
+                    location: location,
+                    mediaURL: mediaURL,
+                    coordinates: (coordinates.latitude, coordinates.longitude)
+                )
                 self?.presenter.presentPostLocation(action: .presentPost(location: location))
             case .failure(let error):
                 self?.presenter.displayError(error.localizedDescription)

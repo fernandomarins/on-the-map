@@ -13,8 +13,10 @@ enum PostLocationViewControllerFactory {
         let presenter: PostLocationPresenting = PostLocationPresenter(coordinator: coordinator)
         let interactor: PostLocationInteracting = PostLocationInteractor(presenter: presenter)
         
-        let viewController = PostLocationViewController(interactor: interactor,
-                                                        location: location)
+        let viewController = PostLocationViewController(
+            interactor: interactor,
+            location: location
+        )
         
         coordinator.viewController = viewController
         presenter.viewController = viewController
