@@ -28,7 +28,7 @@ extension LoginInteractor: LoginInteracting {
         service.login(username: username, password: password) { [weak self] result in
             self?.presenter.stopLoading()
             switch result {
-            case .success(_):
+            case .success:
                 self?.presenter.presentTabBar(action: .presentTabBar)
             case .failure(let error):
                 self?.presenter.displayError(error.localizedDescription)

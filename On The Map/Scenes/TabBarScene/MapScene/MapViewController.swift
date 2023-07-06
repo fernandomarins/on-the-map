@@ -48,19 +48,29 @@ final class MapViewController: TabBarViewController, MKMapViewDelegate {
         }
 
         mapView.snp.makeConstraints {
-            $0.top.equalTo(contentView.snp.top)
-            $0.leading.equalTo(contentView.snp.leading)
-            $0.bottom.equalTo(contentView.snp.bottom)
-            $0.trailing.equalTo(contentView.snp.trailing)
+            $0.edges.equalTo(contentView.snp.edges)
         }
     }
     
     // MARK: - Private methods
     
     private func setupBarButtons() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .done, target: self, action: #selector(logout))
-        let refreshButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refresh))
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(presentAddLocationView))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: "Logout",
+            style: .done,
+            target: self,
+            action: #selector(logout)
+        )
+        let refreshButton = UIBarButtonItem(
+            barButtonSystemItem: .refresh,
+            target: self,
+            action: #selector(refresh)
+        )
+        let addButton = UIBarButtonItem(
+            barButtonSystemItem: .add,
+            target: self,
+            action: #selector(presentAddLocationView)
+        )
         navigationItem.rightBarButtonItems = [addButton, refreshButton]
     }
     
@@ -75,7 +85,7 @@ final class MapViewController: TabBarViewController, MKMapViewDelegate {
     // Getting all the pins
     private func getPins() {
         interactor.getAllLocations { [weak self] success in
-            if success != nil {
+            if success {
                 self?.addPinsToMap()
             }
         }
@@ -84,11 +94,13 @@ final class MapViewController: TabBarViewController, MKMapViewDelegate {
     @objc private func addPinsToMap() {
         // Removing the old pins before adding new ones
         mapView.removeAnnotations(mapView.annotations)
-        for student in StudentList.allStudents {
-            let pin = MKPointAnnotation()
-            pin.title = student.firstName
-            pin.subtitle = student.mediaURL
-            pin.coordinate = CLLocationCoordinate2D(latitude: student.latitude ?? 0.0, longitude: student.longitude ?? 0.0)
+        
+        guard !StudentList.allStudents.isEmpty else {
+            return
+        }
+        
+        StudentList.allStudents.forEach {
+            let pin = createAnnotation(for: $0)
             mapView.addAnnotation(pin)
         }
     }
@@ -97,11 +109,24 @@ final class MapViewController: TabBarViewController, MKMapViewDelegate {
         interactor.presentAddLocation()
     }
     
+    private func createAnnotation(for student: Student) -> MKPointAnnotation {
+        let pin = MKPointAnnotation()
+        pin.title = student.firstName
+        pin.subtitle = student.mediaURL
+        pin.coordinate = CLLocationCoordinate2D(
+            latitude: student.latitude ?? 0.0,
+            longitude: student.longitude ?? 0.0
+        )
+        return pin
+    }
+    
     private func addNotification() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(refresh),
-                                               name: Notification.Name("update"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(refresh),
+            name: Notification.Name("update"),
+            object: nil
+        )
     }
     
     // MARK: - MapView delegate methods
@@ -113,7 +138,10 @@ final class MapViewController: TabBarViewController, MKMapViewDelegate {
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
         
         if annotationView == nil {
-            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView = MKPinAnnotationView(
+                annotation: annotation,
+                reuseIdentifier: identifier
+            )
             annotationView!.canShowCallout = true
             annotationView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         } else {
@@ -125,12 +153,13 @@ final class MapViewController: TabBarViewController, MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView {
-            if let toOpen = view.annotation?.subtitle! {
-                guard UIApplication.shared.canOpenURL(URL(string: toOpen) ?? URL(fileURLWithPath: "")) else {
+            if let toOpen = view.annotation?.subtitle,
+            let unwrappedOpen = toOpen {
+                guard UIApplication.shared.canOpenURL(URL(string: unwrappedOpen) ?? URL(fileURLWithPath: "")) else {
                     showAlert(self, "The link is not valid")
                     return
                 }
-                interactor.openLink(toOpen)
+                interactor.openLink(unwrappedOpen)
             }
         }
     }

@@ -58,7 +58,11 @@ class APIService {
 
 extension APIService: APIServiceProtocol {
     func getAllLocations(completion: @escaping (Result<Bool, Error>) -> Void) -> Void {
-        taskForGETRequest(url: EndPoints.getStudentLocations.url, responseType: StudentResult.self, isUserInfo: false) { result in
+        taskForGETRequest(
+            url: EndPoints.getStudentLocations.url,
+            responseType: StudentResult.self,
+            isUserInfo: false
+        ) { result in
             
             switch result {
             case .success(let results):
@@ -70,9 +74,21 @@ extension APIService: APIServiceProtocol {
         }
     }
     
-    func login(username: String, password: String, completion: @escaping (Result<Bool, Error>) -> Void) {
-        let body = UdacityLogin(udacity: UserLogin(username: username, password: password))
-        taskForPOSTRequest(url: EndPoints.login.url, responseType: LoginResponse.self, body: body, login: true) { result in
+    func login(
+        username: String,
+        password: String,
+        completion: @escaping (Result<Bool, Error>
+        ) -> Void) {
+        let body = UdacityLogin(
+            udacity: UserLogin(
+                username: username, password: password
+            )
+        )
+        taskForPOSTRequest(
+            url: EndPoints.login.url,
+            responseType: LoginResponse.self,
+            body: body, login: true
+        ) { result in
             
             switch result {
             case .success(let response):
@@ -85,8 +101,16 @@ extension APIService: APIServiceProtocol {
         }
     }
     
-    func post(student: PostLocation, completion: @escaping(Result<Bool, ApiError>) -> Void) {
-        taskForPOSTRequest(url: EndPoints.post.url, responseType: PostResponse.self, body: student, login: false) { result in
+    func post(
+        student: PostLocation,
+        completion: @escaping(Result<Bool, ApiError>
+        ) -> Void) {
+        taskForPOSTRequest(
+            url: EndPoints.post.url,
+            responseType: PostResponse.self,
+            body: student,
+            login: false
+        ) { result in
             
             switch result {
             case .success(_):
@@ -110,7 +134,11 @@ extension APIService: APIServiceProtocol {
     }
     
     func getUserInfo(completion: @escaping(Result<Bool, ApiError>) -> Void) {
-        taskForGETRequest(url: EndPoints.getUserInfo.url, responseType: UserDetails.self, isUserInfo: true) { result in
+        taskForGETRequest(
+            url: EndPoints.getUserInfo.url,
+            responseType: UserDetails.self,
+            isUserInfo: true
+        ) { result in
             
             switch result {
             case .success(let response):
@@ -124,7 +152,10 @@ extension APIService: APIServiceProtocol {
         }
     }
     
-    func geocodeLocation(_ location: String, completion: @escaping (Result<CLLocation, ApiError>) -> Void) {
+    func geocodeLocation(
+        _ location: String,
+        completion: @escaping (Result<CLLocation, ApiError>
+        ) -> Void) {
         CLGeocoder().geocodeAddressString(location) { placemarks, error in
             if error != nil {
                 completion(.failure(.geocodeError))

@@ -103,8 +103,7 @@ final class AddLocationViewController: UIViewController, UITextFieldDelegate {
         
         imageView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(32)
-            $0.height.equalTo(100)
-            $0.width.equalTo(100)
+            $0.height.width.equalTo(100)
             $0.centerX.equalToSuperview()
         }
         
@@ -139,7 +138,12 @@ final class AddLocationViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Private methods
     
     private func setupBarButtons() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(dismissView))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: "Cancel",
+            style: .done,
+            target: self,
+            action: #selector(dismissView)
+        )
     }
     
     @objc private func dismissView() {
@@ -147,8 +151,10 @@ final class AddLocationViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc private func geocode() {
-        interactor.geocode(locationTextField.text ?? "",
-                           linkTextField.text ?? "")
+        interactor.geocode(
+            locationTextField.text ?? "",
+            linkTextField.text ?? ""
+        )
     }
     
     // MARK: - Textfield delegate method
@@ -157,11 +163,11 @@ final class AddLocationViewController: UIViewController, UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
-        
+    
 }
 
 extension AddLocationViewController: AddLocationDisplaying {
     func displayError(_ error: String) {
         showAlert(self, error)
-    }    
+    }
 }

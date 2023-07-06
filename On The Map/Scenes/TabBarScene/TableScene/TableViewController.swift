@@ -58,9 +58,22 @@ final class TableViewController: TabBarViewController, UITableViewDelegate, UITa
     // MARK: - Private methods
     
     private func setupBarButtons() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .done, target: self, action: #selector(logout))
-        let refreshButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refresh))
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(presentAddLocationView))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: "Logout",
+            style: .done,
+            target: self,
+            action: #selector(logout)
+        )
+        let refreshButton = UIBarButtonItem(
+            barButtonSystemItem: .refresh,
+            target: self,
+            action: #selector(refresh)
+        )
+        let addButton = UIBarButtonItem(
+            barButtonSystemItem: .add,
+            target: self,
+            action: #selector(presentAddLocationView)
+        )
         navigationItem.rightBarButtonItems = [addButton, refreshButton]
     }
     
@@ -78,7 +91,7 @@ final class TableViewController: TabBarViewController, UITableViewDelegate, UITa
     
     private func getData() {
         interactor.getAllLocations { [weak self] sucess in
-            if sucess != nil {
+            if sucess {
                 self?.reloadTableView()
             }
         }
@@ -91,10 +104,12 @@ final class TableViewController: TabBarViewController, UITableViewDelegate, UITa
     }
     
     private func addNotification() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(refresh),
-                                               name: Notification.Name("update"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(refresh),
+            name: Notification.Name("update"),
+            object: nil
+        )
     }
     
     // MARK: - TableView delegate methods
