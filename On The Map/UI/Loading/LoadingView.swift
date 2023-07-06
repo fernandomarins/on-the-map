@@ -32,8 +32,7 @@ class LoadingView: UIView {
     
     func addConstraints() {
         activityIndicator.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.centerX.equalToSuperview()
+            $0.center.equalToSuperview()
         }
     }
 }
