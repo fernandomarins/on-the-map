@@ -51,7 +51,7 @@ final class LoginInteractorTests: XCTestCase {
     private let presenterSpy = LoginPresenterSpy()
     private var serviceMock = NetworkStub(session: URLSession.shared)
     
-    private var sut: LoginInteractor {
+    private var sut: LoginInteracting {
         let interactor = LoginInteractor(presenter: presenterSpy,
                                          service: serviceMock)
         return interactor

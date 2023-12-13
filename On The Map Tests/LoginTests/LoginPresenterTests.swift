@@ -62,7 +62,7 @@ final class LoginPresenterTests: XCTestCase {
     private let viewControllerSpy = LoginViewControllerSpy()
     private let coordinatorSpy = LoginCoordinatorSpy()
     
-    private var sut: LoginPresenter {
+    private var sut: LoginPresenting {
         let presenter = LoginPresenter(coordinator: coordinatorSpy)
         presenter.viewController = viewControllerSpy
         return presenter

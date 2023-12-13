@@ -52,7 +52,7 @@ final class AddLocationInteractorTests: XCTestCase {
     private let presenterSpy = AddLocationPresenterSpy()
     private var serviceMock = NetworkStub(session: URLSession.shared)
     
-    private var sut: AddLocationInteractor {
+    private var sut: AddLocationInteracting {
         let interactor = AddLocationInteractor(presenter: presenterSpy,
                                                service: serviceMock)
         return interactor

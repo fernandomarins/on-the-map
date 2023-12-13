@@ -56,7 +56,7 @@ final class TabBarInteractorTests: XCTestCase {
     private let presenterSpy = TabBarPresenterSpy()
     private var serviceMock = NetworkStub(session: URLSession.shared)
     
-    private var sut: TabBarInteractor {
+    private var sut: TabBarInteracting {
         let interactor = TabBarInteractor(presenter: presenterSpy,
                                           service: serviceMock)
         return interactor

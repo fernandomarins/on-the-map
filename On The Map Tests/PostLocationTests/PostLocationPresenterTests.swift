@@ -54,7 +54,7 @@ final class PostLocationIPresenterTests: XCTestCase {
     private let viewControllerSpy = PostLocationViewControllerSpy()
     private let coordinatorSpy = PostLocationCoordinatorSpy()
     
-    private var sut: PostLocationPresenter {
+    private var sut: PostLocationPresenting {
         let presenter = PostLocationPresenter(coordinator: coordinatorSpy)
         presenter.viewController = viewControllerSpy
         return presenter
