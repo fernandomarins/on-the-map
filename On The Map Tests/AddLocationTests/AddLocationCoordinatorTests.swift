@@ -11,7 +11,7 @@ import XCTest
 final class AddLocationCoordinatorTests: XCTestCase {
     private let viewControllerSpy = ViewControllerSpy()
     
-    private var sut: AddLocationCoordinator {
+    private var sut: AddLocationCoordinating {
         let coordinator = AddLocationCoordinator()
         coordinator.viewController = viewControllerSpy
         return coordinator

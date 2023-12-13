@@ -8,7 +8,7 @@
 import Foundation
 
 protocol TabBarInteracting: AnyObject {
-    func getAllLocations(completion: @escaping (Bool?) -> Void)
+    func getAllLocations(completion: @escaping (Bool) -> Void)
     func openLink(_ urlString: String)
     func logout()
     func presentAddLocation()
@@ -25,16 +25,16 @@ final class TabBarInteractor {
 }
 
 extension TabBarInteractor: TabBarInteracting {
-    func getAllLocations(completion: @escaping (Bool?) -> Void) {
+    func getAllLocations(completion: @escaping (Bool) -> Void) {
         presenter.startLoading()
         service.getAllLocations { [weak self] result in
             self?.presenter.stopLoading()
             switch result {
-            case .success(_):
+            case .success:
                 completion(true)
             case .failure(let error):
                 self?.presenter.displayError(error.localizedDescription)
-                completion(nil)
+                completion(false)
             }
         }
     }
@@ -48,7 +48,7 @@ extension TabBarInteractor: TabBarInteracting {
         service.logout { [weak self] result in
             self?.presenter.stopLoading()
             switch result {
-            case .success(_):
+            case .success:
                 self?.presenter.logout(action: .logout)
             case .failure(let error):
                 self?.presenter.displayError(error.localizedDescription)

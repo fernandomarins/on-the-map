@@ -61,19 +61,11 @@ extension APIProtocol {
             }
             
             do {
-                
-                if isUserInfo {
-                    let range = 5..<data.count
-                    let newData = data.subdata(in: range)
-                    let responseObject = try JSONDecoder().decode(ResponseType.self, from: newData)
-                    DispatchQueue.main.async {
-                        completion(.success(responseObject))
-                    }
-                } else {
-                    let responseObject = try JSONDecoder().decode(ResponseType.self, from: data)
-                    DispatchQueue.main.async {
-                        completion(.success(responseObject))
-                    }
+                let range = 5..<data.count
+                let newData = data.subdata(in: range)
+                let responseObject = try JSONDecoder().decode(ResponseType.self, from: isUserInfo ? newData : data)
+                DispatchQueue.main.async {
+                    completion(.success(responseObject))
                 }
             } catch {
                 completion(.failure(ApiError.parse))
@@ -108,20 +100,12 @@ extension APIProtocol {
             }
             
             do {
-                if login {
-                    let range = 5..<data.count
-                    let newData = data.subdata(in: range)
-                    let responseObj = try JSONDecoder().decode(ResponseType.self, from: newData)
-                    DispatchQueue.main.async {
-                        completion(.success(responseObj))
-                    }
-                } else {
-                    let responseObj = try JSONDecoder().decode(ResponseType.self, from: data)
-                    DispatchQueue.main.async {
-                        completion(.success(responseObj))
-                    }
+                let range = 5..<data.count
+                let newData = data.subdata(in: range)
+                let responseObj = try JSONDecoder().decode(ResponseType.self, from: login ? newData : data)
+                DispatchQueue.main.async {
+                    completion(.success(responseObj))
                 }
-
             } catch {
                 DispatchQueue.main.async {
                     completion(.failure(error))

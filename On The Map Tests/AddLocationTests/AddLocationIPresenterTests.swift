@@ -52,7 +52,7 @@ final class AddLocationIPresenterTests: XCTestCase {
     private let viewControllerSpy = AddLocationViewControllerSpy()
     private let coordinatorSpy = AddLocationCoordinatorSpy()
     
-    private var sut: AddLocationPresenter {
+    private var sut: AddLocationPresenting {
         let presenter = AddLocationPresenter(coordinator: coordinatorSpy)
         presenter.viewController = viewControllerSpy
         return presenter

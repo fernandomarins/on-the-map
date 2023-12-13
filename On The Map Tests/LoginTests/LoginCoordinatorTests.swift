@@ -11,7 +11,7 @@ import XCTest
 final class LoginCoordinatorTests: XCTestCase {
     private let viewControllerSpy = ViewControllerSpy()
     
-    private var sut: LoginCoordinator {
+    private var sut: LoginCoordinating {
         let coordinator = LoginCoordinator()
         coordinator.viewController = viewControllerSpy
         return coordinator

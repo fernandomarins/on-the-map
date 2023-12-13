@@ -31,7 +31,7 @@ extension PostLocationInteractor: PostLocationInteracting {
             self?.presenter.stopLoading()
             
             switch result {
-            case .success(_):
+            case .success:
                 completion(true)
             case .failure(let error):
                 self?.presenter.displayError(error.localizedDescription)
@@ -42,13 +42,17 @@ extension PostLocationInteractor: PostLocationInteracting {
     
     func post(_ location: Location) {
         presenter.startLoading()
-        let postLocation = PostLocation(uniqueKey: APIService.Auth.uniqueKey,
-                                        firstName: APIService.Auth.firstName,
-                                        lastName: APIService.Auth.lastName,
-                                        mapString: location.location,
-                                        mediaURL: location.mediaURL,
-                                        latitude: location.coordinates.latitude,
-                                        longitude: location.coordinates.longitude)
+        
+        let postLocation = PostLocation(
+            uniqueKey: APIService.Auth.uniqueKey,
+            firstName: APIService.Auth.firstName,
+            lastName: APIService.Auth.lastName,
+            mapString: location.location,
+            mediaURL: location.mediaURL,
+            latitude: location.coordinates.latitude,
+            longitude: location.coordinates.longitude
+        )
+        
         service.post(student: postLocation) { [weak self] result in
             self?.presenter.stopLoading()
             switch result {
@@ -70,7 +74,9 @@ extension PostLocationInteractor: PostLocationInteracting {
     }
     
     private func sendNotification() {
-        NotificationCenter.default.post(name: NSNotification.Name("update"),
-                                        object: nil)
+        NotificationCenter.default.post(
+            name: NSNotification.Name("update"),
+            object: nil
+        )
     }
 }

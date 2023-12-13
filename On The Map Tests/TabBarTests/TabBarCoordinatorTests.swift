@@ -11,7 +11,7 @@ import XCTest
 final class TabBarCoordinatorTests: XCTestCase {
     private let viewControllerSpy = ViewControllerSpy()
     
-    private var sut: TabBarCoordinator {
+    private var sut: TabBarCoordinating {
         let coordinator = TabBarCoordinator()
         coordinator.viewController = viewControllerSpy
         return coordinator

@@ -19,10 +19,18 @@ enum TabBarControllerFactory {
         presenter.viewController = tabBarController
         
         let mapViewController = MapViewController(interactor: interactor)
-        mapViewController.tabBarItem = UITabBarItem(title: "Map", image: UIImage(named: "icon_listview-deselected"), tag: 0)
+        mapViewController.tabBarItem = UITabBarItem(
+            title: "Map",
+            image: UIImage(named: "icon_listview-deselected"),
+            tag: 0
+        )
         
         let tableViewController = TableViewController(interactor: interactor)
-        tableViewController.tabBarItem = UITabBarItem(title: "Table", image: UIImage(named: "icon_mapview-deselected"), tag: 1)
+        tableViewController.tabBarItem = UITabBarItem(
+            title: "Table",
+            image: UIImage(named: "icon_mapview-deselected"),
+            tag: 1
+        )
         
         let viewControllersList = [mapViewController, tableViewController].map {
             UINavigationController(rootViewController: $0)

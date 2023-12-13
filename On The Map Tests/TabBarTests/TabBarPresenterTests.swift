@@ -52,7 +52,7 @@ final class TabBarPresenterTests: XCTestCase {
     private let viewControllerSpy = TabBarViewControllerSpy()
     private let coordinatorSpy = TabBarCoordinatorSpy()
     
-    private var sut: TabBarPresenter {
+    private var sut: TabBarPresenting {
         let presenter = TabBarPresenter(coordinator: coordinatorSpy)
         presenter.viewController = viewControllerSpy
         return presenter
